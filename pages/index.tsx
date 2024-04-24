@@ -1,7 +1,10 @@
+import { Layout } from "@/components/Layout";
+import { IndexPage } from "@/components/IndexPage";
+
 export default function Home() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello, world!</h1>
-    </>
+    <Layout title="Neraime">
+      <IndexPage />
+    </Layout>
   );
 }
