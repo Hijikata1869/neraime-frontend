@@ -38,7 +38,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
         <Head>
           <title>{props.title}</title>
         </Head>
-        <main className="flex flex-col justify-center items-center">
+        <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>
       </div>
