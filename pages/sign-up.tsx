@@ -4,7 +4,7 @@ import { UserAuth } from "@/components/UserAuth";
 const SignUp: React.FC = () => {
   return (
     <>
-      <Layout title="sign-up">
+      <Layout title="新規登録">
         <UserAuth />
       </Layout>
     </>
