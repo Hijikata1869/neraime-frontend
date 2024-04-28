@@ -41,7 +41,9 @@ export const UserAuth: React.FC = () => {
       password: password,
       passwordConfirmation: passwordConfirmation,
     };
-    createUser(userInput);
+    createUser(userInput).then(() => {
+      router.push("/");
+    });
   };
 
   return (
