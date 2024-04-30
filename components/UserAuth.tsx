@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Cookie from "universal-cookie";
 
 // apis
 import { createUser } from "@/lib/users";
+
+const cookie = new Cookie();
 
 export const UserAuth: React.FC = () => {
   const router = useRouter();
@@ -41,9 +44,17 @@ export const UserAuth: React.FC = () => {
       password: password,
       passwordConfirmation: passwordConfirmation,
     };
-    createUser(userInput).then(() => {
-      router.push("/");
-    });
+    createUser(userInput)
+      .then((data) => {
+        const options = {
+          path: "/",
+          expires: new Date(Date.now() + 24 * 3600 * 1000),
+        };
+        cookie.set("access_token", data.token, options);
+      })
+      .then(() => {
+        router.push("/");
+      });
   };
 
   return (

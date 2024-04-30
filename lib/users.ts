@@ -3,7 +3,8 @@ import { UserInput } from "@/types/user";
 export const createUser = async (userInput: UserInput) => {
   const { event, nickname, email, password, passwordConfirmation } = userInput;
   event.preventDefault();
-  await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}users`, {
+  // ここでreturnをつけないと、呼び出し元のコンポーネント内でこのPromiseを持つことができない
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}users`, {
     method: "POST",
     body: JSON.stringify({
       user: {
@@ -16,11 +17,16 @@ export const createUser = async (userInput: UserInput) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.status === 200) {
-      console.log("User created");
-    } else {
-      throw "create failed";
-    }
-  });
+  })
+    .then(async (res) => {
+      if (res.status === 200) {
+        const data = await res.json();
+        return data;
+      } else {
+        throw "create failed";
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
