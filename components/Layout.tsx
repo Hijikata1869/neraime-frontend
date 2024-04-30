@@ -1,13 +1,35 @@
 import Head from "next/head";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { useRouter } from "next/router";
+import { ReactNode, useState, useEffect } from "react";
+import Cookie from "universal-cookie";
 
 interface LayoutProps {
   title: string;
   children?: ReactNode;
 }
 
+const cookie = new Cookie();
+
 export const Layout: React.FC<LayoutProps> = (props) => {
+  const router = useRouter();
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const token = cookie.get("access_token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
+
+  const logout = () => {
+    setIsLogin(false);
+    cookie.remove("access_token", { path: "/" });
+    router.push("/");
+  };
+
   return (
     <>
       <header className="p-8 bg-amber-50">
@@ -19,18 +41,34 @@ export const Layout: React.FC<LayoutProps> = (props) => {
             >
               NERAIME
             </Link>
-            <div>
-              <Link href="sign-up">
-                <button className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4">
-                  新規登録
+            {isLogin ? (
+              <div>
+                <button
+                  className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4"
+                  onClick={logout}
+                >
+                  ログアウト
                 </button>
-              </Link>
-              <Link href="sign-in">
-                <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
-                  ログイン
-                </button>
-              </Link>
-            </div>
+                <Link href="#">
+                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
+                    マイページ
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link href="sign-up">
+                  <button className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4">
+                    新規登録
+                  </button>
+                </Link>
+                <Link href="sign-in">
+                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
+                    ログイン
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
       </header>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
@@ -14,6 +14,16 @@ export const UserAuth: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const token = cookie.get("access_token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   const onClickToggle = () => {
     setIsSignUp(!isSignUp);
@@ -94,6 +104,7 @@ export const UserAuth: React.FC = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center">
+      {isLogin ? "ログイン中" : "ログアウト中"}
       <div className="bg-slate-50 py-4 px-8">
         <div className="flex justify-center mx-4 mt-4">
           {isSignUp ? (
