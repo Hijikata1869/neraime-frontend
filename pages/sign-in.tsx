@@ -1,7 +1,12 @@
+import { Layout } from "@/components/Layout";
+import { UserAuth } from "@/components/UserAuth";
+
 const SignIn: React.FC = () => {
   return (
     <>
-      <h1>SignIn</h1>
+      <Layout title="ログイン">
+        <UserAuth />
+      </Layout>
     </>
   );
 };
