@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
 // apis
-import { createUser } from "@/lib/users";
+import { createUser, login } from "@/lib/users";
 
 const cookie = new Cookie();
 
@@ -54,6 +54,41 @@ export const UserAuth: React.FC = () => {
       })
       .then(() => {
         router.push("/");
+      })
+      .catch((err) => {
+        setNickname("");
+        setEmail("");
+        setPassword("");
+        setPasswordConfirmation("");
+        alert(err);
+      });
+  };
+
+  const onClickSignIn = (event: React.MouseEvent) => {
+    const userInput = {
+      event: event,
+      email: email,
+      password: password,
+    };
+    login(userInput)
+      .then((data) => {
+        const options = {
+          path: "/",
+          expires: new Date(Date.now() + 24 * 3600 * 1000),
+        };
+        cookie.set("access_token", data.token, options);
+      })
+      .then(() => {
+        setEmail("");
+        setPassword("");
+      })
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        setEmail("");
+        setPassword("");
+        alert(err);
       });
   };
 
@@ -184,7 +219,10 @@ export const UserAuth: React.FC = () => {
             </>
           ) : (
             <>
-              <button className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition">
+              <button
+                className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition"
+                onClick={(event) => onClickSignIn(event)}
+              >
                 ログイン
               </button>
             </>

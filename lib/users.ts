@@ -1,6 +1,6 @@
-import { UserInput } from "@/types/user";
+import { CreateUserInput, LoginUserInput } from "@/types/user";
 
-export const createUser = async (userInput: UserInput) => {
+export const createUser = async (userInput: CreateUserInput) => {
   const { event, nickname, email, password, passwordConfirmation } = userInput;
   event.preventDefault();
   // ここでreturnをつけないと、呼び出し元のコンポーネント内でこのPromiseを持つことができない
@@ -17,16 +17,34 @@ export const createUser = async (userInput: UserInput) => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then(async (res) => {
-      if (res.status === 200) {
-        const data = await res.json();
-        return data;
-      } else {
-        throw "create failed";
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "作成失敗";
+    }
+  });
+};
+
+export const login = async (userInput: LoginUserInput) => {
+  const { event, email, password } = userInput;
+  event.preventDefault();
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}auth`, {
+    method: "POST",
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "認証失敗";
+    }
+  });
 };
