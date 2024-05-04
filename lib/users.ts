@@ -48,3 +48,36 @@ export const login = async (userInput: LoginUserInput) => {
     }
   });
 };
+
+export const fetchCurrentUser = async (accessToken: string) => {
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}current_user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = res.json();
+      return data;
+    } else {
+      throw "取得失敗";
+    }
+  });
+};
+
+export const fetchUser = async (id: number) => {
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}users/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "取得失敗";
+    }
+  });
+};

@@ -1,26 +1,46 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Cookie from "universal-cookie";
 
-interface LayoutProps {
-  title: string;
-  children?: ReactNode;
-}
+// apis
+import { fetchCurrentUser } from "@/lib/users";
+
+// types
+import { LayoutProps } from "@/types";
+import { CurrentUserObj } from "@/types/user";
 
 const cookie = new Cookie();
 
 export const Layout: React.FC<LayoutProps> = (props) => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
+  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
-    const token = cookie.get("access_token");
-    if (token) {
+    const accessToken = cookie.get("access_token");
+    if (accessToken) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const accessToken = cookie.get("access_token");
+    if (accessToken) {
+      fetchCurrentUser(accessToken)
+        .then(async (data) => {
+          const currentUser = await data.current_user;
+          return currentUser;
+        })
+        .then((currentUser) => {
+          setCurrentUser(currentUser);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }, []);
 
@@ -49,7 +69,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
                 >
                   ログアウト
                 </button>
-                <Link href="#">
+                <Link href={`/users/${currentUser?.id}`}>
                   <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
                     マイページ
                   </button>
