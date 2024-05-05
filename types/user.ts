@@ -31,3 +31,11 @@ export type UserObj = {
   created_at: string;
   updated_at: string;
 };
+
+export type UpdateUserInput = {
+  event: React.MouseEvent;
+  id: number;
+  nickname: string;
+  email: string;
+  selfIntroduction: string;
+};

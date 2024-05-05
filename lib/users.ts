@@ -1,4 +1,4 @@
-import { CreateUserInput, LoginUserInput } from "@/types/user";
+import { CreateUserInput, LoginUserInput, UpdateUserInput } from "@/types/user";
 
 export const createUser = async (userInput: CreateUserInput) => {
   const { event, nickname, email, password, passwordConfirmation } = userInput;
@@ -78,6 +78,31 @@ export const fetchUser = async (id: number) => {
       return data;
     } else {
       throw "取得失敗";
+    }
+  });
+};
+
+export const updateUser = async (updateUserInput: UpdateUserInput) => {
+  const { event, id, nickname, email, selfIntroduction } = updateUserInput;
+  event.preventDefault();
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}users/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      user: {
+        nickname: nickname,
+        email: email,
+        self_introduction: selfIntroduction,
+      },
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "更新失敗";
     }
   });
 };

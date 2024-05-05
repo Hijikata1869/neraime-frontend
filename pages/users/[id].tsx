@@ -12,7 +12,7 @@ import { fetchUser } from "@/lib/users";
 // types
 import { UserObj } from "@/types/user";
 
-const UserPage = () => {
+const UserPage: React.FC = () => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
   const [user, setUser] = useState<UserObj>();
@@ -56,7 +56,7 @@ const UserPage = () => {
           </p>
         </div>
         <div className="flex justify-center">
-          <Link href="#">
+          <Link href={`/users/${userId}/edit`}>
             <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20">
               登録情報を編集する
             </button>
