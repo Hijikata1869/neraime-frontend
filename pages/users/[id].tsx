@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
+import Cookie from "universal-cookie";
 
 // components
 import { Layout } from "@/components/Layout";
 
 // apis
-import { fetchUser } from "@/lib/users";
+import { fetchCurrentUser, fetchUser } from "@/lib/users";
 
 // types
-import { UserObj } from "@/types/user";
+import { UserObj, CurrentUserObj } from "@/types/user";
+
+const cookie = new Cookie();
 
 const UserPage: React.FC = () => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
   const [user, setUser] = useState<UserObj>();
+  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -33,6 +37,23 @@ const UserPage: React.FC = () => {
     }
     // eslint-disable-next-line
   }, [router.query.id]);
+
+  useEffect(() => {
+    const accessToken = cookie.get("access_token");
+    if (accessToken) {
+      fetchCurrentUser(accessToken)
+        .then(async (data) => {
+          const currentUser = await data.current_user;
+          return currentUser;
+        })
+        .then((currentUser) => {
+          setCurrentUser(currentUser);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, []);
 
   return (
     <Layout title={user?.nickname ? user.nickname : "マイページ"}>
@@ -55,13 +76,15 @@ const UserPage: React.FC = () => {
               : "まだ自己紹介はありません"}
           </p>
         </div>
-        <div className="flex justify-center">
-          <Link href={`/users/${userId}/edit`}>
-            <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20">
-              登録情報を編集する
-            </button>
-          </Link>
-        </div>
+        {currentUser?.id === userId && (
+          <div className="flex justify-center">
+            <Link href={`/users/${userId}/edit`}>
+              <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20">
+                登録情報を編集する
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </Layout>
   );

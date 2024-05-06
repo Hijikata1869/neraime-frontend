@@ -77,12 +77,12 @@ export const Layout: React.FC<LayoutProps> = (props) => {
               </div>
             ) : (
               <div>
-                <Link href="sign-up">
+                <Link href="/sign-up">
                   <button className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4">
                     新規登録
                   </button>
                 </Link>
-                <Link href="sign-in">
+                <Link href="/sign-in">
                   <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
                     ログイン
                   </button>
