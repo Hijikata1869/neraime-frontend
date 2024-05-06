@@ -1,19 +1,32 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Cookie from "universal-cookie";
 
 // components
 import { Layout } from "@/components/Layout";
 
 // apis
-import { fetchUser, updateUser } from "@/lib/users";
+import {
+  fetchUser,
+  updateUser,
+  deleteUser,
+  fetchCurrentUser,
+} from "@/lib/users";
+
+// types
+import { CurrentUserObj } from "@/types/user";
+
+const cookie = new Cookie();
 
 const UserEditPage: React.FC = () => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
+  const token = cookie.get("access_token");
 
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
+  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -25,7 +38,7 @@ const UserEditPage: React.FC = () => {
         .then((data) => {
           setNickname(data.nickname);
           setEmail(data.email);
-          setSelfIntroduction(data.self_introduction);
+          data.self_introduction && setSelfIntroduction(data.self_introduction);
         })
         .catch((err) => {
           console.error(err);
@@ -33,6 +46,23 @@ const UserEditPage: React.FC = () => {
     }
     // eslint-disable-next-line
   }, [router.query.id]);
+
+  useEffect(() => {
+    if (token) {
+      fetchCurrentUser(token)
+        .then(async (data) => {
+          const currentUser = data.current_user;
+          return currentUser;
+        })
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value);
@@ -55,13 +85,29 @@ const UserEditPage: React.FC = () => {
       nickname: nickname,
       email: email,
       selfIntroduction: selfIntroduction,
+      token: token,
     };
     updateUser(updateUserInput)
-      .then((res) => {
-        console.log(res);
-      })
       .then(() => {
         router.push(`/users/${userId}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const onClickDelete = (event: React.MouseEvent) => {
+    const userDeleteArg = {
+      event: event,
+      userId: userId,
+      token: token,
+    };
+    deleteUser(userDeleteArg)
+      .then(() => {
+        cookie.remove("access_token", { path: "/" });
+      })
+      .then(() => {
+        router.push("/");
       })
       .catch((err) => {
         console.error(err);
@@ -104,21 +150,33 @@ const UserEditPage: React.FC = () => {
             onChange={(event) => onChangeSelfIntroduction(event)}
           />
         </form>
-        <div className="flex justify-center mt-10">
+        {currentUser?.id === userId && (
+          <div className="flex justify-center mt-10">
+            <button
+              className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 "
+              onClick={(event) => onClickUpdate(event)}
+            >
+              更新する
+            </button>
+            <button
+              className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition "
+              onClick={() => router.push(`/users/${userId}`)}
+            >
+              マイページに戻る
+            </button>
+          </div>
+        )}
+      </div>
+      {currentUser?.id === userId && (
+        <div className="mt-10 flex justify-center">
           <button
-            className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 "
-            onClick={(event) => onClickUpdate(event)}
+            onClick={(event) => onClickDelete(event)}
+            className="text-sm border-red-500 px-2 py-2 rounded border text-red-500 hover:bg-red-400 hover:text-neutral-200 hover:border-red-400 transition"
           >
-            更新する
-          </button>
-          <button
-            className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition "
-            onClick={() => router.push(`/users/${userId}`)}
-          >
-            マイページに戻る
+            アカウントを削除する
           </button>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

@@ -38,4 +38,11 @@ export type UpdateUserInput = {
   nickname: string;
   email: string;
   selfIntroduction: string;
+  token: string;
+};
+
+export type deleteUserArg = {
+  event: React.MouseEvent;
+  userId: number;
+  token: string;
 };
