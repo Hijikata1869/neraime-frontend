@@ -104,7 +104,6 @@ export const UserAuth: React.FC = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center">
-      {isLogin ? "ログイン中" : "ログアウト中"}
       <div className="bg-slate-50 py-4 px-8">
         <div className="flex justify-center mx-4 mt-4">
           {isSignUp ? (

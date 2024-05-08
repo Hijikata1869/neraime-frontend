@@ -4,6 +4,7 @@ import Cookie from "universal-cookie";
 
 // components
 import { Layout } from "@/components/Layout";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 
 // apis
 import {
@@ -27,6 +28,7 @@ const UserEditPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
   const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -115,69 +117,78 @@ const UserEditPage: React.FC = () => {
   };
 
   return (
-    <Layout title="登録情報の変更">
-      <div className="bg-white w-1/2 p-8">
-        <div className="flex justify-center">
-          <h2 className="font-semibold text-3xl text-gray-900">プロフィール</h2>
+    <>
+      <ConfirmationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        executeOnDialogAction={onClickDelete}
+      />
+      <Layout title="登録情報の変更">
+        <div className="bg-white w-1/2 p-8">
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-3xl text-gray-900">
+              プロフィール
+            </h2>
+          </div>
+          <form className="flex flex-col">
+            <label htmlFor="nickname" className="text-xs">
+              ニックネーム
+            </label>
+            <input
+              type="text"
+              className="border-2 border-gray-300 mb-8 py-2 outline-none pl-2 rounded"
+              name="nickname"
+              value={nickname}
+              onChange={(event) => onChangeNickname(event)}
+            />
+            <label htmlFor="email" className="text-xs">
+              Eメール
+            </label>
+            <input
+              type="text"
+              className="border-2 border-gray-300 mb-8 py-2 outline-none pl-2 rounded"
+              value={email}
+              onChange={(event) => onChangeEmail(event)}
+            />
+            <label htmlFor="selfIntroduction" className="text-xs">
+              自己紹介
+            </label>
+            <textarea
+              className="border-2 border-gray-300 mb-8 py-6 outline-none pl-2 rounded"
+              name="selfIntroduction"
+              value={selfIntroduction}
+              onChange={(event) => onChangeSelfIntroduction(event)}
+            />
+          </form>
+          {currentUser?.id === userId && (
+            <div className="flex justify-center mt-10">
+              <button
+                className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 "
+                onClick={(event) => onClickUpdate(event)}
+              >
+                更新する
+              </button>
+              <button
+                className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition "
+                onClick={() => router.push(`/users/${userId}`)}
+              >
+                マイページに戻る
+              </button>
+            </div>
+          )}
         </div>
-        <form className="flex flex-col">
-          <label htmlFor="nickname" className="text-xs">
-            ニックネーム
-          </label>
-          <input
-            type="text"
-            className="border-2 border-gray-300 mb-8 py-2 outline-none pl-2 rounded"
-            name="nickname"
-            value={nickname}
-            onChange={(event) => onChangeNickname(event)}
-          />
-          <label htmlFor="email" className="text-xs">
-            Eメール
-          </label>
-          <input
-            type="text"
-            className="border-2 border-gray-300 mb-8 py-2 outline-none pl-2 rounded"
-            value={email}
-            onChange={(event) => onChangeEmail(event)}
-          />
-          <label htmlFor="selfIntroduction" className="text-xs">
-            自己紹介
-          </label>
-          <textarea
-            className="border-2 border-gray-300 mb-8 py-6 outline-none pl-2 rounded"
-            name="selfIntroduction"
-            value={selfIntroduction}
-            onChange={(event) => onChangeSelfIntroduction(event)}
-          />
-        </form>
         {currentUser?.id === userId && (
-          <div className="flex justify-center mt-10">
+          <div className="mt-10 flex justify-center">
             <button
-              className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 "
-              onClick={(event) => onClickUpdate(event)}
+              onClick={() => setIsOpen(true)}
+              className="text-sm border-red-500 px-2 py-2 rounded border text-red-500 hover:bg-red-400 hover:text-neutral-200 hover:border-red-400 transition"
             >
-              更新する
-            </button>
-            <button
-              className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition "
-              onClick={() => router.push(`/users/${userId}`)}
-            >
-              マイページに戻る
+              アカウントを削除する
             </button>
           </div>
         )}
-      </div>
-      {currentUser?.id === userId && (
-        <div className="mt-10 flex justify-center">
-          <button
-            onClick={(event) => onClickDelete(event)}
-            className="text-sm border-red-500 px-2 py-2 rounded border text-red-500 hover:bg-red-400 hover:text-neutral-200 hover:border-red-400 transition"
-          >
-            アカウントを削除する
-          </button>
-        </div>
-      )}
-    </Layout>
+      </Layout>
+    </>
   );
 };
 
