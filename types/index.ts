@@ -10,3 +10,14 @@ export type ConfirmationDialogProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   executeOnDialogAction: (arg: any) => any;
 };
+
+export type StoreCandidates = {
+  place_id: string;
+  name: string;
+  formatted_address: string;
+  types: string[];
+}[];
+
+export type SearchResultProps = {
+  candidates: StoreCandidates;
+};
