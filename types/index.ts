@@ -21,3 +21,8 @@ export type StoreCandidates = {
 export type SearchResultProps = {
   candidates: StoreCandidates;
 };
+
+export type SelectedCandidate = {
+  name: string;
+  address: string;
+};
