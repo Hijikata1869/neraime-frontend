@@ -40,7 +40,6 @@ export const SearchForm: React.FC = () => {
         return formatted_candidates;
       })
       .then((formatted_candidates) => {
-        console.log(formatted_candidates);
         setCandidates(formatted_candidates);
       })
       .then(() => {

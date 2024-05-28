@@ -1,9 +1,25 @@
 import { useContext } from "react";
+import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
+// apis
+import { fetchStoreByName } from "@/lib/stores";
+
 export const ResultsList = () => {
+  const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { candidates } = searchContext;
+
+  const hundleClick = (event: React.MouseEvent, storeName: string) => {
+    event.preventDefault();
+    fetchStoreByName(storeName)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <>
@@ -17,11 +33,9 @@ export const ResultsList = () => {
         <div className="flex flex-col items-center">
           {candidates?.map((candidate) => (
             <div
-              className="lg:w-3/4 m-4 p-6 bg-white rounded-2xl cursor-pointer"
+              className="lg:w-3/4 md:w-3/4 m-4 p-6 bg-white rounded-2xl cursor-pointer shadow-sm"
               key={candidate.place_id}
-              onClick={() => {
-                alert(`${candidate.name}`);
-              }}
+              onClick={(event) => hundleClick(event, candidate.name)}
             >
               <h2 className="font-bold text-2xl text-gray-900 mb-4">
                 店舗名：{candidate.name}
