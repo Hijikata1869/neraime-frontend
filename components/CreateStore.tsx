@@ -1,31 +1,151 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
+// apis
+import { createStore } from "@/lib/stores";
+import { initialPrefecture } from "@/lib/stores";
+
 export const CreateStore: React.FC = () => {
+  const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { selectedCandidate } = searchContext;
+  const [selectedPrefecture, setSelectedPrefecture] = useState<string>("");
+  console.log(selectedCandidate?.name.length);
 
-  const hundleClick = () => {};
+  useEffect(() => {
+    const prefecture = initialPrefecture(selectedCandidate?.address);
+    setSelectedPrefecture(prefecture);
+    // eslint-disable-next-line
+  }, []);
+
+  const prefectures = [
+    "北海道",
+    "青森県",
+    "岩手県",
+    "宮城県",
+    "秋田県",
+    "山形県",
+    "福島県",
+    "茨城県",
+    "栃木県",
+    "群馬県",
+    "埼玉県",
+    "千葉県",
+    "東京都",
+    "神奈川県",
+    "新潟県",
+    "富山県",
+    "石川県",
+    "福井県",
+    "山梨県",
+    "長野県",
+    "岐阜県",
+    "静岡県",
+    "愛知県",
+    "三重県",
+    "滋賀県",
+    "京都府",
+    "大阪府",
+    "兵庫県",
+    "奈良県",
+    "和歌山県",
+    "鳥取県",
+    "島根県",
+    "岡山県",
+    "広島県",
+    "山口県",
+    "徳島県",
+    "香川県",
+    "愛媛県",
+    "高知県",
+    "福岡県",
+    "佐賀県",
+    "長崎県",
+    "熊本県",
+    "大分県",
+    "宮崎県",
+    "鹿児島県",
+    "沖縄県",
+  ];
+
+  const hundleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const createStoreArgs = {
+      name: selectedCandidate!.name,
+      address: selectedCandidate!.address,
+      prefecture: selectedPrefecture,
+    };
+    createStore(createStoreArgs)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const hundleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPrefecture(event.target.value);
+  };
 
   return (
     <div className="w-full lg:px-44 pt-6 text-gray-900">
       <h1 className="font-bold text-3xl">店舗登録</h1>
       <div className="mt-10 lg:px-20">
-        <p className="mb-10">
-          選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
-        </p>
-        <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
-          <h1 className="font-bold mb-2">店舗名：{selectedCandidate?.name}</h1>
-          <p className="font-bold">住所：{selectedCandidate?.address}</p>
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
-            onClick={hundleClick}
-          >
-            登録する
-          </button>
-        </div>
+        {selectedCandidate?.name.length ? (
+          <>
+            <p className="mb-10">
+              選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
+            </p>
+            <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
+              <h1 className="font-bold mb-2">
+                店舗名：{selectedCandidate?.name}
+              </h1>
+              <p className="font-bold mb-2">
+                住所：{selectedCandidate?.address}
+              </p>
+              <div className="flex">
+                <p className="font-bold">都道府県：</p>
+                <select
+                  className="border rounded border-gray-500"
+                  value={selectedPrefecture}
+                  onChange={hundleChange}
+                >
+                  <option value="">選択してください</option>
+                  {prefectures.map((prefecture, index) => (
+                    <option key={index} value={prefecture}>
+                      {prefecture}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <span className="text-xs text-red-700">
+                所在の都道府県が正しくない場合は選択し直してください
+              </span>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
+                onClick={(event) => hundleClick(event)}
+              >
+                登録する
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col justify-center items-center">
+            <p className="font-bold">
+              選択された店舗がありません。店舗の検索結果から、店舗を選び直してください。
+            </p>
+            <button
+              className="mt-20 py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition"
+              onClick={() => router.push("/search")}
+            >
+              店舗検索ページに戻る
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

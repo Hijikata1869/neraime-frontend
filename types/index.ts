@@ -26,3 +26,9 @@ export type SelectedCandidate = {
   name: string;
   address: string;
 };
+
+export type StoreCreateArgs = {
+  name: string;
+  address: string;
+  prefecture: string;
+};
