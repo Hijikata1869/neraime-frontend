@@ -1,8 +1,11 @@
+import { Layout } from "@/components/Layout";
+import { SearchForm } from "@/components/SearchForm";
+
 const Search: React.FC = () => {
   return (
-    <>
-      <h1>Search</h1>
-    </>
+    <Layout title="店舗検索">
+      <SearchForm />
+    </Layout>
   );
 };
 

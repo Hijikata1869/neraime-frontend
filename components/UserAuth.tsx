@@ -14,16 +14,6 @@ export const UserAuth: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    const token = cookie.get("access_token");
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
 
   const onClickToggle = () => {
     setIsSignUp(!isSignUp);
