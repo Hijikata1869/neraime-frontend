@@ -63,3 +63,19 @@ export const initialPrefecture = (address: string | undefined) => {
   }
   return addressPrefecture;
 };
+
+export const fetchStore = async (id: number) => {
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}stores/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "取得できませんでした";
+    }
+  });
+};

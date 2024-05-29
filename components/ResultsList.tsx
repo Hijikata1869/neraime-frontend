@@ -20,7 +20,11 @@ export const ResultsList = () => {
     setSelectedCandidate(targetStore);
     fetchStoreByName(storeName)
       .then((res) => {
-        console.log(res);
+        const storeId = res.store.id;
+        return storeId;
+      })
+      .then((storeId) => {
+        router.push(`/stores/${storeId}`);
       })
       .catch(() => {
         router.push("/stores/new");
@@ -32,9 +36,17 @@ export const ResultsList = () => {
       <div className="w-full pt-6 lg:px-44">
         <h1 className="font-bold text-3xl text-gray-900">検索結果</h1>
         {candidates?.length ? null : (
-          <p className="pt-10 text-center">
-            検索結果はありませんでした。キーワードを変えて再度検索し直してください。
-          </p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="pt-10 text-center">
+              検索結果はありませんでした。キーワードを変えて再度検索し直してください。
+            </p>
+            <button
+              className="mt-20 py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition"
+              onClick={() => router.push("/search")}
+            >
+              店舗検索ページに戻る
+            </button>
+          </div>
         )}
         <div className="flex flex-col items-center">
           {candidates?.map((candidate) => (
