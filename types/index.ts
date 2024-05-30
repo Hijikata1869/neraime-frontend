@@ -32,3 +32,12 @@ export type StoreCreateArgs = {
   address: string;
   prefecture: string;
 };
+
+export type StoreData = {
+  id: number;
+  name: string;
+  address: string;
+  prefecture_id: number;
+  created_at: string;
+  updated_at: string;
+};
