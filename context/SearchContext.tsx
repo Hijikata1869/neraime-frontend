@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from "react";
-import { StoreCandidates, SelectedCandidate } from "@/types";
+import { StoreCandidates, SelectedCandidate } from "@/types/store";
 
 export const SearchContext = createContext(
   {} as {

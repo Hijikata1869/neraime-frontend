@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
-import { StoreCandidates } from "@/types";
+import { StoreCandidates } from "@/types/store";
 
 export const SearchForm: React.FC = () => {
   const { setCandidates } = useContext(SearchContext);

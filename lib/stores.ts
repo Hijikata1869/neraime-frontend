@@ -1,4 +1,4 @@
-import { StoreCreateArgs } from "@/types";
+import { StoreCreateArgs } from "@/types/store";
 
 export const fetchStoreByName = async (storeName: string) => {
   const params = { name: storeName };
