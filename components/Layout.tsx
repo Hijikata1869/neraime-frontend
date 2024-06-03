@@ -1,22 +1,25 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Cookie from "universal-cookie";
+
+// context
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 // apis
 import { fetchCurrentUser } from "@/lib/users";
 
 // types
 import { LayoutProps } from "@/types";
-import { CurrentUserObj } from "@/types/user";
 
 const cookie = new Cookie();
 
 export const Layout: React.FC<LayoutProps> = (props) => {
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = currentUserContext;
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -42,6 +45,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           console.error(err);
         });
     }
+    // eslint-disable-next-line
   }, []);
 
   const logout = () => {

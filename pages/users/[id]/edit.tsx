@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
+
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 // components
 import { Layout } from "@/components/Layout";
@@ -14,9 +16,6 @@ import {
   fetchCurrentUser,
 } from "@/lib/users";
 
-// types
-import { CurrentUserObj } from "@/types/user";
-
 const cookie = new Cookie();
 
 const UserEditPage: React.FC = () => {
@@ -24,10 +23,12 @@ const UserEditPage: React.FC = () => {
   const userId = parseInt(router.query.id as string);
   const token = cookie.get("access_token");
 
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = currentUserContext;
+
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
-  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

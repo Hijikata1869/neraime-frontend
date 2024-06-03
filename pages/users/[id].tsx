@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Cookie from "universal-cookie";
+
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 // components
 import { Layout } from "@/components/Layout";
@@ -11,15 +13,16 @@ import { Layout } from "@/components/Layout";
 import { fetchCurrentUser, fetchUser } from "@/lib/users";
 
 // types
-import { UserObj, CurrentUserObj } from "@/types/user";
+import { UserObj } from "@/types/user";
 
 const cookie = new Cookie();
 
 const UserPage: React.FC = () => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = currentUserContext;
   const [user, setUser] = useState<UserObj>();
-  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -53,6 +56,7 @@ const UserPage: React.FC = () => {
           console.error(err);
         });
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
