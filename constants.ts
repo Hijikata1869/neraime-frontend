@@ -65,6 +65,4 @@ for (let i = 0; i < 24; i++) {
   HOURS.push(hour);
 }
 
-export const NUMBER_OF_PEOPLE = ["1人", "2人", "3人以上"];
-
 export const CROWDEDNESS_LEVEL = ["空いてる", "普通", "混雑", "空き無し"];

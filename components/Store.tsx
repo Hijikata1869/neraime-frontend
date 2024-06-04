@@ -1,21 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
+
+import Cookie from "universal-cookie";
 
 import { fetchStore } from "@/lib/stores";
 import { StoreData } from "@/types/store";
 
 import { DAY_OF_WEEK } from "@/constants";
 import { HOURS } from "@/constants";
-import { NUMBER_OF_PEOPLE } from "@/constants";
 import { CROWDEDNESS_LEVEL } from "@/constants";
+import { CurrentUserContext } from "@/context/CurrentUserContext";
+
+import { createCrowdedness } from "@/lib/crowdedness";
+
+const cookie = new Cookie();
 
 export const Store: React.FC = () => {
   const router = useRouter();
   const storeId = parseInt(router.query.id as string);
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser } = currentUserContext;
+  const token: string = cookie.get("access_token");
+
   const [store, setStore] = useState<StoreData>();
   const [dayOfWeek, setDayOfWeek] = useState<string>("");
   const [time, setTime] = useState<string>("");
-  const [numberOfpeople, setNumberOfPeople] = useState<string>("");
   const [crowdednessLevel, setCrowdednessLevel] = useState<string>("");
   const [memo, setMemo] = useState<string>("");
 
@@ -36,22 +45,41 @@ export const Store: React.FC = () => {
     // eslint-disable-next-line
   }, [router.query.id]);
 
-  const hundleDayOfWeekChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setDayOfWeek(event.target.value);
+  const hundleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    switch (event.target.name) {
+      case "dayOfWeek":
+        setDayOfWeek(event.target.value);
+        break;
+      case "hours":
+        setTime(event.target.value);
+        break;
+      case "crowdednessLevel":
+        setCrowdednessLevel(event.target.value);
+        break;
+    }
   };
 
-  const hundleTimeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTime(event.target.value);
-  };
+  const hundleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const createCrowdednessArg = {
+      token: token,
+      userId: currentUser?.id,
+      storeId: store?.id,
+      dayOfWeek: dayOfWeek,
+      time: time,
+      level: crowdednessLevel,
+      memo: memo,
+    };
 
-  const hundleNumberChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setNumberOfPeople(event.target.value);
-  };
-
-  const hundleLevelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCrowdednessLevel(event.target.value);
+    createCrowdedness(createCrowdednessArg)
+      .then(() => {
+        setDayOfWeek("");
+        setTime("");
+        setCrowdednessLevel("");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -68,9 +96,10 @@ export const Store: React.FC = () => {
             <div className="flex mb-5">
               <p className="font-bold">訪問した曜日</p>
               <select
+                name="dayOfWeek"
                 className="border border-gray-900 rounded ml-4"
                 value={dayOfWeek}
-                onChange={hundleDayOfWeekChange}
+                onChange={hundleChange}
               >
                 <option value="">選択してください</option>
                 {DAY_OF_WEEK.map((dayOfWeek, index) => (
@@ -84,9 +113,10 @@ export const Store: React.FC = () => {
             <div className="flex mb-5">
               <p className="font-bold">訪問した時間</p>
               <select
+                name="hours"
                 className="border border-gray-900 rounded ml-4"
                 value={time}
-                onChange={hundleTimeChange}
+                onChange={hundleChange}
               >
                 <option value="">選択してください</option>
                 {HOURS.map((hour, index) => (
@@ -97,28 +127,13 @@ export const Store: React.FC = () => {
               </select>
             </div>
             <p className="text-xs text-red-800">必須</p>
-            <div className="flex mb-5">
-              <p className="font-bold">訪問した時の人数</p>
-              <select
-                className="border border-gray-900 rounded ml-4"
-                value={numberOfpeople}
-                onChange={hundleNumberChange}
-              >
-                <option value="">選択してください</option>
-                {NUMBER_OF_PEOPLE.map((number, index) => (
-                  <option key={index} value={number}>
-                    {number}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <p className="text-xs text-red-800">必須</p>
             <div className="flex">
               <p className="font-bold">混雑度</p>
               <select
+                name="crowdednessLevel"
                 className="border border-gray-900 rounded ml-4"
                 value={crowdednessLevel}
-                onChange={hundleLevelChange}
+                onChange={hundleChange}
               >
                 <option value="">選択してください</option>
                 {CROWDEDNESS_LEVEL.map((level, index) => (
@@ -142,6 +157,12 @@ export const Store: React.FC = () => {
                 空きなし：座席に空きがなく、座れない。
               </p>
             </div>
+            <button
+              className="mt-10 py-2 px-4 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
+              onClick={(event) => hundleClick(event)}
+            >
+              投稿する
+            </button>
           </form>
         </div>
       </div>
