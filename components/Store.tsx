@@ -13,6 +13,8 @@ import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 import { createCrowdedness } from "@/lib/crowdedness";
 
+import { Crowdedness } from "./Crowdedness";
+
 const cookie = new Cookie();
 
 export const Store: React.FC = () => {
@@ -45,7 +47,9 @@ export const Store: React.FC = () => {
     // eslint-disable-next-line
   }, [router.query.id]);
 
-  const hundleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const hundleChange = (
+    event: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     switch (event.target.name) {
       case "dayOfWeek":
         setDayOfWeek(event.target.value);
@@ -56,6 +60,8 @@ export const Store: React.FC = () => {
       case "crowdednessLevel":
         setCrowdednessLevel(event.target.value);
         break;
+      case "memo":
+        setMemo(event.target.value);
     }
   };
 
@@ -76,6 +82,7 @@ export const Store: React.FC = () => {
         setDayOfWeek("");
         setTime("");
         setCrowdednessLevel("");
+        setMemo("");
       })
       .catch((err) => {
         console.error(err);
@@ -92,12 +99,14 @@ export const Store: React.FC = () => {
         <div className="mt-10 px-10">
           <h2 className="font-bold text-3xl">混雑度を投稿する</h2>
           <form className="mt-5 px-10">
-            <p className="text-xs text-red-800">必須</p>
-            <div className="flex mb-5">
-              <p className="font-bold">訪問した曜日</p>
+            <div className="flex flex-col mb-10">
+              <label className="font-bold mb-2" htmlFor="dayOfWeek">
+                訪問した曜日
+              </label>
               <select
+                id="dayOfWeek"
                 name="dayOfWeek"
-                className="border border-gray-900 rounded ml-4"
+                className="w-1/2 border border-gray-900 rounded ml-4"
                 value={dayOfWeek}
                 onChange={hundleChange}
               >
@@ -109,12 +118,14 @@ export const Store: React.FC = () => {
                 ))}
               </select>
             </div>
-            <p className="text-xs text-red-800">必須</p>
-            <div className="flex mb-5">
-              <p className="font-bold">訪問した時間</p>
+            <div className="flex flex-col mb-10">
+              <label className="font-bold mb-2" htmlFor="hours">
+                訪問した曜日
+              </label>
               <select
+                id="hours"
                 name="hours"
-                className="border border-gray-900 rounded ml-4"
+                className="w-1/2 border border-gray-900 rounded ml-4"
                 value={time}
                 onChange={hundleChange}
               >
@@ -126,12 +137,14 @@ export const Store: React.FC = () => {
                 ))}
               </select>
             </div>
-            <p className="text-xs text-red-800">必須</p>
-            <div className="flex">
-              <p className="font-bold">混雑度</p>
+            <div className="flex flex-col">
+              <label className="font-bold mb-2" htmlFor="crowdednessLevel">
+                訪問した曜日
+              </label>
               <select
+                id="crowdednessLevel"
                 name="crowdednessLevel"
-                className="border border-gray-900 rounded ml-4"
+                className="w-1/2 border border-gray-900 rounded ml-4"
                 value={crowdednessLevel}
                 onChange={hundleChange}
               >
@@ -143,7 +156,7 @@ export const Store: React.FC = () => {
                 ))}
               </select>
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center mt-1 mb-10">
               <p className="text-xs text-gray-500">
                 空いてる：ほとんどの座席が空いてる状況。
               </p>
@@ -157,15 +170,31 @@ export const Store: React.FC = () => {
                 空きなし：座席に空きがなく、座れない。
               </p>
             </div>
-            <button
-              className="mt-10 py-2 px-4 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
-              onClick={(event) => hundleClick(event)}
-            >
-              投稿する
-            </button>
+            <div className="flex flex-col">
+              <label htmlFor="memo" className="font-bold mb-2">
+                メモ
+              </label>
+              <textarea
+                id="memo"
+                className="border-2 border-gray-300 mb-8 py-6 outline-none pl-2 rounded ml-4"
+                name="memo"
+                value={memo}
+                onChange={hundleChange}
+                placeholder="３名で訪問しましたが、座れませんでした。１人席なら空いているようでした。"
+              />
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="mt-10 py-2 px-10 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
+                onClick={(event) => hundleClick(event)}
+              >
+                投稿する
+              </button>
+            </div>
           </form>
         </div>
       </div>
+      <Crowdedness />
     </div>
   );
 };
