@@ -27,7 +27,7 @@ export const Store: React.FC = () => {
   const [store, setStore] = useState<StoreData>();
   const [dayOfWeek, setDayOfWeek] = useState<string>("");
   const [time, setTime] = useState<string>("");
-  const [crowdednessLevel, setCrowdednessLevel] = useState<string>("");
+  const [crowdednessLevel, setCrowdednessLevel] = useState<string>("空いてる");
   const [memo, setMemo] = useState<string>("");
 
   useEffect(() => {
@@ -57,9 +57,6 @@ export const Store: React.FC = () => {
       case "hours":
         setTime(event.target.value);
         break;
-      case "crowdednessLevel":
-        setCrowdednessLevel(event.target.value);
-        break;
       case "memo":
         setMemo(event.target.value);
     }
@@ -81,13 +78,22 @@ export const Store: React.FC = () => {
       .then(() => {
         setDayOfWeek("");
         setTime("");
-        setCrowdednessLevel("");
+        setCrowdednessLevel("空いてる");
         setMemo("");
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
+  const hundleCrowdednessClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    setCrowdednessLevel(event.currentTarget.value);
+  };
+
+  console.log(crowdednessLevel);
 
   return (
     <div className="w-full px-40">
@@ -106,7 +112,7 @@ export const Store: React.FC = () => {
               <select
                 id="dayOfWeek"
                 name="dayOfWeek"
-                className="w-1/2 border border-gray-900 rounded ml-4"
+                className="max-w-xs border border-gray-900 rounded ml-4"
                 value={dayOfWeek}
                 onChange={hundleChange}
               >
@@ -120,12 +126,12 @@ export const Store: React.FC = () => {
             </div>
             <div className="flex flex-col mb-10">
               <label className="font-bold mb-2" htmlFor="hours">
-                訪問した曜日
+                訪問した時間
               </label>
               <select
                 id="hours"
                 name="hours"
-                className="w-1/2 border border-gray-900 rounded ml-4"
+                className="max-w-xs border border-gray-900 rounded ml-4"
                 value={time}
                 onChange={hundleChange}
               >
@@ -139,24 +145,60 @@ export const Store: React.FC = () => {
             </div>
             <div className="flex flex-col">
               <label className="font-bold mb-2" htmlFor="crowdednessLevel">
-                訪問した曜日
+                混雑度
               </label>
-              <select
-                id="crowdednessLevel"
-                name="crowdednessLevel"
-                className="w-1/2 border border-gray-900 rounded ml-4"
-                value={crowdednessLevel}
-                onChange={hundleChange}
-              >
-                <option value="">選択してください</option>
-                {CROWDEDNESS_LEVEL.map((level, index) => (
-                  <option key={index} value={level}>
-                    {level}
-                  </option>
-                ))}
-              </select>
+              <div className="inline-flex rounded mb-2 ml-4">
+                <button
+                  type="button"
+                  className={`shadow-sm px-4 py-2 text-sm font-medium  border border-gray-200 rounded-l hover:bg-emerald-100 ${
+                    crowdednessLevel === CROWDEDNESS_LEVEL[0]
+                      ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
+                      : `text-gray-500 bg-white`
+                  }`}
+                  onClick={hundleCrowdednessClick}
+                  value={CROWDEDNESS_LEVEL[0]}
+                >
+                  {`${CROWDEDNESS_LEVEL[0]}`}
+                </button>
+                <button
+                  type="button"
+                  className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-r border-gray-200 hover:bg-emerald-100 ${
+                    crowdednessLevel === CROWDEDNESS_LEVEL[1]
+                      ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
+                      : `text-gray-500 bg-white `
+                  }`}
+                  onClick={hundleCrowdednessClick}
+                  value={CROWDEDNESS_LEVEL[1]}
+                >
+                  {`${CROWDEDNESS_LEVEL[1]}`}
+                </button>
+                <button
+                  type="button"
+                  className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-gray-200 hover:bg-emerald-100 ${
+                    crowdednessLevel === CROWDEDNESS_LEVEL[2]
+                      ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
+                      : `text-gray-500 bg-white`
+                  }`}
+                  onClick={hundleCrowdednessClick}
+                  value={CROWDEDNESS_LEVEL[2]}
+                >
+                  {`${CROWDEDNESS_LEVEL[2]}`}
+                </button>
+                <button
+                  type="button"
+                  className={`shadow-sm px-4 py-2 text-sm font-medium border border-gray-200 rounded-e hover:bg-emerald-100 ${
+                    crowdednessLevel === CROWDEDNESS_LEVEL[3]
+                      ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
+                      : ` text-gray-500 bg-white`
+                  }`}
+                  onClick={hundleCrowdednessClick}
+                  value={CROWDEDNESS_LEVEL[3]}
+                >
+                  {`${CROWDEDNESS_LEVEL[3]}`}
+                </button>
+              </div>
             </div>
-            <div className="flex flex-col justify-center mt-1 mb-10">
+            <div className="flex flex-col justify-center mt-1 mb-10 ml-4">
               <p className="text-xs text-gray-500">
                 空いてる：ほとんどの座席が空いてる状況。
               </p>
@@ -172,7 +214,7 @@ export const Store: React.FC = () => {
             </div>
             <div className="flex flex-col">
               <label htmlFor="memo" className="font-bold mb-2">
-                メモ
+                メモ<span className="font-medium text-xs"> - 任意</span>
               </label>
               <textarea
                 id="memo"
@@ -185,10 +227,10 @@ export const Store: React.FC = () => {
             </div>
             <div className="flex justify-center">
               <button
-                className="mt-10 py-2 px-10 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
+                className="mt-10 py-4 px-10 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
                 onClick={(event) => hundleClick(event)}
               >
-                投稿する
+                混雑度を投稿する
               </button>
             </div>
           </form>
