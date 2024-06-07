@@ -236,7 +236,7 @@ export const Store: React.FC = () => {
           </form>
         </div>
       </div>
-      <Crowdedness />
+      <Crowdedness storeId={storeId} />
     </div>
   );
 };
