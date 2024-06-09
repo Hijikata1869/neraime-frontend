@@ -93,8 +93,6 @@ export const Store: React.FC = () => {
     setCrowdednessLevel(event.currentTarget.value);
   };
 
-  console.log(crowdednessLevel);
-
   return (
     <div className="w-full px-40">
       <div className="flex flex-col bg-white rounded-lg p-20">
