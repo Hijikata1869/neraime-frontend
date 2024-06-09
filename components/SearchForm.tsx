@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
 import { StoreCandidates } from "@/types/store";
 
-export const SearchForm: React.FC = () => {
+export const SearchForm: React.FC = memo(() => {
   const { setCandidates } = useContext(SearchContext);
   const router = useRouter();
   const [placeName, setPlaceName] = useState<string>("");
@@ -76,4 +76,6 @@ export const SearchForm: React.FC = () => {
       </form>
     </>
   );
-};
+});
+
+SearchForm.displayName = "SearchForm";

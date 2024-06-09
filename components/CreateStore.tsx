@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, memo } from "react";
 import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
@@ -8,7 +8,7 @@ import { initialPrefecture } from "@/lib/stores";
 
 import { PREFECTURES } from "@/constants";
 
-export const CreateStore: React.FC = () => {
+export const CreateStore: React.FC = memo(() => {
   const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { selectedCandidate } = searchContext;
@@ -101,4 +101,6 @@ export const CreateStore: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+CreateStore.displayName = "CreateStore";

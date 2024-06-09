@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { fetchStoreCrowdedness } from "@/lib/crowdedness";
 
 import { CrowdednessProps, CrowdednessList } from "@/types/crowdedness";
 
 import { DAY_OF_WEEK } from "@/constants";
 
-export const Crowdedness: React.FC<CrowdednessProps> = (props) => {
+export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
+  console.log("Crowdednessレンダリング");
   const { storeId } = props;
   const [crowdednessList, setCrowdednessList] = useState<
     CrowdednessList | undefined
   >();
   const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string>("月曜日");
-  console.log(crowdednessList);
 
   useEffect(() => {
     if (!isNaN(storeId)) {
@@ -68,4 +68,6 @@ export const Crowdedness: React.FC<CrowdednessProps> = (props) => {
       </div>
     </div>
   );
-};
+});
+
+Crowdedness.displayName = "Crowdedness";

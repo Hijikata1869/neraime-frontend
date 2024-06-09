@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, memo } from "react";
 import { useRouter } from "next/router";
 
 import Cookie from "universal-cookie";
@@ -17,7 +17,8 @@ import { Crowdedness } from "./Crowdedness";
 
 const cookie = new Cookie();
 
-export const Store: React.FC = () => {
+export const Store: React.FC = memo(() => {
+  console.log("Storeレンダリング");
   const router = useRouter();
   const storeId = parseInt(router.query.id as string);
   const currentUserContext = useContext(CurrentUserContext);
@@ -237,4 +238,6 @@ export const Store: React.FC = () => {
       <Crowdedness storeId={storeId} />
     </div>
   );
-};
+});
+
+Store.displayName = "Store";
