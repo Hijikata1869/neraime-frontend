@@ -18,7 +18,6 @@ import { Crowdedness } from "./Crowdedness";
 const cookie = new Cookie();
 
 export const Store: React.FC = memo(() => {
-  console.log("Storeレンダリング");
   const router = useRouter();
   const storeId = parseInt(router.query.id as string);
   const currentUserContext = useContext(CurrentUserContext);

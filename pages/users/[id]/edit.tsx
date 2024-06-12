@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
@@ -99,7 +99,7 @@ const UserEditPage: React.FC = () => {
       });
   };
 
-  const onClickDelete = (event: React.MouseEvent) => {
+  const onClickDelete = useCallback((event: React.MouseEvent) => {
     const userDeleteArg = {
       event: event,
       userId: userId,
@@ -115,7 +115,8 @@ const UserEditPage: React.FC = () => {
       .catch((err) => {
         console.error(err);
       });
-  };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

@@ -3,42 +3,52 @@ import { fetchStoreCrowdedness } from "@/lib/crowdedness";
 
 import { CrowdednessProps, CrowdednessList } from "@/types/crowdedness";
 
-import { DAY_OF_WEEK } from "@/constants";
+import { DAY_OF_WEEK, HOURS } from "@/constants";
 
 export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
-  console.log("Crowdednessレンダリング");
   const { storeId } = props;
   const [crowdednessList, setCrowdednessList] = useState<
     CrowdednessList | undefined
   >();
   const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string>("月曜日");
+  const [daylyCrowdednessList, setDaylyCrowdednessList] = useState<
+    CrowdednessList | undefined
+  >();
 
   useEffect(() => {
     if (!isNaN(storeId)) {
       fetchStoreCrowdedness(storeId)
-        .then((data) => {
-          const crowdednessList = data.store_crowdedness_list;
+        .then(async (data) => {
+          const crowdednessList: CrowdednessList =
+            await data.store_crowdedness_list;
+          setCrowdednessList(crowdednessList);
           return crowdednessList;
         })
         .then((data) => {
-          setCrowdednessList(data);
+          const result = data?.filter(
+            (item) => item.day_of_week === selectedDayOfWeek
+          );
+          return result;
+        })
+        .then((data) => {
+          setDaylyCrowdednessList(data);
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }, [storeId]);
+  }, [storeId, selectedDayOfWeek]);
 
   const hundleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDayOfWeek(event.target.value);
   };
 
-  const filteredCrowdednessList = (dayOfWeek: string) => {
-    const result = crowdednessList?.filter(
-      (item) => item.day_of_week === dayOfWeek
-    );
+  const hourlyCrowdednessList = (hour: string) => {
+    const result = daylyCrowdednessList?.filter((item) => item.time === hour);
     return result;
   };
+
+  console.log(daylyCrowdednessList);
 
   return (
     <div className="mb-20">
@@ -55,16 +65,45 @@ export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
           </option>
         ))}
       </select>
-      <div className="mt-10">
-        {filteredCrowdednessList(selectedDayOfWeek)?.map((crowdedness) => (
-          <div key={crowdedness.id}>
-            <p>{crowdedness.day_of_week}</p>
-            <p>{crowdedness.time}</p>
-            <p>{crowdedness.level}</p>
-            <p>{crowdedness.memo}</p>
-            <p>----------------------------------------</p>
-          </div>
-        ))}
+
+      <div className="mt-10 relative overflow-x-auto">
+        <table className="w-full text-sm text-left">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                訪問時間
+              </th>
+              <th scope="col" className="px-6 py-3">
+                空いてる
+              </th>
+              <th scope="col" className="px-6 py-3">
+                普通
+              </th>
+              <th scope="col" className="px-6 py-3">
+                混雑
+              </th>
+              <th scope="col" className="px-6 py-3">
+                空きなし
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {HOURS.map((hour, index) => (
+              <tr key={index} className="bg-white border-b">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {hour}
+                </th>
+                <td className="px-6 py-4"></td>
+                <td className="px-6 py-4"></td>
+                <td className="px-6 py-4"></td>
+                <td className="px-6 py-4"></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
