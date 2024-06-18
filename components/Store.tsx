@@ -207,7 +207,7 @@ export const Store: React.FC = memo(() => {
                 混雑：座れる座席が残りわずか。
               </p>
               <p className="text-xs text-gray-500">
-                空きなし：座席に空きがなく、座れない。
+                空き無し：座席に空きがなく、座れない。
               </p>
             </div>
             <div className="flex flex-col">

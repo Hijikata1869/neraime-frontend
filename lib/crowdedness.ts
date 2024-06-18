@@ -48,3 +48,27 @@ export const fetchStoreCrowdedness = async (storeId: number) => {
     }
   });
 };
+
+export const fetchDaylyStoreCrowdedness = async (
+  storeId: number,
+  dayOfWeek: string
+) => {
+  const params = { day_of_week: dayOfWeek };
+  const query = new URLSearchParams(params);
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}stores/${storeId}/dayly_crowdedness_list?${query}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "取得失敗";
+    }
+  });
+};

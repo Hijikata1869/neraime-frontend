@@ -23,3 +23,11 @@ export type CrowdednessList = {
   created_at: string;
   updated_at: string;
 }[];
+
+export type DaylyCrowdednessList = {
+  time: string;
+  空いてる: number;
+  普通: number;
+  混雑: number;
+  空き無し: number;
+}[];
