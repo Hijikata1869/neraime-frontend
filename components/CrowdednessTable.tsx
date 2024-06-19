@@ -42,7 +42,6 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
         .then(async (res) => {
           const daylyCrowdednessList = await res.dayly_store_crowdedness_list;
           setDaylyCrowdednessList(daylyCrowdednessList);
-          console.log(daylyCrowdednessList);
         })
         .catch((err) => {
           setDaylyCrowdednessList(undefined);

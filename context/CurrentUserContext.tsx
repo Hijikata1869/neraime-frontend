@@ -7,6 +7,8 @@ export const CurrentUserContext = createContext(
     setCurrentUser: React.Dispatch<
       React.SetStateAction<CurrentUserObj | undefined>
     >;
+    isLogin: boolean | undefined;
+    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
   }
 );
 
@@ -19,9 +21,12 @@ export const CurrentUserContextProvider: React.FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserObj | undefined>(
     undefined
   );
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, setCurrentUser, isLogin, setIsLogin }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

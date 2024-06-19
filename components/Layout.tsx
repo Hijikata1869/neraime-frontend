@@ -17,9 +17,9 @@ const cookie = new Cookie();
 
 export const Layout: React.FC<LayoutProps> = memo((props) => {
   const currentUserContext = useContext(CurrentUserContext);
-  const { currentUser, setCurrentUser } = currentUserContext;
+  const { currentUser, setCurrentUser, isLogin, setIsLogin } =
+    currentUserContext;
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -28,6 +28,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     } else {
       setIsLogin(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
