@@ -12,7 +12,7 @@ import {
 
 import { DAY_OF_WEEK } from "@/constants";
 
-export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
+export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
   const { storeId } = props;
   const [crowdednessList, setCrowdednessList] = useState<
     CrowdednessList | undefined
@@ -51,10 +51,6 @@ export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
     }
   }, [storeId, selectedDayOfWeek]);
 
-  const hundleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDayOfWeek(event.target.value);
-  };
-
   const hundleDayOfWeekClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSelectedDayOfWeek(event.currentTarget.value);
@@ -62,10 +58,10 @@ export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
 
   return (
     <div className="mb-20">
-      <div className="mt-20 w-full flex justify-between px-6 bg-gray-50 pt-5">
+      <div className="mt-5 w-full flex justify-between px-10 bg-white pt-5">
         {DAY_OF_WEEK.map((dayOfWeek, index) => (
           <button
-            className={`pb-1 mb-5 font-bold ${
+            className={`pb-3 font-bold ${
               selectedDayOfWeek === dayOfWeek
                 ? `border-b-2 border-lime-950 text-gray-700`
                 : `text-gray-300`
@@ -80,27 +76,27 @@ export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
       </div>
 
       <div
-        className={`relative overflow-x-auto rounded-md  ${
-          daylyCrowdednessList ? `border border-t-0 border-l-0 border-r-0` : ``
+        className={`relative overflow-x-auto rounded-md ${
+          daylyCrowdednessList ? `border` : ``
         }`}
       >
         {daylyCrowdednessList ? (
           <table className="w-full text-sm text-left">
-            <thead className="text-lg text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3">
+            <thead className="text-lg text-gray-700 uppercase bg-white">
+              <tr className=" border-b">
+                <th scope="col" className="px-6 py-3 border-r pt-10">
                   訪問時間
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 border-r pt-10">
                   空いてる
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 border-r pt-10">
                   普通
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 border-r pt-10">
                   混雑
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 pt-10">
                   空き無し
                 </th>
               </tr>
@@ -170,8 +166,21 @@ export const Crowdedness: React.FC<CrowdednessProps> = memo((props) => {
           </div>
         )}
       </div>
+      <div className="flex flex-col mt-2 bg-gray-100 p-5 rounded">
+        <p className="font-bold mb-2">混雑度の目安</p>
+        <p className="text-sm text-gray-500">
+          空いてる：ほとんどの座席が空いてる状況。
+        </p>
+        <p className="text-sm text-gray-500">
+          普通：選ばなければ座席に座れるくらい。
+        </p>
+        <p className="text-sm text-gray-500">混雑：座れる座席が残りわずか。</p>
+        <p className="text-sm text-gray-500">
+          空き無し：座席に空きがなく、座れない。
+        </p>
+      </div>
     </div>
   );
 });
 
-Crowdedness.displayName = "Crowdedness";
+CrowdednessTable.displayName = "CrowdednessTable";

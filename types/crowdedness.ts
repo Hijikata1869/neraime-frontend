@@ -31,3 +31,7 @@ export type DaylyCrowdednessList = {
   混雑: number;
   空き無し: number;
 }[];
+
+export type CrowdednessFromProps = {
+  storeId: number;
+};
