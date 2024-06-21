@@ -1,13 +1,12 @@
 import { useEffect, useState, memo } from "react";
 import { useRouter } from "next/router";
 
-import Cookie from "universal-cookie";
-
 import { fetchStore } from "@/lib/stores";
 import { StoreData } from "@/types/store";
 
 import { CrowdednessTable } from "./CrowdednessTable";
 import { CrowdednessForm } from "./CrowdednessForm";
+import { LatestCrowdednessReviews } from "./LatestCrowdednessReviews";
 
 export const Store: React.FC = memo(() => {
   const router = useRouter();
@@ -83,6 +82,7 @@ export const Store: React.FC = memo(() => {
           )}
         </div>
       </div>
+      <LatestCrowdednessReviews storeId={storeId} />
     </div>
   );
 });

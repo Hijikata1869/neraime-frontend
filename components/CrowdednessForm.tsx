@@ -5,13 +5,13 @@ import { createCrowdedness } from "@/lib/crowdedness";
 
 import Cookie from "universal-cookie";
 
-import { CrowdednessFromProps } from "@/types/crowdedness";
+import { CrowdednessFormProps } from "@/types/crowdedness";
 
 import { DAY_OF_WEEK, HOURS, CROWDEDNESS_LEVEL } from "@/constants";
 
 const cookie = new Cookie();
 
-export const CrowdednessForm: React.FC<CrowdednessFromProps> = memo((props) => {
+export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
   const { storeId } = props;
 
   const token: string = cookie.get("access_token");

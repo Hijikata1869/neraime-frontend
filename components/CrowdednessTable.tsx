@@ -56,7 +56,7 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
   };
 
   return (
-    <div className="mb-20">
+    <div>
       <div className="mt-5 w-full flex justify-between px-10 bg-white pt-5">
         {DAY_OF_WEEK.map((dayOfWeek, index) => (
           <button
@@ -159,7 +159,7 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
           </table>
         ) : (
           <div className="flex items-center justify-center">
-            <p className="font-bold text-gray-700 mt-10">
+            <p className="font-bold text-gray-700 my-10">
               まだ混雑度情報がありません
             </p>
           </div>

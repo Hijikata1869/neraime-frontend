@@ -32,6 +32,23 @@ export type DaylyCrowdednessList = {
   空き無し: number;
 }[];
 
-export type CrowdednessFromProps = {
+export type CrowdednessFormProps = {
   storeId: number;
 };
+
+export type LatestCrowdednessReviewsProps = {
+  storeId: number;
+};
+
+export type LatestStoreReviews = {
+  id: number;
+  user_id: number;
+  nickname: string;
+  store_id: number;
+  day_of_week: string;
+  time: string;
+  level: string;
+  memo: string;
+  created_at: string;
+  updated_at: string;
+}[];

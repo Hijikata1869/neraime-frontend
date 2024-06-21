@@ -97,7 +97,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
           </div>
         </nav>
       </header>
-      <div className="flex items-center flex-col min-h-screen bg-amber-50">
+      <div className="flex items-center flex-col min-h-screen bg-gray-100">
         <Head>
           <title>{props.title}</title>
         </Head>
