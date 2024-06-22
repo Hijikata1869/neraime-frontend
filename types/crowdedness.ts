@@ -40,7 +40,7 @@ export type LatestCrowdednessReviewsProps = {
   storeId: number;
 };
 
-export type LatestStoreReviews = {
+export type StoreCrowdednessReviews = {
   id: number;
   user_id: number;
   nickname: string;
@@ -52,3 +52,7 @@ export type LatestStoreReviews = {
   created_at: string;
   updated_at: string;
 }[];
+
+export type CrowdednessReviewProps = {
+  reviews: StoreCrowdednessReviews | undefined;
+};
