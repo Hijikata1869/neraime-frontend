@@ -56,3 +56,7 @@ export type StoreCrowdednessReviews = {
 export type CrowdednessReviewProps = {
   reviews: StoreCrowdednessReviews | undefined;
 };
+
+export type CrowdednessReviewsProps = {
+  storeId: number;
+};

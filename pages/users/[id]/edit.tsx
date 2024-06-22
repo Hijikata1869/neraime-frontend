@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useCallback } from "react";
+import { useEffect, useState, useContext, useCallback, memo } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
@@ -18,7 +18,7 @@ import {
 
 const cookie = new Cookie();
 
-const UserEditPage: React.FC = () => {
+const UserEditPage: React.FC = memo(() => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
   const token = cookie.get("access_token");
@@ -192,6 +192,8 @@ const UserEditPage: React.FC = () => {
       </Layout>
     </>
   );
-};
+});
+
+UserEditPage.displayName = "UserEditPage";
 
 export default UserEditPage;

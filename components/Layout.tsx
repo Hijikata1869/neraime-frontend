@@ -57,7 +57,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
 
   return (
     <>
-      <header className="p-8 bg-amber-50">
+      <header className="p-8 bg-gray-100">
         <nav>
           <div className="flex">
             <Link
