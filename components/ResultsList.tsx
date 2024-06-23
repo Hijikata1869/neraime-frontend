@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { useRouter } from "next/router";
 import { SearchContext } from "@/context/SearchContext";
 
 // apis
 import { fetchStoreByName } from "@/lib/stores";
 
-export const ResultsList = () => {
+export const ResultsList = memo(() => {
   const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { candidates, setSelectedCandidate } = searchContext;
@@ -69,4 +69,6 @@ export const ResultsList = () => {
       </div>
     </>
   );
-};
+});
+
+ResultsList.displayName = "ResultsList";

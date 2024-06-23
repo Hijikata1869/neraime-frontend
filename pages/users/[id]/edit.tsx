@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, useCallback, memo } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
+
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 // components
 import { Layout } from "@/components/Layout";
@@ -14,20 +16,19 @@ import {
   fetchCurrentUser,
 } from "@/lib/users";
 
-// types
-import { CurrentUserObj } from "@/types/user";
-
 const cookie = new Cookie();
 
-const UserEditPage: React.FC = () => {
+const UserEditPage: React.FC = memo(() => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
   const token = cookie.get("access_token");
 
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = currentUserContext;
+
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
-  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -98,7 +99,7 @@ const UserEditPage: React.FC = () => {
       });
   };
 
-  const onClickDelete = (event: React.MouseEvent) => {
+  const onClickDelete = useCallback((event: React.MouseEvent) => {
     const userDeleteArg = {
       event: event,
       userId: userId,
@@ -114,7 +115,8 @@ const UserEditPage: React.FC = () => {
       .catch((err) => {
         console.error(err);
       });
-  };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -190,6 +192,8 @@ const UserEditPage: React.FC = () => {
       </Layout>
     </>
   );
-};
+});
+
+UserEditPage.displayName = "UserEditPage";
 
 export default UserEditPage;

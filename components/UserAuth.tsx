@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, memo } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
@@ -7,7 +7,7 @@ import { createUser, login } from "@/lib/users";
 
 const cookie = new Cookie();
 
-export const UserAuth: React.FC = () => {
+export const UserAuth: React.FC = memo(() => {
   const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(router.pathname === "/sign-up");
   const [nickname, setNickname] = useState("");
@@ -231,4 +231,6 @@ export const UserAuth: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+UserAuth.displayName = "UserAuth";

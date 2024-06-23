@@ -1,22 +1,25 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import Cookie from "universal-cookie";
+
+// context
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 // apis
 import { fetchCurrentUser } from "@/lib/users";
 
 // types
 import { LayoutProps } from "@/types";
-import { CurrentUserObj } from "@/types/user";
 
 const cookie = new Cookie();
 
-export const Layout: React.FC<LayoutProps> = (props) => {
+export const Layout: React.FC<LayoutProps> = memo((props) => {
+  const currentUserContext = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser, isLogin, setIsLogin } =
+    currentUserContext;
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUserObj>();
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -25,6 +28,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
     } else {
       setIsLogin(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -42,6 +46,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           console.error(err);
         });
     }
+    // eslint-disable-next-line
   }, []);
 
   const logout = () => {
@@ -52,7 +57,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
 
   return (
     <>
-      <header className="p-8 bg-amber-50">
+      <header className="p-8 bg-gray-100">
         <nav>
           <div className="flex">
             <Link
@@ -92,7 +97,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           </div>
         </nav>
       </header>
-      <div className="flex items-center flex-col min-h-screen bg-amber-50">
+      <div className="flex items-center flex-col min-h-screen bg-gray-100">
         <Head>
           <title>{props.title}</title>
         </Head>
@@ -102,4 +107,6 @@ export const Layout: React.FC<LayoutProps> = (props) => {
       </div>
     </>
   );
-};
+});
+
+Layout.displayName = "Layout";

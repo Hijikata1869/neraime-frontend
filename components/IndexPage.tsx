@@ -1,6 +1,7 @@
+import { memo } from "react";
 import Link from "next/link";
 
-export const IndexPage: React.FC = () => {
+export const IndexPage: React.FC = memo(() => {
   return (
     <div className="flex flex-col justify-center items-center w-4/5 pt-28">
       <h1 className="text-gray-800 font-bold text-9xl pb-8">NERAIME</h1>
@@ -14,4 +15,6 @@ export const IndexPage: React.FC = () => {
       </Link>
     </div>
   );
-};
+});
+
+IndexPage.displayName = "IndexPage";
