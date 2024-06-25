@@ -18,6 +18,7 @@ export type StoreCreateArgs = {
   name: string;
   address: string;
   prefecture: string;
+  token: string;
 };
 
 export type StoreData = {
