@@ -23,7 +23,7 @@ export const fetchStoreByName = async (storeName: string) => {
 };
 
 export const createStore = async (storeCreateArgs: StoreCreateArgs) => {
-  const { name, address, prefecture } = storeCreateArgs;
+  const { name, address, prefecture, token } = storeCreateArgs;
   return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}stores`, {
     method: "POST",
     body: JSON.stringify({
@@ -35,6 +35,7 @@ export const createStore = async (storeCreateArgs: StoreCreateArgs) => {
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
     },
   }).then(async (res) => {
     if (res.status === 200) {
