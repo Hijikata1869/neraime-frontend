@@ -13,6 +13,9 @@ import { fetchCurrentUser } from "@/lib/users";
 // types
 import { LayoutProps } from "@/types";
 
+import { SuccessAlert } from "./SuccessAlert";
+import { ErrorAlert } from "./ErrorAlert";
+
 const cookie = new Cookie();
 
 export const Layout: React.FC<LayoutProps> = memo((props) => {
@@ -101,6 +104,8 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
         <Head>
           <title>{props.title}</title>
         </Head>
+        <SuccessAlert />
+        <ErrorAlert />
         <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>

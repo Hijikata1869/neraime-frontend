@@ -1,6 +1,8 @@
-import { useState, memo } from "react";
+import { useState, memo, useContext } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
+
+import NotificationContext from "@/context/notificationContext";
 
 // apis
 import { createUser, login } from "@/lib/users";
@@ -14,6 +16,7 @@ export const UserAuth: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const notificationCtx = useContext(NotificationContext);
 
   const onClickToggle = () => {
     setIsSignUp(!isSignUp);
@@ -229,6 +232,18 @@ export const UserAuth: React.FC = memo(() => {
           )}
         </div>
       </div>
+      <button
+        className="p-5 bg-emerald-500 text-white font-bold rounded-lg mt-10"
+        onClick={() => notificationCtx.success("ログインしました")}
+      >
+        Success Alert
+      </button>
+      <button
+        className="p-5 bg-red-500 text-white font-bold rounded-lg mt-10"
+        onClick={() => notificationCtx.error("ログインできませんでした")}
+      >
+        Error Alert
+      </button>
     </div>
   );
 });
