@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, memo } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { SearchContext } from "@/context/SearchContext";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import Cookie from "universal-cookie";
@@ -7,6 +8,9 @@ import Cookie from "universal-cookie";
 // apis
 import { createStore } from "@/lib/stores";
 import { initialPrefecture } from "@/lib/stores";
+import { fetchStoreByAddress } from "@/lib/stores";
+
+import { StoreData } from "@/types/store";
 
 import { PREFECTURES } from "@/constants";
 
@@ -20,12 +24,31 @@ export const CreateStore: React.FC = memo(() => {
   const { selectedCandidate } = searchContext;
   const { isLogin } = currentUserContext;
   const [selectedPrefecture, setSelectedPrefecture] = useState<string>("");
+  const [registeredStore, setRegisteredStore] = useState<
+    StoreData | undefined
+  >();
 
   useEffect(() => {
     const prefecture = initialPrefecture(selectedCandidate?.address);
     setSelectedPrefecture(prefecture);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (selectedCandidate !== undefined) {
+      fetchStoreByAddress(selectedCandidate.address)
+        .then(async (res) => {
+          const storeData = await res.store;
+          return storeData;
+        })
+        .then((data) => {
+          setRegisteredStore(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [selectedCandidate]);
 
   const hundleClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -59,43 +82,64 @@ export const CreateStore: React.FC = memo(() => {
         <div className="mt-10 lg:px-20">
           {selectedCandidate?.name.length ? (
             <>
-              <p className="mb-10">
-                選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
-              </p>
-              <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
-                <h1 className="font-bold mb-2">
-                  店舗名：{selectedCandidate?.name}
-                </h1>
-                <p className="font-bold mb-2">
-                  住所：{selectedCandidate?.address}
-                </p>
-                <div className="flex">
-                  <p className="font-bold">都道府県：</p>
-                  <select
-                    className="border rounded border-gray-500"
-                    value={selectedPrefecture}
-                    onChange={hundleChange}
+              {registeredStore !== undefined ? (
+                <div className="flex flex-col justify-center items-center">
+                  <p className="font-bold text-gray-900">
+                    すでに同じ施設が登録されているため、以下の店舗情報をクリックしてご覧ください。
+                  </p>
+                  <Link
+                    href={`/stores/${registeredStore.id}`}
+                    className="bg-white p-10 mt-10 shadow rounded"
                   >
-                    <option value="">選択してください</option>
-                    {PREFECTURES.map((prefecture, index) => (
-                      <option key={index} value={prefecture}>
-                        {prefecture}
-                      </option>
-                    ))}
-                  </select>
+                    <p className="font-bold text-2xl text-gray-900 mb-2">
+                      店舗名：{registeredStore.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      住所：{registeredStore.address}
+                    </p>
+                  </Link>
                 </div>
-                <span className="text-xs text-red-700">
-                  所在の都道府県が正しくない場合は選択し直してください
-                </span>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
-                  onClick={(event) => hundleClick(event)}
-                >
-                  登録する
-                </button>
-              </div>
+              ) : (
+                <>
+                  <p className="mb-10">
+                    選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
+                  </p>
+                  <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
+                    <h1 className="font-bold mb-2">
+                      店舗名：{selectedCandidate?.name}
+                    </h1>
+                    <p className="font-bold mb-2">
+                      住所：{selectedCandidate?.address}
+                    </p>
+                    <div className="flex">
+                      <p className="font-bold">都道府県：</p>
+                      <select
+                        className="border rounded border-gray-500"
+                        value={selectedPrefecture}
+                        onChange={hundleChange}
+                      >
+                        <option value="">選択してください</option>
+                        {PREFECTURES.map((prefecture, index) => (
+                          <option key={index} value={prefecture}>
+                            {prefecture}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <span className="text-xs text-red-700">
+                      所在の都道府県が正しくない場合は選択し直してください
+                    </span>
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
+                      onClick={(event) => hundleClick(event)}
+                    >
+                      登録する
+                    </button>
+                  </div>
+                </>
+              )}
             </>
           ) : (
             <div className="flex flex-col justify-center items-center">
