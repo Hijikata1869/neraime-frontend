@@ -41,8 +41,6 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
       }
     }, [storeId]);
 
-    console.log(latestReviews);
-
     return (
       <div className="mt-10 w-full">
         <h3 className="font-bold text-2xl text-gray-800 mb-5">最新のメモ</h3>
