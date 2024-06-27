@@ -170,17 +170,28 @@ export const UserAuth: React.FC = memo(() => {
                   value={password}
                   onChange={(event) => onChangeInputValue(event)}
                 />
-                <label className="text-xs mb-2" htmlFor="passwordConfirmation">
-                  パスワード（確認用）
-                </label>
-                <input
-                  className="border mb-8 py-2 outline-none pl-2"
-                  id="passwordConfirmation"
-                  type="password"
-                  name="passwordConfirmation"
-                  value={passwordConfirmation}
-                  onChange={(event) => onChangeInputValue(event)}
-                />
+                <div className="flex flex-col mb-8">
+                  <label
+                    className="text-xs mb-2"
+                    htmlFor="passwordConfirmation"
+                  >
+                    パスワード（確認用）
+                  </label>
+                  <input
+                    className="border py-2 outline-none pl-2"
+                    id="passwordConfirmation"
+                    type="password"
+                    name="passwordConfirmation"
+                    value={passwordConfirmation}
+                    onChange={(event) => onChangeInputValue(event)}
+                  />
+                  {passwordConfirmation !== "" &&
+                    passwordConfirmation !== password && (
+                      <p className="mt-1 text-xs text-red-500">
+                        パスワードが一致しません
+                      </p>
+                    )}
+                </div>
               </form>
             </>
           ) : (
