@@ -2,6 +2,7 @@ import { useContext, useState, memo } from "react";
 import Link from "next/link";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { createCrowdedness } from "@/lib/crowdedness";
+import NotificationContext from "@/context/notificationContext";
 
 import Cookie from "universal-cookie";
 
@@ -16,6 +17,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
 
   const token: string = cookie.get("access_token");
   const currentUserContext = useContext(CurrentUserContext);
+  const notificationCtx = useContext(NotificationContext);
   const { currentUser, isLogin } = currentUserContext;
 
   const [dayOfWeek, setDayOfWeek] = useState<string>("");
@@ -62,9 +64,10 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
         setTime("");
         setCrowdednessLevel("空いてる");
         setMemo("");
+        notificationCtx.success("投稿しました");
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        notificationCtx.error("混雑度が投稿できませんでした");
       });
   };
 

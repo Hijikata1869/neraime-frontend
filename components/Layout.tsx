@@ -6,12 +6,16 @@ import Cookie from "universal-cookie";
 
 // context
 import { CurrentUserContext } from "@/context/CurrentUserContext";
+import NotificationContext from "@/context/notificationContext";
 
 // apis
 import { fetchCurrentUser } from "@/lib/users";
 
 // types
 import { LayoutProps } from "@/types";
+
+import { SuccessAlert } from "./SuccessAlert";
+import { ErrorAlert } from "./ErrorAlert";
 
 const cookie = new Cookie();
 
@@ -20,6 +24,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
   const { currentUser, setCurrentUser, isLogin, setIsLogin } =
     currentUserContext;
   const router = useRouter();
+  const notificationCtx = useContext(NotificationContext);
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -53,6 +58,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     setIsLogin(false);
     cookie.remove("access_token", { path: "/" });
     router.push("/");
+    notificationCtx.success("ログアウトしました");
   };
 
   return (
@@ -101,6 +107,8 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
         <Head>
           <title>{props.title}</title>
         </Head>
+        <SuccessAlert />
+        <ErrorAlert />
         <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>

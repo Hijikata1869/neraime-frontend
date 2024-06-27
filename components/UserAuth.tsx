@@ -1,6 +1,8 @@
-import { useState, memo } from "react";
+import { useState, memo, useContext } from "react";
 import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
+
+import NotificationContext from "@/context/notificationContext";
 
 // apis
 import { createUser, login } from "@/lib/users";
@@ -14,6 +16,7 @@ export const UserAuth: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const notificationCtx = useContext(NotificationContext);
 
   const onClickToggle = () => {
     setIsSignUp(!isSignUp);
@@ -54,13 +57,14 @@ export const UserAuth: React.FC = memo(() => {
       })
       .then(() => {
         router.push("/");
+        notificationCtx.success("登録しました");
       })
-      .catch((err) => {
+      .catch(() => {
         setNickname("");
         setEmail("");
         setPassword("");
         setPasswordConfirmation("");
-        alert(err);
+        notificationCtx.error("登録できませんでした");
       });
   };
 
@@ -84,11 +88,12 @@ export const UserAuth: React.FC = memo(() => {
       })
       .then(() => {
         router.push("/");
+        notificationCtx.success("ログインしました");
       })
-      .catch((err) => {
+      .catch(() => {
         setEmail("");
         setPassword("");
-        alert(err);
+        notificationCtx.error("ログインできませんでした");
       });
   };
 
@@ -165,17 +170,28 @@ export const UserAuth: React.FC = memo(() => {
                   value={password}
                   onChange={(event) => onChangeInputValue(event)}
                 />
-                <label className="text-xs mb-2" htmlFor="passwordConfirmation">
-                  パスワード（確認用）
-                </label>
-                <input
-                  className="border mb-8 py-2 outline-none pl-2"
-                  id="passwordConfirmation"
-                  type="password"
-                  name="passwordConfirmation"
-                  value={passwordConfirmation}
-                  onChange={(event) => onChangeInputValue(event)}
-                />
+                <div className="flex flex-col mb-8">
+                  <label
+                    className="text-xs mb-2"
+                    htmlFor="passwordConfirmation"
+                  >
+                    パスワード（確認用）
+                  </label>
+                  <input
+                    className="border py-2 outline-none pl-2"
+                    id="passwordConfirmation"
+                    type="password"
+                    name="passwordConfirmation"
+                    value={passwordConfirmation}
+                    onChange={(event) => onChangeInputValue(event)}
+                  />
+                  {passwordConfirmation !== "" &&
+                    passwordConfirmation !== password && (
+                      <p className="mt-1 text-xs text-red-500">
+                        パスワードが一致しません
+                      </p>
+                    )}
+                </div>
               </form>
             </>
           ) : (
