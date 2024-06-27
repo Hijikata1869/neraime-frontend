@@ -6,6 +6,7 @@ import Cookie from "universal-cookie";
 
 // context
 import { CurrentUserContext } from "@/context/CurrentUserContext";
+import NotificationContext from "@/context/notificationContext";
 
 // apis
 import { fetchCurrentUser } from "@/lib/users";
@@ -23,6 +24,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
   const { currentUser, setCurrentUser, isLogin, setIsLogin } =
     currentUserContext;
   const router = useRouter();
+  const notificationCtx = useContext(NotificationContext);
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -56,6 +58,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     setIsLogin(false);
     cookie.remove("access_token", { path: "/" });
     router.push("/");
+    notificationCtx.success("ログアウトしました");
   };
 
   return (
