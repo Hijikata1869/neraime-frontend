@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Cookie from "universal-cookie";
 
 import { CurrentUserContext } from "@/context/CurrentUserContext";
+import NotificationContext from "@/context/notificationContext";
 
 // components
 import { Layout } from "@/components/Layout";
@@ -25,6 +26,7 @@ const UserEditPage: React.FC = memo(() => {
 
   const currentUserContext = useContext(CurrentUserContext);
   const { currentUser, setCurrentUser } = currentUserContext;
+  const notificationCtx = useContext(NotificationContext);
 
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -92,10 +94,11 @@ const UserEditPage: React.FC = memo(() => {
     };
     updateUser(updateUserInput)
       .then(() => {
+        notificationCtx.success("登録情報を編集しました");
         router.push(`/users/${userId}`);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        notificationCtx.error("登録情報を変更できませんでした");
       });
   };
 
@@ -110,10 +113,11 @@ const UserEditPage: React.FC = memo(() => {
         cookie.remove("access_token", { path: "/" });
       })
       .then(() => {
+        notificationCtx.success("アカウントを削除しました");
         router.push("/");
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        notificationCtx.error("アカウントを削除できませんでした");
       });
     // eslint-disable-next-line
   }, []);
