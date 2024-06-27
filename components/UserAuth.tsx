@@ -57,13 +57,14 @@ export const UserAuth: React.FC = memo(() => {
       })
       .then(() => {
         router.push("/");
+        notificationCtx.success("登録しました");
       })
-      .catch((err) => {
+      .catch(() => {
         setNickname("");
         setEmail("");
         setPassword("");
         setPasswordConfirmation("");
-        alert(err);
+        notificationCtx.error("登録できませんでした");
       });
   };
 
@@ -87,11 +88,12 @@ export const UserAuth: React.FC = memo(() => {
       })
       .then(() => {
         router.push("/");
+        notificationCtx.success("ログインしました");
       })
-      .catch((err) => {
+      .catch(() => {
         setEmail("");
         setPassword("");
-        alert(err);
+        notificationCtx.error("ログインできませんでした");
       });
   };
 
@@ -232,18 +234,6 @@ export const UserAuth: React.FC = memo(() => {
           )}
         </div>
       </div>
-      <button
-        className="p-5 bg-emerald-500 text-white font-bold rounded-lg mt-10"
-        onClick={() => notificationCtx.success("ログインしました")}
-      >
-        Success Alert
-      </button>
-      <button
-        className="p-5 bg-red-500 text-white font-bold rounded-lg mt-10"
-        onClick={() => notificationCtx.error("ログインできませんでした")}
-      >
-        Error Alert
-      </button>
     </div>
   );
 });
