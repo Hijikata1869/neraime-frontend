@@ -1,5 +1,4 @@
 export type CreateUserInput = {
-  event: React.MouseEvent;
   nickname: string;
   email: string;
   password: string;
@@ -7,7 +6,6 @@ export type CreateUserInput = {
 };
 
 export type LoginUserInput = {
-  event: React.MouseEvent;
   email: string;
   password: string;
 };

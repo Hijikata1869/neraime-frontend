@@ -16,6 +16,7 @@ export const UserAuth: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const notificationCtx = useContext(NotificationContext);
 
   const onClickToggle = () => {
@@ -39,15 +40,22 @@ export const UserAuth: React.FC = memo(() => {
     }
   };
 
+  const validateForm = () => {
+    if (isSignUp) {
+      return nickname && email && password && password === passwordConfirmation;
+    } else {
+      return email && password;
+    }
+  };
+
   const onClickSignUp = (event: React.MouseEvent) => {
-    const userInput = {
-      event: event,
-      nickname: nickname,
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-    };
-    createUser(userInput)
+    event.preventDefault();
+    if (!validateForm()) {
+      notificationCtx.error("フォームに不備があります");
+      return;
+    }
+    setIsLoading(true);
+    createUser({ nickname, email, password, passwordConfirmation })
       .then((data) => {
         const options = {
           path: "/",
@@ -65,35 +73,42 @@ export const UserAuth: React.FC = memo(() => {
         setPassword("");
         setPasswordConfirmation("");
         notificationCtx.error("登録できませんでした");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const onClickSignIn = (event: React.MouseEvent) => {
-    const userInput = {
-      event: event,
-      email: email,
-      password: password,
-    };
-    login(userInput)
+    event.preventDefault();
+    if (!validateForm()) {
+      notificationCtx.error("フォームに不備があります");
+      return;
+    }
+    setIsLoading(true);
+    login({ email, password })
       .then((data) => {
         const options = {
           path: "/",
           expires: new Date(Date.now() + 24 * 3600 * 1000),
         };
         cookie.set("access_token", data.token, options);
-      })
-      .then(() => {
-        setEmail("");
-        setPassword("");
-      })
-      .then(() => {
-        router.push("/");
+        const redirectUrl = localStorage.getItem("redirectAfterLogin");
+        if (redirectUrl && redirectUrl.startsWith("/")) {
+          router.push(redirectUrl);
+          localStorage.removeItem("redirectAfterLogin");
+        } else {
+          router.push("/");
+        }
         notificationCtx.success("ログインしました");
       })
       .catch(() => {
         setEmail("");
         setPassword("");
         notificationCtx.error("ログインできませんでした");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -224,25 +239,13 @@ export const UserAuth: React.FC = memo(() => {
           )}
         </div>
         <div className="mt-6 mb-6 mx-4 flex justify-center">
-          {isSignUp ? (
-            <>
-              <button
-                className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition"
-                onClick={(event) => onClickSignUp(event)}
-              >
-                新規登録
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition"
-                onClick={(event) => onClickSignIn(event)}
-              >
-                ログイン
-              </button>
-            </>
-          )}
+          <button
+            className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition"
+            onClick={isSignUp ? onClickSignUp : onClickSignIn}
+            disabled={isLoading}
+          >
+            {isSignUp ? "新規登録" : "ログイン"}
+          </button>
         </div>
       </div>
     </div>
