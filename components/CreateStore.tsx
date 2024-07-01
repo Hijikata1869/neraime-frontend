@@ -78,104 +78,104 @@ export const CreateStore: React.FC = memo(() => {
   return (
     <div className="w-full lg:px-44 pt-6 text-gray-900">
       <h1 className="font-bold text-3xl">店舗登録</h1>
-      {isLogin ? (
-        <div className="mt-10 lg:px-20">
-          {selectedCandidate?.name.length ? (
-            <>
-              {registeredStore !== undefined ? (
-                <div className="flex flex-col justify-center items-center">
-                  <p className="font-bold text-gray-900">
-                    すでに同じ施設が登録されているため、以下の店舗情報をクリックしてご覧ください。
+      <div className="mt-10 lg:px-20">
+        {selectedCandidate?.name.length ? (
+          <>
+            {registeredStore !== undefined ? (
+              <div className="flex flex-col justify-center items-center">
+                <p className="font-bold text-gray-900">
+                  すでに同じ施設が登録されているため、以下の店舗情報をクリックしてご覧ください。
+                </p>
+                <Link
+                  href={`/stores/${registeredStore.id}`}
+                  className="bg-white p-10 mt-10 shadow rounded"
+                >
+                  <p className="font-bold text-2xl text-gray-900 mb-2">
+                    店舗名：{registeredStore.name}
                   </p>
-                  <Link
-                    href={`/stores/${registeredStore.id}`}
-                    className="bg-white p-10 mt-10 shadow rounded"
-                  >
-                    <p className="font-bold text-2xl text-gray-900 mb-2">
-                      店舗名：{registeredStore.name}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      住所：{registeredStore.address}
-                    </p>
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <p className="mb-10">
-                    選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
+                  <p className="text-sm text-gray-500">
+                    住所：{registeredStore.address}
                   </p>
-                  <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
-                    <h1 className="font-bold mb-2">
-                      店舗名：{selectedCandidate?.name}
-                    </h1>
-                    <p className="font-bold mb-2">
-                      住所：{selectedCandidate?.address}
+                </Link>
+              </div>
+            ) : (
+              <>
+                {isLogin ? (
+                  <>
+                    <p className="mb-10">
+                      選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
                     </p>
-                    <div className="flex">
-                      <p className="font-bold">都道府県：</p>
-                      <select
-                        className="border rounded border-gray-500"
-                        value={selectedPrefecture}
-                        onChange={hundleChange}
-                      >
-                        <option value="">選択してください</option>
-                        {PREFECTURES.map((prefecture, index) => (
-                          <option key={index} value={prefecture}>
-                            {prefecture}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
+                      <h1 className="font-bold mb-2">
+                        店舗名：{selectedCandidate?.name}
+                      </h1>
+                      <p className="font-bold mb-2">
+                        住所：{selectedCandidate?.address}
+                      </p>
+                      <div className="flex">
+                        <p className="font-bold">都道府県：</p>
+                        <select
+                          className="border rounded border-gray-500"
+                          value={selectedPrefecture}
+                          onChange={hundleChange}
+                        >
+                          <option value="">選択してください</option>
+                          {PREFECTURES.map((prefecture, index) => (
+                            <option key={index} value={prefecture}>
+                              {prefecture}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <span className="text-xs text-red-700">
+                        所在の都道府県が正しくない場合は選択し直してください
+                      </span>
                     </div>
-                    <span className="text-xs text-red-700">
-                      所在の都道府県が正しくない場合は選択し直してください
-                    </span>
+                    <div className="flex justify-center">
+                      <button
+                        className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
+                        onClick={(event) => hundleClick(event)}
+                      >
+                        登録する
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col justify-center items-center">
+                    <div>
+                      <p className="font-bold text-gray-900">
+                        選択していただいた店舗はまだ登録されていませんでした。店舗登録はログイン後ご利用していただける機能です。
+                        <br />
+                        ログイン、または新規登録をお願いします。
+                      </p>
+                    </div>
+                    <div>
+                      <button
+                        className="py-4 px-6 mt-10 rounded transition mr-4 bg-sky-500 text-white hover:bg-sky-700"
+                        onClick={() => router.push("/sign-in")}
+                      >
+                        ログイン・新規登録はこちら
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex justify-center">
-                    <button
-                      className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
-                      onClick={(event) => hundleClick(event)}
-                    >
-                      登録する
-                    </button>
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <div className="flex flex-col justify-center items-center">
-              <p className="font-bold">
-                選択された店舗がありません。店舗の検索結果から、店舗を選び直してください。
-              </p>
-              <button
-                className="mt-20 py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition"
-                onClick={() => router.push("/search")}
-              >
-                店舗検索ページに戻る
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="mt-10 px-20">
-          <div className="flex flex-col items-center justify-center">
-            <div>
-              <p className="font-bold text-gray-900">
-                店舗登録はログインしていただくことでお使いいただける機能です。
-                <br />
-                ログインがまだの方は以下のボタンからログインまたは新規登録をお願いします。
-              </p>
-            </div>
-            <div className="mt-10">
-              <button
-                className="font-bold text-sm px-6 py-4 bg-sky-500 rounded text-white transition hover:bg-sky-700"
-                onClick={() => router.push("/sign-in")}
-              >
-                ログイン・新規登録する
-              </button>
-            </div>
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <div className="flex flex-col justify-center items-center">
+            <p className="font-bold">
+              選択された店舗がありません。店舗の検索結果から、店舗を選び直してください。
+            </p>
+            <button
+              className="mt-20 py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition"
+              onClick={() => router.push("/search")}
+            >
+              店舗検索ページに戻る
+            </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 });

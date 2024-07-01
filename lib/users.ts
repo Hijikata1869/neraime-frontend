@@ -6,8 +6,7 @@ import {
 } from "@/types/user";
 
 export const createUser = async (userInput: CreateUserInput) => {
-  const { event, nickname, email, password, passwordConfirmation } = userInput;
-  event.preventDefault();
+  const { nickname, email, password, passwordConfirmation } = userInput;
   // ここでreturnをつけないと、呼び出し元のコンポーネント内でこのPromiseを持つことができない
   return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}users`, {
     method: "POST",
@@ -33,8 +32,7 @@ export const createUser = async (userInput: CreateUserInput) => {
 };
 
 export const login = async (userInput: LoginUserInput) => {
-  const { event, email, password } = userInput;
-  event.preventDefault();
+  const { email, password } = userInput;
   return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}auth`, {
     method: "POST",
     body: JSON.stringify({

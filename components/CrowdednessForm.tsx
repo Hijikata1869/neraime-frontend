@@ -1,5 +1,5 @@
 import { useContext, useState, memo } from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { createCrowdedness } from "@/lib/crowdedness";
 import NotificationContext from "@/context/notificationContext";
@@ -20,12 +20,14 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
   const notificationCtx = useContext(NotificationContext);
   const { currentUser, isLogin } = currentUserContext;
 
+  const router = useRouter();
+
   const [dayOfWeek, setDayOfWeek] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [crowdednessLevel, setCrowdednessLevel] = useState<string>("空いてる");
   const [memo, setMemo] = useState<string>("");
 
-  const hundleChange = (
+  const handleChange = (
     event: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     switch (event.target.name) {
@@ -40,7 +42,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
     }
   };
 
-  const hundleCrowdednessClick = (
+  const handleCrowdednessClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
@@ -71,6 +73,12 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
       });
   };
 
+  const hundleLoginButton = (event: React.MouseEvent) => {
+    event.preventDefault();
+    localStorage.setItem("redirectAfterLogin", router.asPath);
+    router.push("/sign-in");
+  };
+
   return (
     <div className="mt-5 px-10">
       {isLogin ? (
@@ -84,7 +92,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               name="dayOfWeek"
               className="max-w-xs border border-gray-900 rounded ml-4"
               value={dayOfWeek}
-              onChange={hundleChange}
+              onChange={handleChange}
             >
               <option value="">選択してください</option>
               {DAY_OF_WEEK.map((dayOfWeek, index) => (
@@ -103,7 +111,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               name="hours"
               className="max-w-xs border border-gray-900 rounded ml-4"
               value={time}
-              onChange={hundleChange}
+              onChange={handleChange}
             >
               <option value="">選択してください</option>
               {HOURS.map((hour, index) => (
@@ -125,7 +133,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
                     ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
                     : `text-gray-500 bg-white`
                 }`}
-                onClick={hundleCrowdednessClick}
+                onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[0]}
               >
                 {`${CROWDEDNESS_LEVEL[0]}`}
@@ -137,7 +145,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
                     ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
                     : `text-gray-500 bg-white `
                 }`}
-                onClick={hundleCrowdednessClick}
+                onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[1]}
               >
                 {`${CROWDEDNESS_LEVEL[1]}`}
@@ -149,7 +157,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
                     ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
                     : `text-gray-500 bg-white`
                 }`}
-                onClick={hundleCrowdednessClick}
+                onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[2]}
               >
                 {`${CROWDEDNESS_LEVEL[2]}`}
@@ -161,7 +169,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
                     ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
                     : ` text-gray-500 bg-white`
                 }`}
-                onClick={hundleCrowdednessClick}
+                onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[3]}
               >
                 {`${CROWDEDNESS_LEVEL[3]}`}
@@ -191,7 +199,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               className="border-2 border-gray-300 mb-8 py-6 outline-none pl-2 rounded ml-4"
               name="memo"
               value={memo}
-              onChange={hundleChange}
+              onChange={handleChange}
               placeholder="３名で訪問しましたが、座れませんでした。１人席なら空いているようでした。"
             />
           </div>
@@ -209,11 +217,12 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
           <p className="font-bold text-gray-700 mt-5">
             混雑度はログインすると投稿できます
           </p>
-          <Link href="/sign-in">
-            <button className="py-4 px-6 mt-10 rounded transition mr-4 bg-emerald-700 text-white hover:bg-emerald-950">
-              ログイン・新規登録はこちら
-            </button>
-          </Link>
+          <button
+            className="py-4 px-6 mt-10 rounded transition mr-4 bg-emerald-700 text-white hover:bg-emerald-950"
+            onClick={hundleLoginButton}
+          >
+            ログイン・新規登録はこちら
+          </button>
         </div>
       )}
     </div>
