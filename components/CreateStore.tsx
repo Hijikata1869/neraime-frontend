@@ -99,7 +99,6 @@ export const CreateStore: React.FC = memo(() => {
                 </Link>
               </div>
             ) : (
-              // ここでログインしているかどうかの条件分岐をする。ログインしていれば登録していただく。ログインしていなければログインページへ遷移する。
               <>
                 {isLogin ? (
                   <>
