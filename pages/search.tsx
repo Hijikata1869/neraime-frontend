@@ -1,10 +1,12 @@
 import { Layout } from "@/components/Layout";
-import { SearchForm } from "@/components/SearchForm";
+import { KeywordSearch } from "@/components/KeywordSearch";
+import { PrefectureSearch } from "@/components/PrefectureSearch";
 
 const Search: React.FC = () => {
   return (
     <Layout title="店舗検索">
-      <SearchForm />
+      <KeywordSearch />
+      <PrefectureSearch />
     </Layout>
   );
 };

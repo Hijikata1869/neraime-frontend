@@ -5,7 +5,7 @@ import { SearchContext } from "@/context/SearchContext";
 // apis
 import { fetchStoreByName } from "@/lib/stores";
 
-export const ResultsList = memo(() => {
+export const ResultsList: React.FC = memo(() => {
   const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { candidates, setSelectedCandidate } = searchContext;
@@ -33,7 +33,7 @@ export const ResultsList = memo(() => {
 
   return (
     <>
-      <div className="w-full pt-6 lg:px-44">
+      <div className="w-full pt-6 lg:px-44 mb-20">
         <h1 className="font-bold text-3xl text-gray-900">検索結果</h1>
         {candidates?.length ? null : (
           <div className="flex flex-col items-center justify-center">
