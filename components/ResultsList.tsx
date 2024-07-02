@@ -5,7 +5,7 @@ import { SearchContext } from "@/context/SearchContext";
 // apis
 import { fetchStoreByName } from "@/lib/stores";
 
-export const ResultsList = memo(() => {
+export const ResultsList: React.FC = memo(() => {
   const router = useRouter();
   const searchContext = useContext(SearchContext);
   const { candidates, setSelectedCandidate } = searchContext;

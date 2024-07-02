@@ -4,7 +4,7 @@ import { SearchContext } from "@/context/SearchContext";
 
 import { StoreCandidates } from "@/types/store";
 
-export const SearchForm: React.FC = memo(() => {
+export const KeywordSearch: React.FC = memo(() => {
   const { setCandidates } = useContext(SearchContext);
   const router = useRouter();
   const [placeName, setPlaceName] = useState<string>("");
@@ -52,9 +52,12 @@ export const SearchForm: React.FC = memo(() => {
 
   return (
     <>
-      <form className="flex flex-col w-full lg:px-80 pt-8">
+      <form className="flex flex-col w-full lg:px-40 pt-8">
         <div className="flex items-center">
-          <label htmlFor="search" className="text-gray-900 text-xl mr-4">
+          <label
+            htmlFor="search"
+            className="text-gray-900 text-xl mr-4 font-bold"
+          >
             キーワード検索
           </label>
           <input
@@ -78,4 +81,4 @@ export const SearchForm: React.FC = memo(() => {
   );
 });
 
-SearchForm.displayName = "SearchForm";
+KeywordSearch.displayName = "KeywordSearch";
