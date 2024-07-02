@@ -29,3 +29,12 @@ export type StoreData = {
   created_at: string;
   updated_at: string;
 };
+
+export type StoreDatas = {
+  id: number;
+  name: string;
+  address: string;
+  prefecture_id: number;
+  created_at: string;
+  updated_at: string;
+}[];

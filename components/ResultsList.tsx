@@ -33,7 +33,7 @@ export const ResultsList: React.FC = memo(() => {
 
   return (
     <>
-      <div className="w-full pt-6 lg:px-44">
+      <div className="w-full pt-6 lg:px-44 mb-20">
         <h1 className="font-bold text-3xl text-gray-900">検索結果</h1>
         {candidates?.length ? null : (
           <div className="flex flex-col items-center justify-center">

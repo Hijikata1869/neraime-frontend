@@ -10,7 +10,9 @@ export const PrefectureSearch: React.FC = memo(() => {
 
   const hundleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    router.push(`search-result?prefecture=${event.currentTarget.innerText}`);
+    router.push(
+      `prefecture-search-result?prefecture=${event.currentTarget.innerText}`
+    );
   };
 
   return (

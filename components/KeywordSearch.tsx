@@ -56,7 +56,7 @@ export const KeywordSearch: React.FC = memo(() => {
         <div className="flex items-center">
           <label
             htmlFor="search"
-            className="text-gray-900 text-xl mr-4 font-bold"
+            className="text-gray-900 text-2xl mr-6 font-bold"
           >
             キーワード検索
           </label>
