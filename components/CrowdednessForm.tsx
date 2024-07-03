@@ -192,7 +192,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="memo" className="font-bold mb-2">
-              メモ<span className="font-medium text-xs"> - 任意</span>
+              メモ・口コミ<span className="font-medium text-xs"> - 任意</span>
             </label>
             <textarea
               id="memo"
@@ -200,7 +200,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               name="memo"
               value={memo}
               onChange={handleChange}
-              placeholder="３名で訪問しましたが、座れませんでした。１人席なら空いているようでした。"
+              placeholder="訪問時の状況に関するメモや、口コミを書いて他のユーザーに教えてあげましょう！"
             />
           </div>
           <div className="flex justify-center">
