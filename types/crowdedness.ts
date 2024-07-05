@@ -60,3 +60,16 @@ export type CrowdednessReviewProps = {
 export type CrowdednessReviewsProps = {
   storeId: number;
 };
+
+export type UserCrowdedness = {
+  id: number;
+  user_id: number;
+  store_id: number;
+  store_name: string;
+  day_of_week: string;
+  time: string;
+  level: string;
+  memo?: string;
+  created_at: string;
+  updated_at: string;
+}[];
