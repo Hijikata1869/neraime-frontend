@@ -1,11 +1,10 @@
 import { memo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
-import { CrowdednessReviewProps } from "@/types/crowdedness";
+import { UserCrowdednessCardProps } from "@/types/crowdedness";
 
-export const CrowdednessReviewCard: React.FC<CrowdednessReviewProps> = memo(
-  (props) => {
+export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
+  memo((props) => {
     const { reviews } = props;
 
     const changeBackgroundColor = (crowdedLevel: string) => {
@@ -25,11 +24,11 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewProps> = memo(
         {reviews?.map((review) => (
           <div
             key={review.id}
-            className="bg-white px-8 py-4 mb-10 rounded-lg shadow-md flex flex-col"
+            className="bg-white px-8 py-4 mb-10 rounded-lg shadow-md flex flex-col max-w-4xl"
           >
             <div className="flex justify-between items-center mb-2">
               <div>
-                <p className="text-gray-500 text-xs">{`${review.created_at} ${review.day_of_week}`}</p>
+                <p className="text-gray-500 text-sm">{`${review.created_at} ${review.day_of_week} ${review.time}時の訪問`}</p>
               </div>
               <div
                 className={`px-2 py-1 rounded ${changeBackgroundColor(
@@ -39,29 +38,23 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewProps> = memo(
                 <p className={`text-sm text-white font-bold`}>{review.level}</p>
               </div>
             </div>
-            <div className="mb-4">
-              <p className="text-gray-900">{review.memo}</p>
+            <div className="flex mb-2">
+              <Link
+                href={`/stores/${review.store_id}`}
+                className="font-bold text-lg text-cyan-600"
+              >
+                {review.store_name}
+              </Link>
             </div>
-            <div className="flex items-center justify-end">
-              <div className="flex items-center">
-                <Image
-                  src="/default.svg"
-                  width={40}
-                  height={40}
-                  alt="default user image"
-                />
-                <Link href={`/users/${review.user_id}`}>
-                  <p className="font-bold text-gray-700 pl-2">
-                    {review.nickname}
-                  </p>
-                </Link>
+            {review.memo?.length !== 0 && (
+              <div className="mb-4">
+                <p className="text-gray-900">{review.memo}</p>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </div>
     );
-  }
-);
+  });
 
-CrowdednessReviewCard.displayName = "CrowdednessReviewCard";
+UserCrowdednessReviewCard.displayName = "UserCrowdednessReviewCard";

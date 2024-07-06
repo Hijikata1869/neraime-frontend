@@ -7,7 +7,7 @@ import { StoreData } from "@/types/store";
 
 import { fetchCrowdednessReviews } from "@/lib/crowdedness";
 
-import { CrowdednessReviewCard } from "@/components/CrowdednessReviewCard";
+import { StoreCrowdednessReviewCard } from "@/components/StoreCrowdednessReviewCard";
 import { Layout } from "@/components/Layout";
 import { fetchStore } from "@/lib/stores";
 
@@ -57,7 +57,7 @@ const StoreReviewPage: React.FC = memo(() => {
       <div className="w-full px-40 mt-10">
         <h1 className="text-2xl font-bold text-gray-900 mb-10">{`${store?.name}のメモ一覧`}</h1>
         {crowdednessReviews ? (
-          <CrowdednessReviewCard reviews={crowdednessReviews} />
+          <StoreCrowdednessReviewCard reviews={crowdednessReviews} />
         ) : (
           <div className="flex justify-center items-center">
             <p className="font-bold text-gray-900">

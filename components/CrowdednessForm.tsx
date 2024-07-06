@@ -196,7 +196,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             </label>
             <textarea
               id="memo"
-              className="border-2 border-gray-300 mb-8 py-6 outline-none pl-2 rounded ml-4"
+              className="border-2 border-gray-300 mb-8 py-6 outline-none px-2 rounded ml-4"
               name="memo"
               value={memo}
               onChange={handleChange}

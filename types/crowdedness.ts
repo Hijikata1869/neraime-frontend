@@ -53,7 +53,7 @@ export type StoreCrowdednessReviews = {
   updated_at: string;
 }[];
 
-export type CrowdednessReviewProps = {
+export type StoreCrowdednessReviewProps = {
   reviews: StoreCrowdednessReviews | undefined;
 };
 
@@ -73,3 +73,7 @@ export type UserCrowdedness = {
   created_at: string;
   updated_at: string;
 }[];
+
+export type UserCrowdednessCardProps = {
+  reviews: UserCrowdedness | undefined;
+};

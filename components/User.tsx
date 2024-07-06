@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Cookie from "universal-cookie";
+import { format } from "date-fns";
 
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 
@@ -13,6 +14,8 @@ import { fetchUserCrowdedness } from "@/lib/crowdedness";
 // types
 import { UserObj } from "@/types/user";
 import { UserCrowdedness } from "@/types/crowdedness";
+
+import { UserCrowdednessReviewCard } from "./UserCrowdednessReviewCard";
 
 const cookie = new Cookie();
 
@@ -62,7 +65,13 @@ export const User: React.FC = memo(() => {
     if (!isNaN(userId)) {
       fetchUserCrowdedness(userId)
         .then(async (res) => {
-          const data = await res.user_crowdedness;
+          const data: UserCrowdedness = await res.user_crowdedness;
+          data.forEach((review) => {
+            review.created_at = format(
+              new Date(review.created_at),
+              "yyyy年MM月dd日"
+            );
+          });
           setUserCrowdedness(data);
         })
         .catch((err) => {
@@ -103,21 +112,15 @@ export const User: React.FC = memo(() => {
         )}
       </div>
       <div className="w-full px-40 mt-20 flex flex-col mb-20">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-gray-900 mb-5">
           {user?.nickname}さんの投稿一覧
         </h2>
-        {userCrowdedness?.length !== 0 && (
-          <>
-            {userCrowdedness?.map((crowdedness) => (
-              <div key={crowdedness.id} className="p-10 mt-10 bg-white">
-                <p>{crowdedness.store_name}</p>
-                <p>{crowdedness.day_of_week}</p>
-                <p>{crowdedness.time}</p>
-                <p>{crowdedness.level}</p>
-                <p>{crowdedness.memo}</p>
-              </div>
-            ))}
-          </>
+        {userCrowdedness?.length !== 0 ? (
+          <UserCrowdednessReviewCard reviews={userCrowdedness} />
+        ) : (
+          <div className="flex px-20">
+            <p className="font-bold text-gray-900">まだ投稿がありません</p>
+          </div>
         )}
       </div>
     </>

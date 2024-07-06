@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { format } from "date-fns";
 
-import { CrowdednessReviewCard } from "./CrowdednessReviewCard";
+import { StoreCrowdednessReviewCard } from "./StoreCrowdednessReviewCard";
 
 import {
   LatestCrowdednessReviewsProps,
@@ -44,7 +44,7 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
     return (
       <div className="mt-10 w-full">
         <h3 className="font-bold text-2xl text-gray-800 mb-5">最新のメモ</h3>
-        <CrowdednessReviewCard reviews={latestReviews} />
+        <StoreCrowdednessReviewCard reviews={latestReviews} />
         <div className="flex justify-center items-center mt-20">
           {latestReviews !== undefined ? (
             <button
