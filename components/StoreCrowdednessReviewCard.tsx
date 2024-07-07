@@ -39,10 +39,12 @@ export const StoreCrowdednessReviewCard: React.FC<StoreCrowdednessReviewProps> =
                 <p className={`text-sm text-white font-bold`}>{review.level}</p>
               </div>
             </div>
-            <div className="mb-4">
-              <p className="text-gray-900">{review.memo}</p>
-            </div>
-            <div className="flex items-center justify-end">
+            {review.memo.length !== 0 && (
+              <div>
+                <p className="text-gray-900">{review.memo}</p>
+              </div>
+            )}
+            <div className="flex items-center justify-end mt-4">
               <div className="flex items-center">
                 <Image
                   src="/default.svg"
