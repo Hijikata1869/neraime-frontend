@@ -77,3 +77,21 @@ export type UserCrowdedness = {
 export type UserCrowdednessCardProps = {
   reviews: UserCrowdedness | undefined;
 };
+
+export type LatestPosts = {
+  id: number;
+  user_id: number;
+  store_id: number;
+  nickname: string;
+  store_name: string;
+  day_of_week: string;
+  time: string;
+  level: string;
+  memo?: string;
+  created_at: string;
+  updated_at: string;
+}[];
+
+export type CrowdednessReviewCardProps = {
+  reviews: LatestPosts | undefined;
+};
