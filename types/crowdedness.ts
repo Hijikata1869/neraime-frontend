@@ -91,3 +91,7 @@ export type LatestPosts = {
   created_at: string;
   updated_at: string;
 }[];
+
+export type CrowdednessReviewCardProps = {
+  reviews: LatestPosts | undefined;
+};

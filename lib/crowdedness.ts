@@ -148,3 +148,22 @@ export const fetchLatestPosts = async () => {
     }
   });
 };
+
+export const fetchAllPosts = async () => {
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdedness/formatted_all_crowdedness_list`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "取得失敗";
+    }
+  });
+};
