@@ -55,3 +55,22 @@ export const deleteFavorite = async (storeId: number, token: string) => {
     }
   });
 };
+
+export const fetchUserFavoriteStores = async (id: number) => {
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}users/${id}/favorite_stores`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "取得できませんでした";
+    }
+  });
+};
