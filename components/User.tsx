@@ -18,6 +18,7 @@ import { UserCrowdedness } from "@/types/crowdedness";
 import { StoreDatas } from "@/types/store";
 
 import { UserCrowdednessReviewCard } from "./UserCrowdednessReviewCard";
+import { FavoriteStoreCards } from "./FavoriteStoreCards";
 
 const cookie = new Cookie();
 
@@ -134,17 +135,7 @@ export const User: React.FC = memo(() => {
           </div>
           <div className="p-8 w-2/5 ml-5 flex flex-col">
             <h2 className="font-bold text-gray-900 mb-5">{`${user?.nickname}さんのお気に入り店舗`}</h2>
-            <div className="flex flex-col items-start pl-5">
-              {favoriteStores?.map((store) => (
-                <Link
-                  key={store.id}
-                  href={`/stores/${store.id}`}
-                  className="mb-2 text-cyan-600 font-bold"
-                >
-                  {store.name}
-                </Link>
-              ))}
-            </div>
+            <FavoriteStoreCards favoriteStores={favoriteStores} />
           </div>
         </div>
       </div>
