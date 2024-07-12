@@ -10,12 +10,15 @@ import { CurrentUserContext } from "@/context/CurrentUserContext";
 // apis
 import { fetchCurrentUser, fetchUser } from "@/lib/users";
 import { fetchUserCrowdedness } from "@/lib/crowdedness";
+import { fetchUserFavoriteStores } from "@/lib/favorites";
 
 // types
 import { UserObj } from "@/types/user";
 import { UserCrowdedness } from "@/types/crowdedness";
+import { StoreDatas } from "@/types/store";
 
 import { UserCrowdednessReviewCard } from "./UserCrowdednessReviewCard";
+import { FavoriteStoreCards } from "./FavoriteStoreCards";
 
 const cookie = new Cookie();
 
@@ -28,6 +31,9 @@ export const User: React.FC = memo(() => {
   const [userCrowdedness, setUserCrowdedness] = useState<
     UserCrowdedness | undefined
   >(undefined);
+  const [favoriteStores, setFavoriteStores] = useState<StoreDatas | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -80,36 +86,58 @@ export const User: React.FC = memo(() => {
     }
   }, [userId]);
 
+  useEffect(() => {
+    if (!isNaN(userId)) {
+      fetchUserFavoriteStores(userId)
+        .then(async (res) => {
+          const data = await res.favorite_stores;
+          setFavoriteStores(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [userId]);
+
   return (
     <>
-      <div className="w-2/4 bg-white rounded p-8">
-        <div className="flex flex-col">
-          <div className="flex items-center">
-            <Image
-              src="/default.svg"
-              width={100}
-              height={100}
-              alt="default user image"
-            />
-            <h1 className="font-bold text-3xl text-gray-700">
-              {user?.nickname}
-            </h1>
+      <div className="w-full px-40">
+        <div className="flex">
+          <div className="w-3/5 bg-white rounded-lg p-8 shadow">
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <Image
+                  src="/default.svg"
+                  width={100}
+                  height={100}
+                  alt="default user image"
+                />
+                <h2 className="font-bold text-3xl text-gray-700">
+                  {user?.nickname}
+                </h2>
+              </div>
+              <p className="mt-4 ml-4">
+                {user?.self_introduction
+                  ? `${user.self_introduction}`
+                  : "まだ自己紹介はありません"}
+              </p>
+            </div>
+            {currentUser?.id === userId && (
+              <div className="flex justify-center">
+                <Link
+                  href={`/users/${userId}/edit`}
+                  className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20"
+                >
+                  登録情報を編集する
+                </Link>
+              </div>
+            )}
           </div>
-          <p className="mt-4 ml-4">
-            {user?.self_introduction
-              ? `${user.self_introduction}`
-              : "まだ自己紹介はありません"}
-          </p>
+          <div className="p-8 w-2/5 ml-5 flex flex-col">
+            <h2 className="font-bold text-gray-900 mb-5">{`${user?.nickname}さんのお気に入り店舗`}</h2>
+            <FavoriteStoreCards favoriteStores={favoriteStores} />
+          </div>
         </div>
-        {currentUser?.id === userId && (
-          <div className="flex justify-center">
-            <Link href={`/users/${userId}/edit`}>
-              <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20">
-                登録情報を編集する
-              </button>
-            </Link>
-          </div>
-        )}
       </div>
       <div className="w-full px-40 mt-20 flex flex-col mb-20">
         <h2 className="text-2xl font-bold text-gray-900 mb-5">

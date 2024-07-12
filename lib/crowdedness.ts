@@ -68,7 +68,7 @@ export const fetchDaylyStoreCrowdedness = async (
       const data = await res.json();
       return data;
     } else {
-      throw "取得失敗";
+      throw "この曜日のデータがありません";
     }
   });
 };

@@ -38,3 +38,7 @@ export type StoreDatas = {
   created_at: string;
   updated_at: string;
 }[];
+
+export type FavoriteStoreCardsProps = {
+  favoriteStores: StoreDatas | undefined;
+};
