@@ -17,7 +17,7 @@ export const AllPosts: React.FC = memo(() => {
         setAllPosts(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, []);
 

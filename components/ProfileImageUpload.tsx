@@ -78,20 +78,12 @@ const ProfileImageUpload: React.FC = memo(() => {
       });
   };
 
-  const imageSrc = () => {
-    if (imageUrl !== null) {
-      return imageUrl;
-    } else {
-      return "/default.svg";
-    }
-  };
-
   return (
     <div className="flex flex-col items-center mt-2">
       <div className="relative w-24 h-24">
         <Image
           className="rounded-full object-cover"
-          src={imageSrc()}
+          src={imageUrl || "/default.svg"}
           fill
           alt="current profile image"
           priority
@@ -124,6 +116,7 @@ const ProfileImageUpload: React.FC = memo(() => {
                   fill
                   style={{ objectFit: "cover" }}
                   className="rounded-full"
+                  sizes="(max-width: 600px) 100vw, 24px"
                 />
               </div>
               <div>

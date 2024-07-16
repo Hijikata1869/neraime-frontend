@@ -28,6 +28,7 @@ export type UserObj = {
   self_introduction?: string;
   created_at: string;
   updated_at: string;
+  url: string;
 };
 
 export type UpdateUserInput = {

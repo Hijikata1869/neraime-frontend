@@ -43,7 +43,9 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
 
     return (
       <div className="mt-10 w-full">
-        <h3 className="font-bold text-2xl text-gray-800 mb-5">最新のメモ</h3>
+        <h3 className="font-bold text-2xl text-gray-800 mb-5">
+          最新の口コミ・メモ
+        </h3>
         <StoreCrowdednessReviewCard reviews={latestReviews} />
         <div className="flex justify-center items-center mt-20">
           {latestReviews !== undefined ? (
@@ -51,7 +53,7 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
               className="py-2 px-4 bg-sky-500 rounded-lg text-gray-50 font-bold hover:bg-sky-700 transition"
               onClick={() => router.push(`/stores/${storeId}/reviews`)}
             >
-              この店舗のメモをもっと見る
+              この店舗の口コミ・メモをもっと見る
             </button>
           ) : (
             <p className="font-bold text-gray-900">

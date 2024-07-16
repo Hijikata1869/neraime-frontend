@@ -51,6 +51,7 @@ export type StoreCrowdednessReviews = {
   memo: string;
   created_at: string;
   updated_at: string;
+  url: string;
 }[];
 
 export type StoreCrowdednessReviewProps = {
@@ -90,6 +91,7 @@ export type LatestPosts = {
   memo?: string;
   created_at: string;
   updated_at: string;
+  url: string;
 }[];
 
 export type CrowdednessReviewCardProps = {
