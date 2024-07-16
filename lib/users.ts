@@ -130,3 +130,22 @@ export const deleteUser = async (deleteUserArg: deleteUserArg) => {
     }
   });
 };
+
+export const userImageUpload = async (file: File, userId: number) => {
+  const formData = new FormData();
+  formData.append("profile_image", file);
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}users/${userId}/image_upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  ).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "投稿できませんでした。";
+    }
+  });
+};
