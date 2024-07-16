@@ -8,9 +8,12 @@ import {
   useEffect,
   useContext,
 } from "react";
+import Cookie from "universal-cookie";
 import { fetchUser, userImageUpload } from "@/lib/users";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import NotificationContext from "@/context/notificationContext";
+
+const cookie = new Cookie();
 
 const ProfileImageUpload: React.FC = memo(() => {
   const router = useRouter();
@@ -58,7 +61,9 @@ const ProfileImageUpload: React.FC = memo(() => {
     event.preventDefault();
     if (!selectedFile) return;
 
-    userImageUpload(selectedFile, userId)
+    const accessToken = cookie.get("access_token") as string;
+
+    userImageUpload(selectedFile, userId, accessToken)
       .then(async (res) => {
         const url = await res.url;
         setImageUrl(url);
@@ -68,6 +73,7 @@ const ProfileImageUpload: React.FC = memo(() => {
         notificationContext.success("アイコンを変更しました");
       })
       .catch(() => {
+        setPreview(null);
         notificationContext.error("アイコンを変更できませんでした");
       });
   };

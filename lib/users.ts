@@ -131,7 +131,11 @@ export const deleteUser = async (deleteUserArg: deleteUserArg) => {
   });
 };
 
-export const userImageUpload = async (file: File, userId: number) => {
+export const userImageUpload = async (
+  file: File,
+  userId: number,
+  accessToken: string
+) => {
   const formData = new FormData();
   formData.append("profile_image", file);
   return await fetch(
@@ -139,6 +143,9 @@ export const userImageUpload = async (file: File, userId: number) => {
     {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: accessToken,
+      },
     }
   ).then(async (res) => {
     if (res.status === 200) {
