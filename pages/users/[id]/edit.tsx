@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext, useCallback, memo } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import Cookie from "universal-cookie";
 
 import { CurrentUserContext } from "@/context/CurrentUserContext";
@@ -8,6 +9,7 @@ import NotificationContext from "@/context/notificationContext";
 // components
 import { Layout } from "@/components/Layout";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
 
 // apis
 import {
@@ -32,17 +34,19 @@ const UserEditPage: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isNaN(userId)) {
       fetchUser(userId)
-        .then((data) => {
-          const userData = data.user;
+        .then(async (data) => {
+          const userData = await data.user;
           return userData;
         })
         .then((data) => {
           setNickname(data.nickname);
           setEmail(data.email);
+          setImageUrl(data.url);
           data.self_introduction && setSelfIntroduction(data.self_introduction);
         })
         .catch((err) => {
@@ -130,11 +134,12 @@ const UserEditPage: React.FC = memo(() => {
         executeOnDialogAction={onClickDelete}
       />
       <Layout title="登録情報の変更">
-        <div className="bg-white w-1/2 p-8">
-          <div className="flex justify-center">
-            <h2 className="font-semibold text-3xl text-gray-900">
+        <div className="bg-white w-1/2 p-8 mb-20">
+          <div className="flex flex-col items-center justify-center">
+            <h2 className="font-semibold text-3xl text-gray-900 mb-10">
               プロフィール
             </h2>
+            <ProfileImageUpload />
           </div>
           <form className="flex flex-col">
             <label htmlFor="nickname" className="text-xs">
@@ -184,7 +189,7 @@ const UserEditPage: React.FC = memo(() => {
           )}
         </div>
         {currentUser?.id === userId && (
-          <div className="mt-10 flex justify-center">
+          <div className="flex justify-center mb-20">
             <button
               onClick={() => setIsOpen(true)}
               className="text-sm border-red-500 px-2 py-2 rounded border text-red-500 hover:bg-red-400 hover:text-neutral-200 hover:border-red-400 transition"

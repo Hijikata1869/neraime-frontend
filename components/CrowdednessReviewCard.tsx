@@ -19,7 +19,7 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
       }
     };
     return (
-      <div className="px-20">
+      <div className="px-20 w-full">
         {reviews?.map((review) => (
           <div
             key={review.id}
@@ -52,12 +52,16 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
             )}
             <div className="flex items-center justify-end mt-4">
               <div className="flex items-center">
-                <Image
-                  src="/default.svg"
-                  width={40}
-                  height={40}
-                  alt="default user image"
-                />
+                <div className="relative w-10 h-10">
+                  <Image
+                    src={review.url || "/default.svg"}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    alt="default user image"
+                    className="rounded-full"
+                    sizes="(max-width: 600px) 100vw, 24px"
+                  />
+                </div>
                 <Link href={`/users/${review.user_id}`}>
                   <p className="font-bold text-gray-700 pl-2">
                     {review.nickname}

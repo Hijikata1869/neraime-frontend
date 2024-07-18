@@ -27,7 +27,7 @@ export const User: React.FC = memo(() => {
   const userId = parseInt(router.query.id as string);
   const currentUserContext = useContext(CurrentUserContext);
   const { currentUser, setCurrentUser } = currentUserContext;
-  const [user, setUser] = useState<UserObj>();
+  const [user, setUser] = useState<UserObj | undefined>(undefined);
   const [userCrowdedness, setUserCrowdedness] = useState<
     UserCrowdedness | undefined
   >(undefined);
@@ -106,13 +106,17 @@ export const User: React.FC = memo(() => {
           <div className="w-3/5 bg-white rounded-lg p-8 shadow">
             <div className="flex flex-col">
               <div className="flex items-center">
-                <Image
-                  src="/default.svg"
-                  width={100}
-                  height={100}
-                  alt="default user image"
-                />
-                <h2 className="font-bold text-3xl text-gray-700">
+                <div className="relative w-20 h-20">
+                  <Image
+                    src={user?.url || "/default.svg"}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    alt="default user image"
+                    className="rounded-full"
+                    sizes="(max-width: 600px) 100vw, 24px"
+                  />
+                </div>
+                <h2 className="font-bold text-3xl text-gray-700 ml-5">
                   {user?.nickname}
                 </h2>
               </div>
