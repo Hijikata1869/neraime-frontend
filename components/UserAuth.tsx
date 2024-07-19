@@ -113,7 +113,7 @@ export const UserAuth: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center">
+    <div className="w-screen h-screen flex flex-col items-center mt-20 shadow-md">
       <div className="bg-slate-50 py-4 px-8">
         <div className="flex justify-center mx-4 mt-4">
           {isSignUp ? (
@@ -240,7 +240,7 @@ export const UserAuth: React.FC = memo(() => {
         </div>
         <div className="mt-6 mb-6 mx-4 flex justify-center">
           <button
-            className="text-sm border w-full py-3 bg-emerald-700 text-gray-100 rounded hover:bg-emerald-900 transition"
+            className="text-sm border w-full py-3 bg-cyan-600 text-gray-100 rounded hover:bg-cyan-700 transition"
             onClick={isSignUp ? onClickSignUp : onClickSignIn}
             disabled={isLoading}
           >
