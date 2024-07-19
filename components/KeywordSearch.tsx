@@ -70,7 +70,7 @@ export const KeywordSearch: React.FC = memo(() => {
             onChange={(event) => onChangeInputValue(event)}
           />
           <button
-            className="py-3 px-6 text-amber-50 rounded-r bg-emerald-700 hover:bg-emerald-950"
+            className="py-3 px-6 text-amber-50 rounded-r bg-cyan-600 hover:bg-cyan-700"
             onClick={(event) => onClickSearch(event)}
           >
             検索
