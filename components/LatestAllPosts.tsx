@@ -34,7 +34,7 @@ export const LatestAllPosts: React.FC = memo(() => {
         <div className="flex flex-col justify-center items-center">
           <CrowdednessReviewCard reviews={latestPosts} />
           <Link href="/posts">
-            <button className="py-2 px-4 bg-sky-500 rounded-lg text-gray-50 font-bold hover:bg-sky-700 transition">
+            <button className="py-2 px-4 bg-cyan-600 rounded-lg text-gray-50 font-bold hover:bg-cyan-500 transition">
               投稿をもっと見る
             </button>
           </Link>
