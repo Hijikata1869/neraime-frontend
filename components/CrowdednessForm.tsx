@@ -128,10 +128,10 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             <div className="inline-flex rounded mb-2 ml-4">
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium  border border-gray-200 rounded-l hover:bg-emerald-100 ${
+                className={`shadow-sm px-4 py-2 text-sm font-medium  border border-gray-200 rounded-l ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[0]
-                    ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
-                    : `text-gray-500 bg-white`
+                    ? `z-10 bg-cyan-600 text-white hover:text-white`
+                    : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
                 }`}
                 onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[0]}
@@ -140,10 +140,10 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-r border-gray-200 hover:bg-emerald-100 ${
+                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-r border-gray-200 ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[1]
-                    ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
-                    : `text-gray-500 bg-white `
+                    ? `z-10 bg-cyan-600 text-white hover:text-white`
+                    : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100 `
                 }`}
                 onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[1]}
@@ -152,10 +152,10 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-gray-200 hover:bg-emerald-100 ${
+                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-gray-200  ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[2]
-                    ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
-                    : `text-gray-500 bg-white`
+                    ? `z-10 bg-cyan-600 text-white hover:text-white`
+                    : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
                 }`}
                 onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[2]}
@@ -164,10 +164,10 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border border-gray-200 rounded-e hover:bg-emerald-100 ${
+                className={`shadow-sm px-4 py-2 text-sm font-medium border border-gray-200 rounded-e ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[3]
-                    ? `z-10 bg-emerald-600 text-white hover:bg-emerald-600 hover:text-white`
-                    : ` text-gray-500 bg-white`
+                    ? `z-10 bg-cyan-600 text-white`
+                    : ` text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
                 }`}
                 onClick={handleCrowdednessClick}
                 value={CROWDEDNESS_LEVEL[3]}
@@ -205,7 +205,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
           </div>
           <div className="flex justify-center">
             <button
-              className="mt-10 py-4 px-10 rounded transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950"
+              className="mt-10 py-4 px-10 rounded transition mr-4 bg-cyan-700 text-amber-50 hover:bg-cyan-900"
               onClick={(event) => hundleClick(event)}
             >
               混雑度を投稿する

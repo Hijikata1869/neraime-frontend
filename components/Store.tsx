@@ -141,7 +141,7 @@ export const Store: React.FC = memo(() => {
               <>
                 <button
                   onClick={onClickToggle}
-                  className="border border-r-0 rounded rounded-r-none px-16 py-2 bg-emerald-950 text-gray-100 font-semibold"
+                  className="border border-r-0 rounded rounded-r-none px-16 py-2 bg-cyan-600 text-gray-100 font-semibold"
                 >
                   混雑度を見る
                 </button>
@@ -162,7 +162,7 @@ export const Store: React.FC = memo(() => {
                 </button>
                 <button
                   onClick={onClickToggle}
-                  className="border border-l-0 rounded rounded-l-none px-16 py-2 bg-emerald-950 text-gray-100 font-semibold"
+                  className="border border-l-0 rounded rounded-l-none px-16 py-2 bg-cyan-600 text-gray-100 font-semibold"
                 >
                   混雑度を投稿する
                 </button>
