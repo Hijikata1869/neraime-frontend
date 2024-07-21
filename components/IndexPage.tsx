@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const IndexPage: React.FC = memo(() => {
   return (
-    <div className="w-full flex flex-col justify-center items-center px-20 pt-20">
+    <div className="w-full flex flex-col justify-center items-center px-40 pt-20">
       <div className="flex justify-between">
         <div className="flex flex-col justify-center">
           <h2 className="text-gray-900 font-bold text-3xl">
@@ -38,6 +38,53 @@ export const IndexPage: React.FC = memo(() => {
             「混んでいて席に座れなかった」「サウナに入りたがったが待たなければならなかった」を避け、
             <br />
             ”狙い目”の時間を見つけましょう！
+          </p>
+        </div>
+      </div>
+      <div className="flex justify-between items-baseline space-x-10 mt-10">
+        <div className="flex flex-col w-1/3">
+          <Image
+            src={"/search.svg"}
+            alt="title image"
+            width={300}
+            height={300}
+            priority
+          />
+          <h3 className="text-lg font-bold text-gray-900 mt-4">
+            店舗検索・混雑度閲覧機能
+          </h3>
+          <p className="text-sm text-gray-900 font-semibold mt-2">
+            行きたいお店を検索して、混み具合傾向を見ることができます。
+          </p>
+        </div>
+        <div className="flex flex-col w-1/3">
+          <Image
+            src={"/post.svg"}
+            alt="title image"
+            width={300}
+            height={300}
+            priority
+          />
+          <h3 className="text-lg font-bold text-gray-900 mt-4">
+            混雑度投稿機能
+          </h3>
+          <p className="text-sm text-gray-900 font-semibold mt-2">
+            自分が行ったお店の混み具合を投稿して、共有しましょう。
+          </p>
+        </div>
+        <div className="flex flex-col w-1/3">
+          <Image
+            src={"/bookmark.svg"}
+            alt="title image"
+            width={300}
+            height={300}
+            priority
+          />
+          <h3 className="text-lg font-bold text-gray-900 mt-4">
+            店舗お気に入り機能
+          </h3>
+          <p className="text-sm text-gray-900 font-semibold mt-2">
+            よく行くお店はお気に入り登録すると、マイページからすぐにアクセスできます。
           </p>
         </div>
       </div>
