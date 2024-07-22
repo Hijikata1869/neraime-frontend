@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useContext, memo } from "react";
 import Cookie from "universal-cookie";
+import { bebasNeue } from "@/utiles/font";
 
 // context
 import { CurrentUserContext } from "@/context/CurrentUserContext";
@@ -65,10 +66,10 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     <>
       <header className="p-5 bg-sky-800">
         <nav>
-          <div className="flex">
+          <div className="flex items-center">
             <Link
               href="/"
-              className="text-amber-50 font-bold text-3xl cursor-pointer mr-auto"
+              className={`${bebasNeue.className} text-amber-50 text-5xl cursor-pointer mr-auto`}
             >
               NERAIME
             </Link>

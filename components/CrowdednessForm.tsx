@@ -218,7 +218,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             混雑度はログインすると投稿できます
           </p>
           <button
-            className="py-4 px-6 mt-10 rounded transition mr-4 bg-emerald-700 text-white hover:bg-emerald-950"
+            className="py-4 px-6 mt-10 rounded transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700"
             onClick={hundleLoginButton}
           >
             ログイン・新規登録はこちら
