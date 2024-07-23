@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useContext, memo } from "react";
 import Cookie from "universal-cookie";
+import { bebasNeue } from "@/utiles/font";
 
 // context
 import { CurrentUserContext } from "@/context/CurrentUserContext";
@@ -63,25 +64,25 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
 
   return (
     <>
-      <header className="p-8 bg-gray-100">
+      <header className="p-5 bg-sky-800">
         <nav>
-          <div className="flex">
+          <div className="flex items-center">
             <Link
               href="/"
-              className="text-gray-800 font-bold text-3xl cursor-pointer mr-auto"
+              className={`${bebasNeue.className} text-amber-50 text-5xl cursor-pointer mr-auto`}
             >
               NERAIME
             </Link>
             {isLogin ? (
               <div>
                 <button
-                  className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4"
+                  className="py-2 px-4 rounded text-sm text-gray-100 hover:bg-sky-600 transition mr-4"
                   onClick={logout}
                 >
                   ログアウト
                 </button>
                 <Link href={`/users/${currentUser?.id}`}>
-                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
+                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700">
                     マイページ
                   </button>
                 </Link>
@@ -89,12 +90,12 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
             ) : (
               <div>
                 <Link href="/sign-up">
-                  <button className="py-2 px-4 border border-gray-300 rounded text-sm hover:bg-neutral-200 transition mr-4">
+                  <button className="py-2 px-4 text-sm rounded hover:bg-sky-600 transition mr-4 text-gray-100">
                     新規登録
                   </button>
                 </Link>
                 <Link href="/sign-in">
-                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-950 text-amber-50 hover:bg-emerald-700">
+                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700">
                     ログイン
                   </button>
                 </Link>

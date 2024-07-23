@@ -134,7 +134,7 @@ const UserEditPage: React.FC = memo(() => {
         executeOnDialogAction={onClickDelete}
       />
       <Layout title="登録情報の変更">
-        <div className="bg-white w-1/2 p-8 mb-20">
+        <div className="bg-white w-1/2 p-8 mb-20 mt-20">
           <div className="flex flex-col items-center justify-center">
             <h2 className="font-semibold text-3xl text-gray-900 mb-10">
               プロフィール
@@ -174,7 +174,7 @@ const UserEditPage: React.FC = memo(() => {
           {currentUser?.id === userId && (
             <div className="flex justify-center mt-10">
               <button
-                className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 "
+                className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700"
                 onClick={(event) => onClickUpdate(event)}
               >
                 更新する

@@ -133,7 +133,7 @@ export const CreateStore: React.FC = memo(() => {
                     </div>
                     <div className="flex justify-center">
                       <button
-                        className="rounded bg-emerald-700 text-amber-50 py-4 px-20 mt-10 hover:bg-emerald-950 transition"
+                        className="rounded bg-cyan-600 text-amber-50 py-4 px-20 mt-10 hover:bg-cyan-700 transition"
                         onClick={(event) => hundleClick(event)}
                       >
                         登録する

@@ -101,7 +101,7 @@ export const User: React.FC = memo(() => {
 
   return (
     <>
-      <div className="w-full px-40">
+      <div className="w-full px-40 mt-20">
         <div className="flex">
           <div className="w-3/5 bg-white rounded-lg p-8 shadow">
             <div className="flex flex-col">
@@ -130,7 +130,7 @@ export const User: React.FC = memo(() => {
               <div className="flex justify-center">
                 <Link
                   href={`/users/${userId}/edit`}
-                  className="py-2 px-4 rounded text-sm transition mr-4 bg-emerald-700 text-amber-50 hover:bg-emerald-950 mt-20"
+                  className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700 mt-20"
                 >
                   登録情報を編集する
                 </Link>

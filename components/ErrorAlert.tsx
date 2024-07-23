@@ -8,7 +8,7 @@ export const ErrorAlert: React.FC = memo(() => {
 
   return (
     notificationCtx.notification === "error" && (
-      <div className="flex justify-between bg-red-200 p-4 min-w-96 rounded-lg mb-10">
+      <div className="flex justify-between bg-red-200 p-4 min-w-96 rounded-lg mb-10 mt-10">
         <div className="flex">
           <Image
             src="/exclamation.svg"
