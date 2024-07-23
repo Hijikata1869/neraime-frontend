@@ -1,3 +1,5 @@
+import { CurrentUserObj } from "./user";
+
 export type CreateCrowdednessArg = {
   token: string;
   userId: number | undefined;
@@ -77,6 +79,8 @@ export type UserCrowdedness = {
 
 export type UserCrowdednessCardProps = {
   reviews: UserCrowdedness | undefined;
+  currentUser: CurrentUserObj | undefined;
+  accessToken: string;
 };
 
 export type LatestPosts = {
