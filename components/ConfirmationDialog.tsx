@@ -13,7 +13,13 @@ import { ConfirmationDialogProps } from "@/types";
 
 export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = memo(
   (props) => {
-    const { isOpen, setIsOpen, executeOnDialogAction } = props;
+    const {
+      isOpen,
+      setIsOpen,
+      dialogTitle,
+      dialogDescription,
+      executeOnDialogAction,
+    } = props;
 
     return (
       <>
@@ -55,11 +61,11 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = memo(
                             as="h3"
                             className="text-base font-semibold leading-6 text-gray-900"
                           >
-                            アカウントを削除しますか？
+                            {`${dialogTitle}`}
                           </DialogTitle>
                           <div className="mt-2">
                             <Description className="text-sm text-gray-500">
-                              アカウントを削除するとこれまでの投稿も削除されます。
+                              {`${dialogDescription}`}
                             </Description>
                           </div>
                         </div>

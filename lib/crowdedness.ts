@@ -167,3 +167,26 @@ export const fetchAllPosts = async () => {
     }
   });
 };
+
+export const deletePost = async (
+  crowdednessId: number,
+  accessToken: string
+) => {
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdednesses/${crowdednessId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken,
+      },
+    }
+  ).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "削除失敗";
+    }
+  });
+};

@@ -8,5 +8,7 @@ export type LayoutProps = {
 export type ConfirmationDialogProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  executeOnDialogAction: (arg: any) => any;
+  dialogTitle: string;
+  dialogDescription: string;
+  executeOnDialogAction?: (arg: any) => any;
 };

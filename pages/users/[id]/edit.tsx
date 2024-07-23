@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, useCallback, memo } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Cookie from "universal-cookie";
 
 import { CurrentUserContext } from "@/context/CurrentUserContext";
@@ -34,7 +33,6 @@ const UserEditPage: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -46,7 +44,6 @@ const UserEditPage: React.FC = memo(() => {
         .then((data) => {
           setNickname(data.nickname);
           setEmail(data.email);
-          setImageUrl(data.url);
           data.self_introduction && setSelfIntroduction(data.self_introduction);
         })
         .catch((err) => {
@@ -131,6 +128,8 @@ const UserEditPage: React.FC = memo(() => {
       <ConfirmationDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        dialogTitle="アカウントを削除しますか？"
+        dialogDescription="アカウントを削除するとこれまでの投稿も削除されます。"
         executeOnDialogAction={onClickDelete}
       />
       <Layout title="登録情報の変更">

@@ -25,6 +25,7 @@ const cookie = new Cookie();
 export const User: React.FC = memo(() => {
   const router = useRouter();
   const userId = parseInt(router.query.id as string);
+  const accessToken = cookie.get("access_token") as string;
   const currentUserContext = useContext(CurrentUserContext);
   const { currentUser, setCurrentUser } = currentUserContext;
   const [user, setUser] = useState<UserObj | undefined>(undefined);
@@ -50,7 +51,6 @@ export const User: React.FC = memo(() => {
   }, [router.query.id]);
 
   useEffect(() => {
-    const accessToken = cookie.get("access_token");
     if (accessToken) {
       fetchCurrentUser(accessToken)
         .then(async (data) => {
@@ -148,7 +148,11 @@ export const User: React.FC = memo(() => {
           {user?.nickname}さんの投稿一覧
         </h2>
         {userCrowdedness?.length !== 0 ? (
-          <UserCrowdednessReviewCard reviews={userCrowdedness} />
+          <UserCrowdednessReviewCard
+            reviews={userCrowdedness}
+            currentUser={currentUser}
+            accessToken={accessToken}
+          />
         ) : (
           <div className="flex px-20">
             <p className="font-bold text-gray-900">まだ投稿がありません</p>
