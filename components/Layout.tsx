@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useContext, memo } from "react";
+import { useEffect, useContext, memo, useState } from "react";
 import Cookie from "universal-cookie";
 import { bebasNeue } from "@/utiles/font";
 
@@ -17,6 +17,7 @@ import { LayoutProps } from "@/types";
 
 import { SuccessAlert } from "./SuccessAlert";
 import { ErrorAlert } from "./ErrorAlert";
+import { HumbergerMenu } from "./HumbergerMenu";
 
 const cookie = new Cookie();
 
@@ -26,6 +27,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     currentUserContext;
   const router = useRouter();
   const notificationCtx = useContext(NotificationContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -64,12 +66,12 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
 
   const hundleClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    alert("Clicked!!");
+    setIsOpen(!isOpen);
   };
 
   return (
     <>
-      <header className="p-5 bg-sky-800">
+      <header className="p-5 bg-sky-800 z-30 relative">
         <nav>
           <div className="flex items-center">
             <Link
@@ -95,7 +97,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
                 </div>
                 <div>
                   <button
-                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden"
+                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden focus:outline-none"
                     onClick={hundleClick}
                   >
                     <svg
@@ -131,7 +133,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
                 </div>
                 <div>
                   <button
-                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden"
+                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden focus:outline-none"
                     onClick={hundleClick}
                   >
                     <svg
@@ -161,6 +163,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
         </Head>
         <SuccessAlert />
         <ErrorAlert />
+        <HumbergerMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>

@@ -12,3 +12,8 @@ export type ConfirmationDialogProps = {
   dialogDescription: string;
   executeOnDialogAction?: (arg: any) => any;
 };
+
+export type HumbergerMenuProps = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
