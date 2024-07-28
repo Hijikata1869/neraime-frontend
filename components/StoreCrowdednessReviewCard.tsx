@@ -21,30 +21,34 @@ export const StoreCrowdednessReviewCard: React.FC<StoreCrowdednessReviewProps> =
     };
 
     return (
-      <div className="px-20">
+      <div className="md:px-20">
         {reviews?.map((review) => (
           <div
             key={review.id}
             className="bg-white px-8 py-4 mb-10 rounded-lg shadow-md flex flex-col"
           >
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex md:flex-row flex-col md:justify-between md:items-center items-start mb-2">
               <div>
-                <p className="text-gray-500 text-xs">{`${review.created_at} ${review.day_of_week}`}</p>
+                <p className="text-gray-500 text-xs mb-2 md:mb-0">{`${review.created_at} ${review.day_of_week}`}</p>
               </div>
               <div
                 className={`px-2 py-1 rounded ${changeBackgroundColor(
                   review.level
                 )}`}
               >
-                <p className={`text-sm text-white font-bold`}>{review.level}</p>
+                <p className={`text-sm text-white font-bold`}>
+                  混み具合：{review.level}
+                </p>
               </div>
             </div>
             {review.memo?.length !== 0 && (
               <div>
-                <p className="text-gray-900">{review.memo}</p>
+                <p className="text-gray-900 text-sm md:text-base">
+                  {review.memo}
+                </p>
               </div>
             )}
-            <div className="flex items-center justify-end mt-4">
+            <div className="flex items-center md:justify-end justify-start mt-4">
               <div className="flex items-center">
                 <div className="relative w-10 h-10">
                   <Image

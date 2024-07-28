@@ -54,8 +54,8 @@ const StoreReviewPage: React.FC = memo(() => {
 
   return (
     <Layout title="メモ一覧">
-      <div className="w-full px-40 mt-10">
-        <h1 className="text-2xl font-bold text-gray-900 mb-10">{`${store?.name}のメモ一覧`}</h1>
+      <div className="w-full lg:px-40 md:px-20 px-10 mt-10">
+        <h1 className="md:text-2xl font-bold text-gray-900 mb-10">{`${store?.name}の口コミ・メモ一覧`}</h1>
         {crowdednessReviews ? (
           <StoreCrowdednessReviewCard reviews={crowdednessReviews} />
         ) : (
