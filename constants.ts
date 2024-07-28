@@ -58,6 +58,16 @@ export const DAY_OF_WEEK = [
   "日曜日",
 ];
 
+export const RESPONSIVE_DAY_OF_WEEK = [
+  "月",
+  "火",
+  "水",
+  "木",
+  "金",
+  "土",
+  "日",
+];
+
 export const HOURS: string[] = [];
 
 for (let i = 0; i < 24; i++) {

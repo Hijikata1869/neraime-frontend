@@ -10,7 +10,7 @@ import {
   DaylyCrowdednessList,
 } from "@/types/crowdedness";
 
-import { DAY_OF_WEEK } from "@/constants";
+import { DAY_OF_WEEK, RESPONSIVE_DAY_OF_WEEK } from "@/constants";
 
 export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
   const { storeId } = props;
@@ -57,7 +57,7 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
 
   return (
     <div>
-      <div className="mt-5 w-full flex justify-between px-10 bg-white pt-5">
+      <div className="hidden mt-5 w-full md:flex justify-between px-10 bg-white pt-5">
         {DAY_OF_WEEK.map((dayOfWeek, index) => (
           <button
             className={`pb-3 font-bold ${
@@ -73,6 +73,22 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
           </button>
         ))}
       </div>
+      <div className="md:hidden mt-5 w-full flex justify-between px-10 bg-white pt-5">
+        {RESPONSIVE_DAY_OF_WEEK.map((dayOfWeek, index) => (
+          <button
+            className={`pb-3 font-bold ${
+              selectedDayOfWeek === dayOfWeek + "曜日"
+                ? `border-b-2 border-lime-950 text-gray-700`
+                : `text-gray-300`
+            }`}
+            key={index}
+            value={`${dayOfWeek}曜日`}
+            onClick={hundleDayOfWeekClick}
+          >
+            {dayOfWeek}
+          </button>
+        ))}
+      </div>
 
       <div
         className={`relative overflow-x-auto rounded-md ${
@@ -80,22 +96,25 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
         }`}
       >
         {daylyCrowdednessList ? (
-          <table className="w-full text-sm text-left">
-            <thead className="text-lg text-gray-700 uppercase bg-white">
+          <table className="w-full md:text-sm text-xs md:text-left text-center">
+            <thead className="md:text-lg text-xs text-gray-700 uppercase bg-white">
               <tr className=" border-b">
-                <th scope="col" className="px-6 py-3 border-r pt-10">
+                <th
+                  scope="col"
+                  className="md:px-6 px-1 md:py-3 py-4 border-r md:pt-10"
+                >
                   訪問時間
                 </th>
-                <th scope="col" className="px-6 py-3 border-r pt-10">
+                <th scope="col" className="md:px-6 md:py-3 border-r md:pt-10">
                   空いてる
                 </th>
-                <th scope="col" className="px-6 py-3 border-r pt-10">
+                <th scope="col" className="md:px-6 md:py-3 border-r md:pt-10">
                   普通
                 </th>
-                <th scope="col" className="px-6 py-3 border-r pt-10">
+                <th scope="col" className="md:px-6 md:py-3 border-r md:pt-10">
                   混雑
                 </th>
-                <th scope="col" className="px-6 py-3 pt-10">
+                <th scope="col" className="md:px-6 md:py-3 md:pt-10">
                   空き無し
                 </th>
               </tr>
@@ -105,51 +124,51 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
                 <tr key={crowdedness.time} className="bg-white border-b">
                   <th
                     scope="row"
-                    className="px-6 py-4 font-normal text-lg text-gray-900 whitespace-nowrap border-r-2"
+                    className="md:px-6 md:py-4 py-2 font-normal md:text-lg text-gray-900 whitespace-nowrap border-r-2"
                   >
                     {crowdedness.time}
                   </th>
                   {crowdedness.空いてる === 0 ? (
-                    <td className="px-6 py-4 text-gray-400 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.空いてる}`}</span>
+                    <td className="md:px-6 md:py-4 text-gray-400 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.空いてる}`}</span>
                       件
                     </td>
                   ) : (
-                    <td className="px-6 py-4 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.空いてる}`}</span>
+                    <td className="md:px-6 md:py-4 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.空いてる}`}</span>
                       件
                     </td>
                   )}
                   {crowdedness.普通 === 0 ? (
-                    <td className="px-6 py-4 text-gray-400 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.普通}`}</span>
+                    <td className="md:px-6 md:py-4 text-gray-400 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.普通}`}</span>
                       件
                     </td>
                   ) : (
-                    <td className="px-6 py-4 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.普通}`}</span>
+                    <td className="md:px-6 md:py-4 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.普通}`}</span>
                       件
                     </td>
                   )}
                   {crowdedness.混雑 === 0 ? (
-                    <td className="px-6 py-4 text-gray-400 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.混雑}`}</span>
+                    <td className="md:px-6 md:py-4 text-gray-400 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.混雑}`}</span>
                       件
                     </td>
                   ) : (
-                    <td className="px-6 py-4 border-r-2">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.混雑}`}</span>
+                    <td className="md:px-6 md:py-4 border-r-2">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.混雑}`}</span>
                       件
                     </td>
                   )}
                   {crowdedness.空き無し === 0 ? (
-                    <td className="px-6 py-4 text-gray-400">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.空き無し}`}</span>
+                    <td className="md:px-6 md:py-4 text-gray-400">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.空き無し}`}</span>
                       件
                     </td>
                   ) : (
-                    <td className="px-6 py-4">
-                      <span className="text-xl font-bold mr-1">{`${crowdedness.空き無し}`}</span>
+                    <td className="md:px-6 md:py-4">
+                      <span className="md:text-xl font-bold md:mr-1">{`${crowdedness.空き無し}`}</span>
                       件
                     </td>
                   )}
