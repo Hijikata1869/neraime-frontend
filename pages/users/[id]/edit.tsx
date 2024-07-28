@@ -133,7 +133,7 @@ const UserEditPage: React.FC = memo(() => {
         executeOnDialogAction={onClickDelete}
       />
       <Layout title="登録情報の変更">
-        <div className="bg-white w-1/2 p-8 mb-20 mt-20">
+        <div className="bg-white md:w-1/2 p-8 mb-20 mt-20">
           <div className="flex flex-col items-center justify-center">
             <h2 className="font-semibold text-3xl text-gray-900 mb-10">
               プロフィール
