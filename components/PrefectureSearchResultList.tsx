@@ -27,7 +27,7 @@ export const PrefectureSearchResultList: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-full px-40 mt-10 mb-20">
+    <div className="w-full lg:px-40 md:px-20 px-10 mt-10 mb-20">
       <h1 className="font-bold text-2xl text-gray-900 mb-5">
         都道府県検索結果
       </h1>
@@ -49,13 +49,15 @@ export const PrefectureSearchResultList: React.FC = memo(() => {
             {stores.map((store) => (
               <div
                 key={store.id}
-                className="lg:w-3/4 md:w-3/4 m-4 p-6 bg-white rounded-2xl cursor-pointer shadow-sm"
+                className="lg:w-3/4 md:w-3/4 w-11/12 m-4 p-6 bg-white rounded-2xl cursor-pointer shadow-sm"
                 onClick={() => hundleClick(store.id)}
               >
-                <h2 className="font-bold text-2xl text-gray-900 mb-4">
+                <h2 className="font-bold md:text-2xl text-sm text-gray-900 mb-4">
                   店舗名：{store.name}
                 </h2>
-                <p className="font-bold text-gray-500">住所：{store.address}</p>
+                <p className="font-bold text-gray-500 md:text-base text-xs">
+                  住所：{store.address}
+                </p>
               </div>
             ))}
           </>
