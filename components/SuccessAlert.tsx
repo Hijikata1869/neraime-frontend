@@ -8,7 +8,7 @@ export const SuccessAlert: React.FC = memo(() => {
 
   return (
     notificationCtx.notification === "success" && (
-      <div className="flex justify-between bg-emerald-200 p-4 min-w-96 rounded-lg mb-10 mt-10">
+      <div className="flex justify-between bg-emerald-200 p-4 md:min-w-96 rounded-lg mb-10 mt-10">
         <div className="flex">
           <Image
             src="/info.svg"
@@ -17,7 +17,7 @@ export const SuccessAlert: React.FC = memo(() => {
             alt="info icon for alert"
             className="mr-2"
           />
-          <p className="text-emerald-900 text-sm">
+          <p className="text-emerald-900 text-sm mr-2 md:mr-0">
             {notificationCtx.notificationText}
           </p>
         </div>

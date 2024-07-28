@@ -1,4 +1,5 @@
 import { ReactNode, Dispatch, SetStateAction } from "react";
+import { CurrentUserObj } from "./user";
 
 export type LayoutProps = {
   title: string;
@@ -16,4 +17,7 @@ export type ConfirmationDialogProps = {
 export type HumbergerMenuProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isLogin: boolean | undefined;
+  currentUser: CurrentUserObj | undefined;
+  logout: () => void;
 };

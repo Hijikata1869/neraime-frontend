@@ -163,7 +163,13 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
         </Head>
         <SuccessAlert />
         <ErrorAlert />
-        <HumbergerMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        <HumbergerMenu
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          isLogin={isLogin}
+          currentUser={currentUser}
+          logout={logout}
+        />
         <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>
