@@ -59,15 +59,15 @@ export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
           dialogDescription="削除した投稿は復元できません"
           executeOnDialogAction={hundleDeleteButtonClick}
         />
-        <div className="px-20">
+        <div className="md:px-20">
           {reviews?.map((review) => (
             <div
               key={review.id}
-              className="bg-white px-8 py-4 mb-10 rounded-lg shadow-md flex flex-col max-w-4xl"
+              className="bg-white md:px-8 md:py-4 p-4 mb-10 rounded-lg shadow-md flex flex-col max-w-4xl"
             >
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center items-start mb-2">
                 <div>
-                  <p className="text-gray-500 text-sm">{`${review.created_at} ${review.day_of_week} ${review.time}時の訪問`}</p>
+                  <p className="text-gray-500 pb-2 text-sm">{`${review.created_at} ${review.day_of_week} ${review.time}時の訪問`}</p>
                 </div>
                 <div
                   className={`px-2 py-1 rounded ${changeBackgroundColor(
@@ -75,7 +75,7 @@ export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
                   )}`}
                 >
                   <p className={`text-sm text-white font-bold`}>
-                    {review.level}
+                    混み具合：{review.level}
                   </p>
                 </div>
               </div>

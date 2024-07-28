@@ -101,9 +101,9 @@ export const User: React.FC = memo(() => {
 
   return (
     <>
-      <div className="w-full px-40 mt-20">
-        <div className="flex">
-          <div className="w-3/5 bg-white rounded-lg p-8 shadow">
+      <div className="w-full lg:px-40 md:px-20 px-5 md:mt-20 mt-10">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-3/5 bg-white rounded-lg p-8 shadow">
             <div className="flex flex-col">
               <div className="flex items-center">
                 <div className="relative w-20 h-20">
@@ -130,20 +130,20 @@ export const User: React.FC = memo(() => {
               <div className="flex justify-center">
                 <Link
                   href={`/users/${userId}/edit`}
-                  className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700 mt-20"
+                  className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700 md:mt-20 mt-5"
                 >
                   登録情報を編集する
                 </Link>
               </div>
             )}
           </div>
-          <div className="p-8 w-2/5 ml-5 flex flex-col">
-            <h2 className="font-bold text-gray-900 mb-5">{`${user?.nickname}さんのお気に入り店舗`}</h2>
+          <div className="md:p-8 mt-10 md:mt-0 md:w-2/5 md:ml-5 flex flex-col">
+            <h2 className="font-bold text-gray-900 mb-5 text-xl">{`${user?.nickname}さんのお気に入り店舗`}</h2>
             <FavoriteStoreCards favoriteStores={favoriteStores} />
           </div>
         </div>
       </div>
-      <div className="w-full px-40 mt-20 flex flex-col mb-20">
+      <div className="w-full lg:px-40 md:px-20 px-5 mt-20 flex flex-col mb-20">
         <h2 className="text-2xl font-bold text-gray-900 mb-5">
           {user?.nickname}さんの投稿一覧
         </h2>
