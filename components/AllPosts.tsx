@@ -22,8 +22,10 @@ export const AllPosts: React.FC = memo(() => {
   }, []);
 
   return (
-    <div className="w-full px-40 mb-20">
-      <h2 className="font-bold text-2xl text-gray-900 mb-5 mt-20">投稿一覧</h2>
+    <div className="w-full lg:px-40 md:px-20 px-10 mb-20 ">
+      <h2 className="font-bold text-2xl text-gray-900 mb-5 md:mt-20 mt-10">
+        投稿一覧
+      </h2>
       <CrowdednessReviewCard reviews={allPosts} />
     </div>
   );
