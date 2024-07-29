@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useContext, memo } from "react";
+import { useEffect, useContext, memo, useState } from "react";
 import Cookie from "universal-cookie";
 import { bebasNeue } from "@/utiles/font";
 
@@ -17,6 +17,7 @@ import { LayoutProps } from "@/types";
 
 import { SuccessAlert } from "./SuccessAlert";
 import { ErrorAlert } from "./ErrorAlert";
+import { HumbergerMenu } from "./HumbergerMenu";
 
 const cookie = new Cookie();
 
@@ -26,6 +27,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     currentUserContext;
   const router = useRouter();
   const notificationCtx = useContext(NotificationContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const accessToken = cookie.get("access_token");
@@ -62,9 +64,14 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
     notificationCtx.success("ログアウトしました");
   };
 
+  const hundleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      <header className="p-5 bg-sky-800">
+      <header className="p-5 bg-sky-800 z-30 relative">
         <nav>
           <div className="flex items-center">
             <Link
@@ -75,30 +82,76 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
             </Link>
             {isLogin ? (
               <div>
-                <button
-                  className="py-2 px-4 rounded text-sm text-gray-100 hover:bg-sky-600 transition mr-4"
-                  onClick={logout}
-                >
-                  ログアウト
-                </button>
-                <Link href={`/users/${currentUser?.id}`}>
-                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700">
-                    マイページ
+                <div className="hidden md:block">
+                  <button
+                    className="py-2 px-4 rounded text-sm text-gray-100 hover:bg-sky-600 transition mr-4"
+                    onClick={logout}
+                  >
+                    ログアウト
                   </button>
-                </Link>
+                  <Link href={`/users/${currentUser?.id}`}>
+                    <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700">
+                      マイページ
+                    </button>
+                  </Link>
+                </div>
+                <div>
+                  <button
+                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden focus:outline-none"
+                    onClick={hundleClick}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-8 text-amber-50"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             ) : (
               <div>
-                <Link href="/sign-up">
-                  <button className="py-2 px-4 text-sm rounded hover:bg-sky-600 transition mr-4 text-gray-100">
-                    新規登録
+                <div className="hidden md:block">
+                  <Link href="/sign-up">
+                    <button className="py-2 px-4 text-sm rounded hover:bg-sky-600 transition mr-4 text-gray-100">
+                      新規登録
+                    </button>
+                  </Link>
+                  <Link href="/sign-in">
+                    <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700">
+                      ログイン
+                    </button>
+                  </Link>
+                </div>
+                <div>
+                  <button
+                    className="outline outline-cyan-600 rounded p-1 bg-sky-800 hover:bg-sky-700 md:hidden focus:outline-none"
+                    onClick={hundleClick}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-8 text-amber-50"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      />
+                    </svg>
                   </button>
-                </Link>
-                <Link href="/sign-in">
-                  <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700">
-                    ログイン
-                  </button>
-                </Link>
+                </div>
               </div>
             )}
           </div>
@@ -110,6 +163,13 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
         </Head>
         <SuccessAlert />
         <ErrorAlert />
+        <HumbergerMenu
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          isLogin={isLogin}
+          currentUser={currentUser}
+          logout={logout}
+        />
         <main className="flex flex-col justify-center items-center h-full w-full">
           {props.children}
         </main>

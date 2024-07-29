@@ -42,7 +42,7 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
     }, [storeId]);
 
     return (
-      <div className="mt-10 w-full">
+      <div className="mt-10 w-full lg:px-0 md:px-20 px-10">
         <h3 className="font-bold text-2xl text-gray-800 mb-5">
           最新の口コミ・メモ
         </h3>
@@ -50,7 +50,7 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
         <div className="flex justify-center items-center mt-20">
           {latestReviews !== undefined ? (
             <button
-              className="py-2 px-4 bg-cyan-600 rounded-lg text-gray-50 font-bold hover:bg-cyan-800 transition"
+              className="py-2 px-4 bg-cyan-600 rounded-lg text-gray-50 font-bold hover:bg-cyan-800 transition text-sm md:text-base"
               onClick={() => router.push(`/stores/${storeId}/reviews`)}
             >
               この店舗の口コミ・メモをもっと見る

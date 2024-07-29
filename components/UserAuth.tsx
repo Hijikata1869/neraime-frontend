@@ -113,20 +113,20 @@ export const UserAuth: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center mt-20 shadow-md">
-      <div className="bg-slate-50 py-4 px-8">
+    <div className="w-full h-screen flex flex-col items-center mt-20 shadow-md">
+      <div className="md:bg-slate-50 bg-gray-100 py-4 md:px-8 px-2">
         <div className="flex justify-center mx-4 mt-4">
           {isSignUp ? (
             <>
               <button
                 onClick={onClickToggle}
-                className="border rounded px-16 py-2 bg-emerald-950 text-gray-100 font-semibold"
+                className="border rounded md:px-16 px-8 py-2 bg-emerald-950 text-gray-100 font-semibold"
               >
                 新規登録
               </button>
               <button
                 onClick={onClickToggle}
-                className="border rounded px-16 py-2 font-semibold text-gray-400"
+                className="border rounded md:px-16 px-8 py-2 font-semibold text-gray-400"
               >
                 ログイン
               </button>
@@ -135,13 +135,13 @@ export const UserAuth: React.FC = memo(() => {
             <>
               <button
                 onClick={onClickToggle}
-                className="border rounded px-16 py-2 font-semibold text-gray-400"
+                className="border rounded md:px-16 px-8 py-2 font-semibold text-gray-400"
               >
                 新規登録
               </button>
               <button
                 onClick={onClickToggle}
-                className="border rounded px-16 py-2 bg-emerald-950 text-gray-100 font-semibold"
+                className="border rounded md:px-16 px-8 py-2 bg-emerald-950 text-gray-100 font-semibold"
               >
                 ログイン
               </button>

@@ -52,29 +52,58 @@ export const KeywordSearch: React.FC = memo(() => {
 
   return (
     <>
-      <form className="flex flex-col w-full lg:px-40 pt-8">
-        <div className="flex items-center">
-          <label
-            htmlFor="search"
-            className="text-gray-900 text-2xl mr-6 font-bold"
-          >
-            キーワード検索
-          </label>
-          <input
-            id="search"
-            className="py-3 pl-2 focus: outline-none w-1/2 rounded-l"
-            type="text"
-            name="search"
-            placeholder="施設名・エリア・キーワード"
-            value={placeName}
-            onChange={(event) => onChangeInputValue(event)}
-          />
-          <button
-            className="py-3 px-6 text-amber-50 rounded-r bg-cyan-600 hover:bg-cyan-700"
-            onClick={(event) => onClickSearch(event)}
-          >
-            検索
-          </button>
+      <form className="flex flex-col w-full lg:px-40 md:px-20 px-10 pt-8">
+        <div className="hidden md:block">
+          <div className="flex items-center">
+            <label
+              htmlFor="search"
+              className="text-gray-900 text-2xl mr-6 font-bold"
+            >
+              キーワード検索
+            </label>
+            <input
+              id="search"
+              className="py-3 pl-2 focus: outline-none w-1/2 rounded-l"
+              type="text"
+              name="search"
+              placeholder="施設名・エリア・キーワード"
+              value={placeName}
+              onChange={(event) => onChangeInputValue(event)}
+            />
+            <button
+              className="py-3 px-6 text-amber-50 rounded-r bg-cyan-600 hover:bg-cyan-700"
+              onClick={(event) => onClickSearch(event)}
+            >
+              検索
+            </button>
+          </div>
+        </div>
+        <div className="md:hidden">
+          <div className="flex flex-col">
+            <label
+              htmlFor="search"
+              className="text-gray-900 text-2xl font-bold mb-4"
+            >
+              キーワード検索
+            </label>
+            <div className="flex w-full">
+              <input
+                id="search"
+                className="py-2 pl-2 focus:outline-none rounded-l w-3/4 text-sm"
+                type="text"
+                name="search"
+                placeholder="施設名・エリア・キーワード"
+                value={placeName}
+                onChange={(event) => onChangeInputValue(event)}
+              />
+              <button
+                className="py-1 px-4 text-amber-50 rounded-r bg-cyan-600 hover:bg-cyan-700 w-1/4"
+                onClick={(event) => onClickSearch(event)}
+              >
+                検索
+              </button>
+            </div>
+          </div>
         </div>
       </form>
     </>

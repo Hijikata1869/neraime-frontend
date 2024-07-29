@@ -80,7 +80,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
   };
 
   return (
-    <div className="mt-5 px-10">
+    <div className="mt-5 md:px-10">
       {isLogin ? (
         <form className="mt-5 px-10">
           <div className="flex flex-col mb-10">
@@ -128,7 +128,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             <div className="inline-flex rounded mb-2 ml-4">
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium  border border-gray-200 rounded-l ${
+                className={`shadow-sm md:px-4 px-2 py-2 text-sm font-medium  border border-gray-200 rounded-l ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[0]
                     ? `z-10 bg-cyan-600 text-white hover:text-white`
                     : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
@@ -140,7 +140,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-r border-gray-200 ${
+                className={`shadow-sm md:px-4 px-2 py-2 text-sm font-medium border-t border-b border-r border-gray-200 ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[1]
                     ? `z-10 bg-cyan-600 text-white hover:text-white`
                     : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100 `
@@ -152,7 +152,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border-t border-b border-gray-200  ${
+                className={`shadow-sm md:px-4 py-2 px-2 text-sm font-medium border-t border-b border-gray-200  ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[2]
                     ? `z-10 bg-cyan-600 text-white hover:text-white`
                     : `text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
@@ -164,7 +164,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               </button>
               <button
                 type="button"
-                className={`shadow-sm px-4 py-2 text-sm font-medium border border-gray-200 rounded-e ${
+                className={`shadow-sm md:px-4 py-2 px-2 text-sm font-medium border border-gray-200 rounded-e ${
                   crowdednessLevel === CROWDEDNESS_LEVEL[3]
                     ? `z-10 bg-cyan-600 text-white`
                     : ` text-gray-500 bg-white hover:text-gray-500 hover:bg-cyan-100`
@@ -203,9 +203,9 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
               placeholder="訪問時の状況に関するメモや、口コミを書いて他のユーザーに教えてあげましょう！"
             />
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-10 md:mb-0 ">
             <button
-              className="mt-10 py-4 px-10 rounded transition mr-4 bg-cyan-700 text-amber-50 hover:bg-cyan-900"
+              className="mt-10 py-4 px-10 rounded transition md:mr-4 bg-cyan-700 text-amber-50 hover:bg-cyan-900"
               onClick={(event) => hundleClick(event)}
             >
               混雑度を投稿する
@@ -218,7 +218,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             混雑度はログインすると投稿できます
           </p>
           <button
-            className="py-4 px-6 mt-10 rounded transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700"
+            className="py-4 px-6 mt-10 rounded transition mr-4 bg-cyan-600 text-white hover:bg-cyan-700 md:mb-0 mb-10"
             onClick={hundleLoginButton}
           >
             ログイン・新規登録はこちら

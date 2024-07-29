@@ -16,7 +16,7 @@ export const PrefectureSearch: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-full px-40 flex flex-col mt-10 mb-20">
+    <div className="w-full lg:px-40 md:px-20 px-10 flex flex-col mt-10 mb-20">
       <h2 className="font-bold text-gray-900 text-2xl">都道府県検索</h2>
       <div className="flex flex-col mt-5">
         <div>

@@ -108,13 +108,15 @@ export const Store: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-full px-40 mb-20">
-      <div className="flex flex-col bg-white rounded-lg p-20 mt-20">
+    <div className="w-full lg:px-40 mb-20 lg:mt-20">
+      <div className="flex flex-col bg-white rounded-lg md:p-20 p-4">
         <div>
-          <div className="flex justify-between items-center">
-            <h2 className="font-bold text-3xl mb-3">{store?.name}</h2>
+          <div className="flex md:flex-row flex-col md:justify-between md:items-center items-start">
+            <h2 className="font-bold md:text-3xl text-xl mb-2">
+              {store?.name}
+            </h2>
             {isLogin && (
-              <>
+              <div className="hidden md:block">
                 {isStoreInList(favoriteStores, storeId) ? (
                   <button
                     className="px-4 py-2 bg-white rounded text-sky-500 hover:bg-sky-100 transition outline outline-sky-200 font-bold ml-5"
@@ -132,22 +134,49 @@ export const Store: React.FC = memo(() => {
                     お気に入りに追加
                   </button>
                 )}
-              </>
+              </div>
             )}
           </div>
-          <p className="text-gray-400 ">{store?.address}</p>
-          <div className="flex justify-center mx-4 mt-10">
+          <div>
+            <p className="text-gray-400 md:text-base text-sm">
+              {store?.address}
+            </p>
+          </div>
+          <div>
+            {isLogin && (
+              <div className="md:hidden mt-4 flex justify-center items-center">
+                {isStoreInList(favoriteStores, storeId) ? (
+                  <button
+                    className="px-4 py-2 bg-white rounded text-sky-500 hover:bg-sky-100 transition outline outline-sky-200 font-bold"
+                    onClick={onClickDeleteFavorite}
+                    disabled={isDisabled}
+                  >
+                    お気に入り解除
+                  </button>
+                ) : (
+                  <button
+                    className="px-4 py-2 bg-sky-500 rounded text-gray-50 hover:bg-sky-700 transition font-bold"
+                    onClick={onClickCreateFavorite}
+                    disabled={isDisabled}
+                  >
+                    お気に入りに追加
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center mx-4 md:mt-10 mt-5">
             {isCrowdedness ? (
               <>
                 <button
                   onClick={onClickToggle}
-                  className="border border-r-0 rounded rounded-r-none px-16 py-2 bg-cyan-600 text-gray-100 font-semibold"
+                  className="border border-r-0 rounded rounded-r-none md:px-16 px-4 py-2 bg-cyan-600 text-gray-100 font-semibold"
                 >
                   混雑度を見る
                 </button>
                 <button
                   onClick={onClickToggle}
-                  className="border border-l-0 rounded rounded-l-none px-16 py-2 font-semibold text-gray-400"
+                  className="border border-l-0 rounded rounded-l-none md:px-16 px-4 py-2 font-semibold text-gray-400"
                 >
                   混雑度を投稿する
                 </button>
@@ -156,13 +185,13 @@ export const Store: React.FC = memo(() => {
               <>
                 <button
                   onClick={onClickToggle}
-                  className="border border-r-0 rounded rounded-r-none px-16 py-2 font-semibold text-gray-400"
+                  className="border border-r-0 rounded rounded-r-none md:px-16 px-4 py-2 font-semibold text-gray-400"
                 >
                   混雑度を見る
                 </button>
                 <button
                   onClick={onClickToggle}
-                  className="border border-l-0 rounded rounded-l-none px-16 py-2 bg-cyan-600 text-gray-100 font-semibold"
+                  className="border border-l-0 rounded rounded-l-none md:px-16 px-4 py-2 bg-cyan-600 text-gray-100 font-semibold"
                 >
                   混雑度を投稿する
                 </button>

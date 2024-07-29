@@ -76,7 +76,7 @@ export const CreateStore: React.FC = memo(() => {
   };
 
   return (
-    <div className="w-full lg:px-44 pt-6 text-gray-900">
+    <div className="w-full lg:px-40 md:px-20 px-10 pt-6 text-gray-900">
       <h1 className="font-bold text-3xl">店舗登録</h1>
       <div className="mt-10 lg:px-20">
         {selectedCandidate?.name.length ? (
@@ -102,10 +102,10 @@ export const CreateStore: React.FC = memo(() => {
               <>
                 {isLogin ? (
                   <>
-                    <p className="mb-10">
+                    <p className="mb-10 font-semibold">
                       選択していただいた店舗の情報はまだ登録されていませんでした。店舗情報を登録していただくことで混雑状況を投稿・閲覧できるようになります。以下の内容でお間違えなければ登録するボタンをクリックしてご登録をお願いします。
                     </p>
-                    <div className="flex flex-col m-4 p-6 bg-white rounded-2xl shadow-sm">
+                    <div className="flex flex-col md:m-4 p-6 bg-white rounded-2xl shadow-sm">
                       <h1 className="font-bold mb-2">
                         店舗名：{selectedCandidate?.name}
                       </h1>

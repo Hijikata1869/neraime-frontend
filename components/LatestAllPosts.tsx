@@ -28,7 +28,7 @@ export const LatestAllPosts: React.FC = memo(() => {
   }, []);
 
   return (
-    <div className="w-full px-40 my-20">
+    <div className="w-full lg:px-40 md:px-20 px-10 my-20">
       <h2 className="font-bold text-gray-900 text-3xl mb-5">新着の投稿</h2>
       {latestPosts?.length !== 0 ? (
         <div className="flex flex-col justify-center items-center">

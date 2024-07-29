@@ -126,7 +126,7 @@ const ProfileImageUpload: React.FC = memo(() => {
               </div>
               <button
                 type="submit"
-                className="mt-2 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 font-bold"
+                className="mt-2 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 font-bold mb-10"
               >
                 アイコンをこちらに変更する
               </button>

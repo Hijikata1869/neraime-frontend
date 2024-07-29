@@ -4,13 +4,13 @@ import Image from "next/image";
 
 export const IndexPage: React.FC = memo(() => {
   return (
-    <div className="w-full flex flex-col justify-center items-center px-40 pt-20">
-      <div className="flex justify-between">
-        <div className="flex flex-col justify-center">
-          <h2 className="text-gray-900 font-bold text-3xl">
+    <div className="w-full flex flex-col justify-center items-center lg:px-40 md:px-20 px-10 pt-20">
+      <div className="flex md:justify-between">
+        <div className="flex flex-col md:justify-center items-center md:items-start">
+          <h2 className="text-gray-900 font-bold lg:text-3xl md:text-xl">
             行きたいお店の混み具合傾向を見て、
           </h2>
-          <h2 className="text-gray-900 font-bold text-3xl">
+          <h2 className="text-gray-900 font-bold lg:text-3xl md:text-xl">
             狙い目の時間を見つけよう
           </h2>
           <div>
@@ -27,22 +27,31 @@ export const IndexPage: React.FC = memo(() => {
           width={350}
           height={350}
           priority
+          className="hidden md:block"
         />
       </div>
       <div className="flex flex-col mt-20">
         <div className="flex flex-col justify-center items-center">
-          <h2 className="text-gray-900 font-bold text-3xl">NERAIMEとは？</h2>
-          <p className="text-gray-900 font-semibold mt-5">
+          <h2 className="text-gray-900 font-bold lg:text-3xl md:text-xl">
+            NERAIMEとは？
+          </h2>
+          <p className="text-gray-900 font-semibold mt-5 lg:text-base md:text-sm hidden md:block">
             NERAIMEはカフェやサウナなどの混み具合の傾向を投稿、確認できるサービスです。
             <br />
             「混んでいて席に座れなかった」「サウナに入りたがったが待たなければならなかった」を避け、
             <br />
             ”狙い目”の時間を見つけましょう！
           </p>
+          <p className="text-gray-900 font-semibold mt-5 text-xs md:hidden">
+            NERAIMEはカフェやサウナなどの混み具合の傾向を投稿、確認できるサービスです。
+            <br />
+            「混んでいて席に座れなかった」「サウナに入りたがったが待たなければならなかった」を避け、
+            ”狙い目”の時間を見つけましょう！
+          </p>
         </div>
       </div>
-      <div className="flex justify-between items-baseline space-x-10 mt-10">
-        <div className="flex flex-col w-1/3">
+      <div className="flex md:flex-row flex-col md:justify-between md:items-baseline md:space-x-10 mt-10">
+        <div className="flex flex-col md:w-1/3 mb-10 md:mb-0">
           <Image
             src={"/search.svg"}
             alt="title image"
@@ -57,7 +66,7 @@ export const IndexPage: React.FC = memo(() => {
             行きたいお店を検索して、混み具合傾向を見ることができます。
           </p>
         </div>
-        <div className="flex flex-col w-1/3">
+        <div className="flex flex-col md:w-1/3 mb-10 md:mb-0">
           <Image
             src={"/post.svg"}
             alt="title image"
@@ -72,7 +81,7 @@ export const IndexPage: React.FC = memo(() => {
             自分が行ったお店の混み具合を投稿して、共有しましょう。
           </p>
         </div>
-        <div className="flex flex-col w-1/3">
+        <div className="flex flex-col md:w-1/3">
           <Image
             src={"/bookmark.svg"}
             alt="title image"
