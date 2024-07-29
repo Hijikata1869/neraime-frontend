@@ -67,7 +67,7 @@ export const HumbergerMenu: React.FC<HumbergerMenuProps> = memo((props) => {
 
           <div className="relative h-40 w-40 mt-20">
             <Image
-              src="login.svg"
+              src="/login.svg"
               alt="login image"
               fill
               style={{ objectFit: "cover" }}
