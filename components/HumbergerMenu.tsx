@@ -38,7 +38,7 @@ export const HumbergerMenu: React.FC<HumbergerMenuProps> = memo((props) => {
         >
           {isLogin ? (
             <>
-              <Link href={`users/${currentUser?.id}`}>
+              <Link href={`/users/${currentUser?.id}`}>
                 <div className="mt-20 py-2 px-3 text-gray-50 bg-cyan-600 hover:bg-cyan-700 rounded cursor-pointer">
                   マイページ
                 </div>
