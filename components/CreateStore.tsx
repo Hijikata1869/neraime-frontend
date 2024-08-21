@@ -88,12 +88,12 @@ export const CreateStore: React.FC = memo(() => {
                 </p>
                 <Link
                   href={`/stores/${registeredStore.id}`}
-                  className="bg-white p-10 mt-10 shadow rounded"
+                  className="bg-white md:p-10 p-5 mt-10 shadow rounded"
                 >
-                  <p className="font-bold text-2xl text-gray-900 mb-2">
+                  <p className="font-bold md:text-2xl text-gray-900 mb-2">
                     店舗名：{registeredStore.name}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="md:text-sm text-xs text-gray-500">
                     住所：{registeredStore.address}
                   </p>
                 </Link>
