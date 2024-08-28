@@ -3,8 +3,10 @@ import { Layout } from "@/components/Layout";
 const Privacy: React.FC = () => {
   return (
     <Layout title="プライバシーポリシー">
-      <div className="w-full flex flex-col text-gray-900 lg:px-40 md:px-20 px-10 my-10">
-        <h1 className="font-bold text-3xl mb-10">プライバシーポリシー</h1>
+      <div className="w-full flex flex-col text-gray-900 lg:px-40 md:px-20 px-10 lg:my-20 my-10">
+        <h1 className="font-bold lg:text-3xl text-2xl mb-10">
+          プライバシーポリシー
+        </h1>
         <div>
           <div className="mb-10">
             <h2 className="font-bold">お客様から取得する情報</h2>
@@ -75,9 +77,12 @@ const Privacy: React.FC = () => {
               <p>
                 当サービスは、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。Googleアナリティクスについて、詳しくは以下からご確認ください。
               </p>
-              <p>
-                https://marketingplatform.google.com/about/analytics/terms/jp/
-              </p>
+              <a
+                href="https://marketingplatform.google.com/about/analytics/terms/jp/"
+                className="text-sky-600 underline"
+              >
+                Google アナリティクス利用規約
+              </a>
             </div>
           </div>
           <div className="mb-10">
