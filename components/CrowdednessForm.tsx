@@ -205,7 +205,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
           </div>
           <div className="flex justify-center mb-10 md:mb-0 ">
             <button
-              className="mt-10 py-4 px-10 rounded transition md:mr-4 bg-cyan-700 text-amber-50 hover:bg-cyan-900"
+              className="mt-10 py-4 px-10 rounded transition md:mr-4 bg-cyan-700 text-white hover:bg-cyan-900"
               onClick={(event) => hundleClick(event)}
             >
               混雑度を投稿する

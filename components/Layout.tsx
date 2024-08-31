@@ -18,6 +18,7 @@ import { LayoutProps } from "@/types";
 import { SuccessAlert } from "./SuccessAlert";
 import { ErrorAlert } from "./ErrorAlert";
 import { HumbergerMenu } from "./HumbergerMenu";
+import { Footer } from "./Footer";
 
 const cookie = new Cookie();
 
@@ -174,6 +175,7 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
           {props.children}
         </main>
       </div>
+      <Footer />
     </>
   );
 });
