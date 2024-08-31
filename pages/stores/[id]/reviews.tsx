@@ -10,6 +10,7 @@ import { fetchCrowdednessReviews } from "@/lib/crowdedness";
 import { StoreCrowdednessReviewCard } from "@/components/StoreCrowdednessReviewCard";
 import { Layout } from "@/components/Layout";
 import { fetchStore } from "@/lib/stores";
+import { Spinner } from "@/components/Spinner";
 
 const StoreReviewPage: React.FC = memo(() => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const StoreReviewPage: React.FC = memo(() => {
     StoreCrowdednessReviews | undefined
   >();
   const [store, setStore] = useState<StoreData | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isNaN(storeId)) {
@@ -35,9 +37,10 @@ const StoreReviewPage: React.FC = memo(() => {
         })
         .catch((err) => {
           console.error(err);
+          router.push("/404");
         });
     }
-  }, [storeId]);
+  }, [storeId, router]);
 
   useEffect(() => {
     if (!isNaN(storeId)) {
@@ -48,9 +51,20 @@ const StoreReviewPage: React.FC = memo(() => {
         })
         .catch((err) => {
           console.error(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [storeId]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!crowdednessReviews) {
+    return null;
+  }
 
   return (
     <Layout title="メモ一覧">
