@@ -19,6 +19,7 @@ import { StoreDatas } from "@/types/store";
 
 import { UserCrowdednessReviewCard } from "./UserCrowdednessReviewCard";
 import { FavoriteStoreCards } from "./FavoriteStoreCards";
+import { Spinner } from "./Spinner";
 
 const cookie = new Cookie();
 
@@ -35,6 +36,7 @@ export const User: React.FC = memo(() => {
   const [favoriteStores, setFavoriteStores] = useState<StoreDatas | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -45,6 +47,10 @@ export const User: React.FC = memo(() => {
         })
         .catch((err) => {
           console.error(err);
+          router.replace("/404");
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
     // eslint-disable-next-line
@@ -98,6 +104,14 @@ export const User: React.FC = memo(() => {
         });
     }
   }, [userId]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <>

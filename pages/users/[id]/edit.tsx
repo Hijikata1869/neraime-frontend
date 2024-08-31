@@ -9,6 +9,7 @@ import NotificationContext from "@/context/notificationContext";
 import { Layout } from "@/components/Layout";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
+import { Spinner } from "@/components/Spinner";
 
 // apis
 import {
@@ -33,6 +34,7 @@ const UserEditPage: React.FC = memo(() => {
   const [email, setEmail] = useState("");
   const [selfIntroduction, setSelfIntroduction] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -48,6 +50,10 @@ const UserEditPage: React.FC = memo(() => {
         })
         .catch((err) => {
           console.error(err);
+          router.replace("/404");
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
     // eslint-disable-next-line
@@ -122,6 +128,14 @@ const UserEditPage: React.FC = memo(() => {
       });
     // eslint-disable-next-line
   }, []);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!nickname) {
+    return null;
+  }
 
   return (
     <>
