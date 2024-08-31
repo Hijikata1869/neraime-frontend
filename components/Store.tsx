@@ -15,6 +15,7 @@ import { StoreData, StoreDatas } from "@/types/store";
 import { CrowdednessTable } from "./CrowdednessTable";
 import { CrowdednessForm } from "./CrowdednessForm";
 import { LatestCrowdednessReviews } from "./LatestCrowdednessReviews";
+import { Spinner } from "./Spinner";
 
 const cookie = new Cookie();
 
@@ -32,6 +33,7 @@ export const Store: React.FC = memo(() => {
     undefined
   );
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isNaN(storeId)) {
@@ -45,6 +47,10 @@ export const Store: React.FC = memo(() => {
         })
         .catch((err) => {
           console.error(err);
+          router.replace("/404");
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
     // eslint-disable-next-line
@@ -106,6 +112,14 @@ export const Store: React.FC = memo(() => {
   ) => {
     return storeList?.some((store) => store.id === storeId);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!store) {
+    return null;
+  }
 
   return (
     <div className="w-full lg:px-40 mb-20 lg:mt-20">
