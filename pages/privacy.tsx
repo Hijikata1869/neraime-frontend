@@ -106,15 +106,7 @@ const Privacy: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="mb-10">
-            <h2 className="font-bold">事業者の氏名</h2>
-            <p className="ml-4">山田　大智</p>
-          </div>
-          <div className="mb-10">
-            <h2 className="font-bold">事業者の住所</h2>
-            <p className="ml-4">宮城県仙台市泉区将監一丁目19-17</p>
-          </div>
-          <p>2024年08月28日 制定</p>
+          <p>2024年10月8日 制定</p>
         </div>
       </div>
     </Layout>
