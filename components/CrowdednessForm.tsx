@@ -242,7 +242,7 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             ログイン・新規登録はこちら
           </button>
           <button
-            className="text-sm text-gray-800 font-bold py-4 px-6 mt-10 rounded border border-gray-800 transition mr-4 hover:bg-gray-400 hover:text-gray-100 hover:border-gray-400 md:mb-0 mb-10"
+            className="text-sm bg-gray-400 text-gray-100 font-bold py-4 px-6 mt-10 rounded border border-gray-400 transition mr-4 hover:bg-white hover:text-gray-800 hover:border-gray-400 md:mb-0 mb-10"
             onClick={hundleGuestLogin}
           >
             ゲストログインして使ってみる
