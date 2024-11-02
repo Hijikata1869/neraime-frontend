@@ -2,6 +2,7 @@ import { useContext, useState, memo } from "react";
 import { useRouter } from "next/router";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
 import { createCrowdedness } from "@/lib/crowdedness";
+import { guestUserLogin } from "@/lib/users";
 import NotificationContext from "@/context/notificationContext";
 
 import Cookie from "universal-cookie";
@@ -77,6 +78,23 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
     event.preventDefault();
     localStorage.setItem("redirectAfterLogin", router.asPath);
     router.push("/sign-in");
+  };
+
+  const hundleGuestLogin = (event: React.MouseEvent) => {
+    event.preventDefault();
+    guestUserLogin()
+      .then((data) => {
+        const options = {
+          path: "/",
+          expires: new Date(Date.now() + 24 * 3600 * 1000),
+        };
+        cookie.set("access_token", data.token, options);
+        router.push("/");
+        notificationCtx.success("ゲストログインしました");
+      })
+      .catch(() => {
+        notificationCtx.error("ゲストログインできませんでした");
+      });
   };
 
   return (
@@ -222,6 +240,12 @@ export const CrowdednessForm: React.FC<CrowdednessFormProps> = memo((props) => {
             onClick={hundleLoginButton}
           >
             ログイン・新規登録はこちら
+          </button>
+          <button
+            className="text-sm text-gray-800 font-bold py-4 px-6 mt-10 rounded border border-gray-800 transition mr-4 hover:bg-gray-400 hover:text-gray-100 hover:border-gray-400 md:mb-0 mb-10"
+            onClick={hundleGuestLogin}
+          >
+            ゲストログインして使ってみる
           </button>
         </div>
       )}
