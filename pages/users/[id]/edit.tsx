@@ -122,13 +122,15 @@ const UserEditPage: React.FC = memo(() => {
     deleteUser(userDeleteArg)
       .then(() => {
         cookie.remove("access_token", { path: "/" });
-      })
-      .then(() => {
         notificationCtx.success("アカウントを削除しました");
         router.push("/");
       })
-      .catch(() => {
-        notificationCtx.error("アカウントを削除できませんでした");
+      .catch((errorMessage) => {
+        if (errorMessage === "ゲストユーザーのユーザー情報は更新できません") {
+          notificationCtx.error("ゲストユーザーは削除できません");
+        } else {
+          notificationCtx.error("アカウントを削除できませんでした");
+        }
       });
     // eslint-disable-next-line
   }, []);

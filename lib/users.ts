@@ -127,7 +127,8 @@ export const deleteUser = async (deleteUserArg: deleteUserArg) => {
       const data = await res.json();
       return data;
     } else {
-      throw "削除失敗";
+      const data = await res.json();
+      throw `${data.message}`;
     }
   });
 };
