@@ -5,7 +5,7 @@ import Cookie from "universal-cookie";
 import NotificationContext from "@/context/notificationContext";
 
 // apis
-import { createUser, login } from "@/lib/users";
+import { createUser, login, guestUserLogin } from "@/lib/users";
 
 const cookie = new Cookie();
 
@@ -112,8 +112,31 @@ export const UserAuth: React.FC = memo(() => {
       });
   };
 
+  const hundleGuestLogin = (event: React.MouseEvent) => {
+    event.preventDefault();
+    guestUserLogin()
+      .then((data) => {
+        const options = {
+          path: "/",
+          expires: new Date(Date.now() + 24 * 3600 * 1000),
+        };
+        cookie.set("access_token", data.token, options);
+        const redirectUrl = localStorage.getItem("redirectAfterLogin");
+        if (redirectUrl && redirectUrl.startsWith("/")) {
+          router.push(redirectUrl);
+          localStorage.removeItem("redirectAfterLogin");
+        } else {
+          router.push("/");
+        }
+        notificationCtx.success("ゲストログインしました");
+      })
+      .catch(() => {
+        notificationCtx.error("ゲストログインできませんでした");
+      });
+  };
+
   return (
-    <div className="w-full h-screen flex flex-col items-center mt-20 shadow-md">
+    <div className="w-full md:h-screen flex flex-col items-center md:mt-20">
       <div className="md:bg-slate-50 bg-gray-100 py-4 md:px-8 px-2">
         <div className="flex justify-center mx-4 mt-4">
           {isSignUp ? (
@@ -238,13 +261,19 @@ export const UserAuth: React.FC = memo(() => {
             </>
           )}
         </div>
-        <div className="mt-6 mb-6 mx-4 flex justify-center">
+        <div className="mt-6 mb-6 mx-4 flex flex-col justify-center">
           <button
             className="text-sm border w-full py-3 bg-cyan-600 text-gray-100 rounded hover:bg-cyan-700 transition"
             onClick={isSignUp ? onClickSignUp : onClickSignIn}
             disabled={isLoading}
           >
             {isSignUp ? "新規登録" : "ログイン"}
+          </button>
+          <button
+            className="text-sm w-full bg-gray-400 text-gray-100 font-bold py-3 px-6 mt-10 rounded border border-gray-400 transition mr-4 hover:bg-white hover:text-gray-800 hover:border-gray-400 md:mb-0 mb-10"
+            onClick={hundleGuestLogin}
+          >
+            ゲストログインして使ってみる
           </button>
         </div>
       </div>

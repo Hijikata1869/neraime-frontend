@@ -72,9 +72,15 @@ const ProfileImageUpload: React.FC = memo(() => {
         setPreview(null);
         notificationContext.success("アイコンを変更しました");
       })
-      .catch(() => {
+      .catch((errorMessage) => {
         setPreview(null);
-        notificationContext.error("アイコンを変更できませんでした");
+        if (errorMessage === "ゲストユーザーのユーザー情報は更新できません") {
+          notificationContext.error(
+            "ゲストユーザーのプロフィール画像は更新できません"
+          );
+        } else {
+          notificationContext.error("アイコンを変更できませんでした");
+        }
       });
   };
 

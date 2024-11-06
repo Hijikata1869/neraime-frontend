@@ -107,7 +107,8 @@ export const updateUser = async (updateUserInput: UpdateUserInput) => {
       const data = await res.json();
       return data;
     } else {
-      throw "更新失敗";
+      const data = await res.json();
+      throw `${data.message}`;
     }
   });
 };
@@ -126,7 +127,8 @@ export const deleteUser = async (deleteUserArg: deleteUserArg) => {
       const data = await res.json();
       return data;
     } else {
-      throw "削除失敗";
+      const data = await res.json();
+      throw `${data.message}`;
     }
   });
 };
@@ -152,7 +154,24 @@ export const userImageUpload = async (
       const data = await res.json();
       return data;
     } else {
-      throw "投稿できませんでした。";
+      const data = await res.json();
+      throw `${data.message}`;
+    }
+  });
+};
+
+export const guestUserLogin = async () => {
+  return await fetch(`${process.env.NEXT_PUBLIC_RAILSAPI_URL}guest_login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else {
+      throw "ゲストログインできませんでした。";
     }
   });
 };
