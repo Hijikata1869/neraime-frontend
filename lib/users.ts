@@ -107,7 +107,8 @@ export const updateUser = async (updateUserInput: UpdateUserInput) => {
       const data = await res.json();
       return data;
     } else {
-      throw "更新失敗";
+      const data = await res.json();
+      throw `${data.message}`;
     }
   });
 };

@@ -104,8 +104,12 @@ const UserEditPage: React.FC = memo(() => {
         notificationCtx.success("登録情報を編集しました");
         router.push(`/users/${userId}`);
       })
-      .catch(() => {
-        notificationCtx.error("登録情報を変更できませんでした");
+      .catch((errorMessage) => {
+        if (errorMessage === "ゲストユーザーのユーザー情報は更新できません") {
+          notificationCtx.error(`${errorMessage}`);
+        } else {
+          notificationCtx.error("登録情報を変更できませんでした");
+        }
       });
   };
 
