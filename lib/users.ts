@@ -154,7 +154,8 @@ export const userImageUpload = async (
       const data = await res.json();
       return data;
     } else {
-      throw "投稿できませんでした。";
+      const data = await res.json();
+      throw `${data.message}`;
     }
   });
 };
