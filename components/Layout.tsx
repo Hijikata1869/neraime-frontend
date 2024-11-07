@@ -84,17 +84,22 @@ export const Layout: React.FC<LayoutProps> = memo((props) => {
             {isLogin ? (
               <div>
                 <div className="hidden md:block">
+                  <Link href="/search">
+                    <button className="py-2 px-4 rounded text-sm transition mr-4 bg-sky-600 text-amber-50 hover:bg-sky-700">
+                      混雑度検索・投稿
+                    </button>
+                  </Link>
+                  <Link href={`/users/${currentUser?.id}`}>
+                    <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700">
+                      マイページ
+                    </button>
+                  </Link>
                   <button
                     className="py-2 px-4 rounded text-sm text-gray-100 hover:bg-sky-600 transition mr-4"
                     onClick={logout}
                   >
                     ログアウト
                   </button>
-                  <Link href={`/users/${currentUser?.id}`}>
-                    <button className="py-2 px-4 rounded text-sm transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-700">
-                      マイページ
-                    </button>
-                  </Link>
                 </div>
                 <div>
                   <button
