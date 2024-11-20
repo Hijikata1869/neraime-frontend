@@ -16,7 +16,7 @@ export const IndexPage: React.FC = memo(() => {
           <div>
             <Link href="search">
               <button className="py-4 px-6 rounded-lg transition mr-4 bg-cyan-600 text-amber-50 hover:bg-cyan-500 mt-10">
-                {`混み具合を検索する →`}
+                {`混み具合を検索・投稿する →`}
               </button>
             </Link>
           </div>

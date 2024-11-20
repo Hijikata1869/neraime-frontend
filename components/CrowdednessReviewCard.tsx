@@ -65,12 +65,14 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                 {review.store_name}
               </Link>
             </div>
-            {review.memo?.length !== 0 && (
-              <div className="mt-2">
-                <p className="text-gray-900 text-sm md:text-base">
-                  {review.memo}
-                </p>
-              </div>
+            {review?.memo ? (
+              <p className="mt-2 text-gray-900 text-sm md:text-base">
+                {review.memo}
+              </p>
+            ) : (
+              <p className="mt-2 text-gray-300 text-xs md:text-base">
+                この投稿にはメモ・口コミはありません
+              </p>
             )}
             <div className="flex items-center md:justify-end justify-start mt-4">
               <div className="flex items-center">
