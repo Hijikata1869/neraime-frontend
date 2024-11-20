@@ -43,9 +43,8 @@ export const CrowdednessTable: React.FC<CrowdednessProps> = memo((props) => {
           const daylyCrowdednessList = await res.dayly_store_crowdedness_list;
           setDaylyCrowdednessList(daylyCrowdednessList);
         })
-        .catch((err) => {
+        .catch(() => {
           setDaylyCrowdednessList(undefined);
-          console.error(err);
         });
     }
   }, [storeId, selectedDayOfWeek]);
