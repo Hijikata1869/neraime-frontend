@@ -41,12 +41,14 @@ export const StoreCrowdednessReviewCard: React.FC<StoreCrowdednessReviewProps> =
                 </p>
               </div>
             </div>
-            {review.memo?.length !== 0 && (
-              <div>
-                <p className="text-gray-900 text-sm md:text-base">
-                  {review.memo}
-                </p>
-              </div>
+            {review.memo.length ? (
+              <p className="text-gray-900 text-sm md:text-base">
+                {review.memo}
+              </p>
+            ) : (
+              <p className="text-gray-300 text-xs md:text-base">
+                この投稿にはメモ・口コミはありません
+              </p>
             )}
             <div className="flex items-center md:justify-end justify-start mt-4">
               <div className="flex items-center">
