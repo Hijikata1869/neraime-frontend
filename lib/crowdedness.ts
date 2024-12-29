@@ -130,13 +130,14 @@ export const fetchUserCrowdedness = async (userId: number) => {
   });
 };
 
-export const fetchLatestPosts = async () => {
+export const fetchLatestPosts = async (token: string) => {
   return await fetch(
     `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdedness/formatted_latest_crowdednesses_list`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
     }
   ).then(async (res) => {

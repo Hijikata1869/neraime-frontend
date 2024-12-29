@@ -3,7 +3,7 @@ import { createUsefulArg, deleteUsefulArg } from "@/types/useful";
 export const createUseful = async (createUsefulArg: createUsefulArg) => {
   const { crowdednessId, token } = createUsefulArg;
   return await fetch(
-    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdedness/${crowdednessId}/useful`,
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdednesses/${crowdednessId}/usefuls`,
     {
       method: "POST",
       headers: {
@@ -25,7 +25,7 @@ export const createUseful = async (createUsefulArg: createUsefulArg) => {
 export const deleteUseful = async (deleteUsefulArg: deleteUsefulArg) => {
   const { crowdednessId, token } = deleteUsefulArg;
   return await fetch(
-    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdedness/${crowdednessId}/useful`,
+    `${process.env.NEXT_PUBLIC_RAILSAPI_URL}crowdednesses/${crowdednessId}/usefuls`,
     {
       method: "DELETE",
       headers: {

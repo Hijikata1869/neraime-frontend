@@ -96,8 +96,11 @@ export type LatestPosts = {
   created_at: string;
   updated_at: string;
   url: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type CrowdednessReviewCardProps = {
   reviews: LatestPosts | undefined;
+  reFetchPost: () => void;
 };

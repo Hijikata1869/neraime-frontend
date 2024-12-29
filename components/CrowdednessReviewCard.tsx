@@ -1,12 +1,16 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Cookie from "universal-cookie";
 
 import { CrowdednessReviewCardProps } from "@/types/crowdedness";
+import { createUseful, deleteUseful } from "@/lib/usefuls";
+
+const cookie = new Cookie();
 
 export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
   (props) => {
-    const { reviews } = props;
+    const { reviews, reFetchPost } = props;
     const changeBackgroundColor = (crowdedLevel: string) => {
       if (crowdedLevel === "空いてる") {
         return "bg-sky-600";
@@ -18,6 +22,39 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
         return "bg-red-600";
       }
     };
+
+    const onClickCreateUseful = (
+      event: React.MouseEvent,
+      crowdednessId: number
+    ) => {
+      event.preventDefault();
+      const token = cookie.get("access_token") as string;
+      const createUsefulArg = { crowdednessId: crowdednessId, token: token };
+      createUseful(createUsefulArg)
+        .then(() => {
+          reFetchPost();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
+    const onClickDeleteUseful = (
+      event: React.MouseEvent,
+      crowdednessId: number
+    ) => {
+      event.preventDefault();
+      const token = cookie.get("access_token") as string;
+      const deleteUsefulArg = { crowdednessId: crowdednessId, token: token };
+      deleteUseful(deleteUsefulArg)
+        .then(() => {
+          reFetchPost();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
     return (
       <div className="lg:px-20 md:px-10 w-full">
         {reviews?.map((review) => (
@@ -74,7 +111,7 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                 この投稿にはメモ・口コミはありません
               </p>
             )}
-            <div className="flex items-center md:justify-end justify-start mt-4">
+            <div className="flex items-center md:justify-between justify-start mt-4">
               <div className="flex items-center">
                 <div className="relative w-10 h-10">
                   <Image
@@ -91,6 +128,36 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                     {review.nickname}
                   </p>
                 </Link>
+              </div>
+              <div className="flex flex-col items-end">
+                <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
+                <div className="flex flex-col items-center">
+                  {review.is_useful ? (
+                    <button
+                      onClick={(event) => onClickDeleteUseful(event, review.id)}
+                    >
+                      <Image
+                        src={"/solidSmile.svg"}
+                        alt="smile.svg"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(event) => onClickCreateUseful(event, review.id)}
+                    >
+                      <Image
+                        src={"/smile.svg"}
+                        alt="smile.svg"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  )}
+
+                  <p className="text-xs text-gray-400">参考になった</p>
+                </div>
               </div>
             </div>
           </div>
