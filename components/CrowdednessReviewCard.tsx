@@ -1,16 +1,21 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Cookie from "universal-cookie";
 
 import { CrowdednessReviewCardProps } from "@/types/crowdedness";
 import { createUseful, deleteUseful } from "@/lib/usefuls";
+import { CurrentUserContext } from "@/context/CurrentUserContext";
 
 const cookie = new Cookie();
 
 export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
   (props) => {
     const { reviews, reFetchPost } = props;
+
+    const currentUserContext = useContext(CurrentUserContext);
+    const { isLogin } = currentUserContext;
+
     const changeBackgroundColor = (crowdedLevel: string) => {
       if (crowdedLevel === "空いてる") {
         return "bg-sky-600";
@@ -129,36 +134,46 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                   </p>
                 </Link>
               </div>
-              <div className="flex flex-col items-end">
-                <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
-                <div className="flex flex-col items-center">
-                  {review.is_useful ? (
-                    <button
-                      onClick={(event) => onClickDeleteUseful(event, review.id)}
-                    >
-                      <Image
-                        src={"/solidSmile.svg"}
-                        alt="smile.svg"
-                        width={20}
-                        height={20}
-                      />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={(event) => onClickCreateUseful(event, review.id)}
-                    >
-                      <Image
-                        src={"/smile.svg"}
-                        alt="smile.svg"
-                        width={20}
-                        height={20}
-                      />
-                    </button>
-                  )}
+              {isLogin ? (
+                <div className="flex flex-col items-end">
+                  <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
+                  <div className="flex flex-col items-center">
+                    {review.is_useful ? (
+                      <button
+                        onClick={(event) =>
+                          onClickDeleteUseful(event, review.id)
+                        }
+                      >
+                        <Image
+                          src={"/solidSmile.svg"}
+                          alt="smile.svg"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(event) =>
+                          onClickCreateUseful(event, review.id)
+                        }
+                      >
+                        <Image
+                          src={"/smile.svg"}
+                          alt="smile.svg"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
+                    )}
 
-                  <p className="text-xs text-gray-400">参考になった</p>
+                    <p className="text-xs text-gray-400">参考になった</p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col items-end">
+                  <p className="text-xs text-gray-400">{`${review.number_of_usefuls}人のユーザーが役に立ったと評価しています`}</p>
+                </div>
+              )}
             </div>
           </div>
         ))}
