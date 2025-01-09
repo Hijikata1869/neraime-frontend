@@ -116,7 +116,7 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                 この投稿にはメモ・口コミはありません
               </p>
             )}
-            <div className="flex items-center md:justify-between justify-start mt-4">
+            <div className="flex items-center justify-between mt-4">
               <div className="flex items-center">
                 <div className="relative w-10 h-10">
                   <Image
@@ -176,48 +176,48 @@ export const CrowdednessReviewCard: React.FC<CrowdednessReviewCardProps> = memo(
                   </div>
                 )}
               </div>
-            </div>
-            <div className="md:hidden mt-4">
-              {isLogin ? (
-                <div className="flex flex-col items-end">
-                  <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
-                  <div className="flex flex-col items-center">
-                    {review.is_useful ? (
-                      <button
-                        onClick={(event) =>
-                          onClickDeleteUseful(event, review.id)
-                        }
-                      >
-                        <Image
-                          src={"/solidSmile.svg"}
-                          alt="smile.svg"
-                          width={20}
-                          height={20}
-                        />
-                      </button>
-                    ) : (
-                      <button
-                        onClick={(event) =>
-                          onClickCreateUseful(event, review.id)
-                        }
-                      >
-                        <Image
-                          src={"/smile.svg"}
-                          alt="smile.svg"
-                          width={20}
-                          height={20}
-                        />
-                      </button>
-                    )}
+              <div className="md:hidden mt-4">
+                {isLogin ? (
+                  <div className="flex flex-col items-end">
+                    <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
+                    <div className="flex flex-col items-center">
+                      {review.is_useful ? (
+                        <button
+                          onClick={(event) =>
+                            onClickDeleteUseful(event, review.id)
+                          }
+                        >
+                          <Image
+                            src={"/solidSmile.svg"}
+                            alt="smile.svg"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(event) =>
+                            onClickCreateUseful(event, review.id)
+                          }
+                        >
+                          <Image
+                            src={"/smile.svg"}
+                            alt="smile.svg"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                      )}
 
-                    <p className="text-xs text-gray-400">参考になった</p>
+                      <p className="text-xs text-gray-400">参考になった</p>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-end">
-                  <p className="text-xs text-gray-400">{`${review.number_of_usefuls}人のユーザーが役に立ったと評価しています`}</p>
-                </div>
-              )}
+                ) : (
+                  <div className="flex flex-col items-end">
+                    <p className="text-xs text-gray-400">{`${review.number_of_usefuls}人のユーザーが役に立ったと評価しています`}</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}
