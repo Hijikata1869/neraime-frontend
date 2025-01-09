@@ -42,6 +42,7 @@ export type LatestCrowdednessReviewsProps = {
   storeId: number;
 };
 
+// number_of_usefuls: number, is_useful: booleanを付け足したい
 export type StoreCrowdednessReviews = {
   id: number;
   user_id: number;
@@ -54,10 +55,13 @@ export type StoreCrowdednessReviews = {
   created_at: string;
   updated_at: string;
   url: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type StoreCrowdednessReviewProps = {
   reviews: StoreCrowdednessReviews | undefined;
+  reFetchPost: () => void;
 };
 
 export type CrowdednessReviewsProps = {
