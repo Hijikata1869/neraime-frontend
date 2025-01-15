@@ -79,12 +79,15 @@ export type UserCrowdedness = {
   memo?: string;
   created_at: string;
   updated_at: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type UserCrowdednessCardProps = {
   reviews: UserCrowdedness | undefined;
   currentUser: CurrentUserObj | undefined;
   accessToken: string;
+  reFetchPost: () => void;
 };
 
 export type LatestPosts = {

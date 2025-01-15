@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, memo } from "react";
+import { useEffect, useState, useContext, memo, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -73,7 +73,7 @@ export const User: React.FC = memo(() => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
+  const fetchPosts = useCallback(() => {
     if (!isNaN(userId)) {
       fetchUserCrowdedness(userId)
         .then(async (res) => {
@@ -91,6 +91,10 @@ export const User: React.FC = memo(() => {
         });
     }
   }, [userId]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   useEffect(() => {
     if (!isNaN(userId)) {
@@ -166,6 +170,7 @@ export const User: React.FC = memo(() => {
             reviews={userCrowdedness}
             currentUser={currentUser}
             accessToken={accessToken}
+            reFetchPost={fetchPosts}
           />
         ) : (
           <div className="flex px-20">
