@@ -96,13 +96,17 @@ export const fetchLatestCrowdednessReviews = async (
   });
 };
 
-export const fetchCrowdednessReviews = async (storeId: number) => {
+export const fetchCrowdednessReviews = async (
+  storeId: number,
+  token: string
+) => {
   return await fetch(
     `${process.env.NEXT_PUBLIC_RAILSAPI_URL}stores/${storeId}/all_store_reviews`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
     }
   ).then(async (res) => {
