@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { format } from "date-fns";
+import Cookie from "universal-cookie";
 
 import { StoreCrowdednessReviewCard } from "./StoreCrowdednessReviewCard";
 
@@ -12,6 +13,8 @@ import {
 
 import { fetchLatestCrowdednessReviews } from "@/lib/crowdedness";
 
+const cookie = new Cookie();
+
 export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
   memo((props) => {
     const { storeId } = props;
@@ -21,9 +24,10 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
       StoreCrowdednessReviews | undefined
     >();
 
-    useEffect(() => {
+    const fetchPosts = () => {
+      const token = cookie.get("access_token") as string;
       if (!isNaN(storeId)) {
-        fetchLatestCrowdednessReviews(storeId)
+        fetchLatestCrowdednessReviews(storeId, token)
           .then(async (res) => {
             const data: StoreCrowdednessReviews =
               await res.latest_store_reviews;
@@ -39,14 +43,22 @@ export const LatestCrowdednessReviews: React.FC<LatestCrowdednessReviewsProps> =
             console.error(err);
           });
       }
-    }, [storeId]);
+    };
+
+    useEffect(() => {
+      fetchPosts();
+      // eslint-disable-next-line
+    }, []);
 
     return (
       <div className="mt-10 w-full lg:px-0 md:px-20 px-10">
         <h3 className="font-bold text-2xl text-gray-800 mb-5">
           最新の口コミ・メモ
         </h3>
-        <StoreCrowdednessReviewCard reviews={latestReviews} />
+        <StoreCrowdednessReviewCard
+          reviews={latestReviews}
+          reFetchPost={fetchPosts}
+        />
         <div className="flex justify-center items-center mt-20">
           {latestReviews !== undefined ? (
             <button

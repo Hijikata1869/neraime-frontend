@@ -1,5 +1,6 @@
 import { memo, useState, useContext } from "react";
 import Link from "next/link";
+import Cookie from "universal-cookie";
 
 import { UserCrowdednessCardProps } from "@/types/crowdedness";
 
@@ -8,13 +9,21 @@ import { ConfirmationDialog } from "./ConfirmationDialog";
 import { deletePost } from "@/lib/crowdedness";
 
 import NotificationContext from "@/context/notificationContext";
+import { CurrentUserContext } from "@/context/CurrentUserContext";
+import { createUseful, deleteUseful } from "@/lib/usefuls";
+import Image from "next/image";
+
+const cookie = new Cookie();
 
 export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
   memo((props) => {
-    const { reviews, currentUser, accessToken } = props;
+    const { reviews, currentUser, accessToken, reFetchPost } = props;
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
     const notificationContext = useContext(NotificationContext);
+    const currentUserContext = useContext(CurrentUserContext);
+
+    const { isLogin } = currentUserContext;
 
     const changeBackgroundColor = (crowdedLevel: string) => {
       if (crowdedLevel === "空いてる") {
@@ -48,6 +57,38 @@ export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
             setIsOpen(false);
           });
       }
+    };
+
+    const onClickCreateUseful = (
+      event: React.MouseEvent,
+      crowdednessId: number
+    ) => {
+      event.preventDefault();
+      const token = cookie.get("access_token") as string;
+      const createUsefulArg = { crowdednessId: crowdednessId, token: token };
+      createUseful(createUsefulArg)
+        .then(() => {
+          reFetchPost();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+
+    const onClickDeleteUseful = (
+      event: React.MouseEvent,
+      crowdednessId: number
+    ) => {
+      event.preventDefault();
+      const token = cookie.get("access_token") as string;
+      const deleteUsefulArg = { crowdednessId: crowdednessId, token: token };
+      deleteUseful(deleteUsefulArg)
+        .then(() => {
+          reFetchPost();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     };
 
     return (
@@ -92,16 +133,56 @@ export const UserCrowdednessReviewCard: React.FC<UserCrowdednessCardProps> =
                   <p className="text-gray-900">{review.memo}</p>
                 </div>
               )}
-              {review.user_id === currentUser?.id && (
-                <div className="flex justify-end items-center">
-                  <button
-                    className="text-xs rounded border border-red-500 px-2 py-2 text-red-500 hover:bg-red-500 hover:text-white transition"
-                    onClick={(event) => hundleDialogOpen(event, review.id)}
-                  >
-                    この投稿を削除する
-                  </button>
-                </div>
-              )}
+              <div className="flex justify-between items-center mt-4">
+                {isLogin ? (
+                  <div className="flex flex-col items-end">
+                    <p className="bg-gray-400 px-2 py-1 rounded-full text-xs text-white font-bold">{`${review.number_of_usefuls}`}</p>
+                    <div className="flex flex-col items-center">
+                      {review.is_useful ? (
+                        <button
+                          onClick={(event) =>
+                            onClickDeleteUseful(event, review.id)
+                          }
+                        >
+                          <Image
+                            src={"/solidSmile.svg"}
+                            alt="smile.svg"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(event) =>
+                            onClickCreateUseful(event, review.id)
+                          }
+                        >
+                          <Image
+                            src={"/smile.svg"}
+                            alt="smile.svg"
+                            width={20}
+                            height={20}
+                          />
+                        </button>
+                      )}
+
+                      <p className="text-xs text-gray-400">参考になった</p>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-400">{`${review.number_of_usefuls}人のユーザーが役に立ったと評価しています`}</p>
+                )}
+                {review.user_id === currentUser?.id && (
+                  <div>
+                    <button
+                      className="text-xs rounded border border-red-500 px-2 py-2 text-red-500 hover:bg-red-500 hover:text-white transition"
+                      onClick={(event) => hundleDialogOpen(event, review.id)}
+                    >
+                      この投稿を削除する
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>

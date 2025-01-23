@@ -42,6 +42,7 @@ export type LatestCrowdednessReviewsProps = {
   storeId: number;
 };
 
+// number_of_usefuls: number, is_useful: booleanを付け足したい
 export type StoreCrowdednessReviews = {
   id: number;
   user_id: number;
@@ -54,10 +55,13 @@ export type StoreCrowdednessReviews = {
   created_at: string;
   updated_at: string;
   url: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type StoreCrowdednessReviewProps = {
   reviews: StoreCrowdednessReviews | undefined;
+  reFetchPost: () => void;
 };
 
 export type CrowdednessReviewsProps = {
@@ -75,12 +79,15 @@ export type UserCrowdedness = {
   memo?: string;
   created_at: string;
   updated_at: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type UserCrowdednessCardProps = {
   reviews: UserCrowdedness | undefined;
   currentUser: CurrentUserObj | undefined;
   accessToken: string;
+  reFetchPost: () => void;
 };
 
 export type LatestPosts = {
@@ -96,8 +103,11 @@ export type LatestPosts = {
   created_at: string;
   updated_at: string;
   url: string;
+  number_of_usefuls: number;
+  is_useful: boolean;
 }[];
 
 export type CrowdednessReviewCardProps = {
   reviews: LatestPosts | undefined;
+  reFetchPost: () => void;
 };

@@ -1,6 +1,7 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
+import Cookie from "universal-cookie";
 
 import { StoreCrowdednessReviews } from "@/types/crowdedness";
 import { StoreData } from "@/types/store";
@@ -12,6 +13,8 @@ import { Layout } from "@/components/Layout";
 import { fetchStore } from "@/lib/stores";
 import { Spinner } from "@/components/Spinner";
 
+const cookie = new Cookie();
+
 const StoreReviewPage: React.FC = memo(() => {
   const router = useRouter();
   const storeId = parseInt(router.query.id as string);
@@ -22,9 +25,10 @@ const StoreReviewPage: React.FC = memo(() => {
   const [store, setStore] = useState<StoreData | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
+  const fetchPosts = useCallback(() => {
+    const token = cookie.get("access_token") as string;
     if (!isNaN(storeId)) {
-      fetchCrowdednessReviews(storeId)
+      fetchCrowdednessReviews(storeId, token)
         .then(async (res) => {
           const data: StoreCrowdednessReviews = await res.store_reviews;
           data.forEach((review) => {
@@ -41,6 +45,10 @@ const StoreReviewPage: React.FC = memo(() => {
         });
     }
   }, [storeId, router]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   useEffect(() => {
     if (!isNaN(storeId)) {
@@ -71,7 +79,10 @@ const StoreReviewPage: React.FC = memo(() => {
       <div className="w-full lg:px-40 md:px-20 px-10 mt-10">
         <h1 className="md:text-2xl font-bold text-gray-900 mb-10">{`${store?.name}の口コミ・メモ一覧`}</h1>
         {crowdednessReviews ? (
-          <StoreCrowdednessReviewCard reviews={crowdednessReviews} />
+          <StoreCrowdednessReviewCard
+            reviews={crowdednessReviews}
+            reFetchPost={fetchPosts}
+          />
         ) : (
           <div className="flex justify-center items-center">
             <p className="font-bold text-gray-900">
