@@ -9,7 +9,10 @@ const config = {
       tsconfig: "<rootDir>/tsconfig.test.json"
     }
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1'
+  }
 };
 
 module.exports = config;
