@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction} from "react";
 import { render, screen } from "@testing-library/react";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 
-const mockSetIsOpen = jest.fn();
+const mockSetIsOpen: Dispatch<SetStateAction<boolean>> = jest.fn();
 
 test("ダイアログが画面に表示されていること", () => {
     render(<ConfirmationDialog isOpen={true} setIsOpen={mockSetIsOpen} dialogTitle="mockTitle" dialogDescription="mockDialogDescription" />);
