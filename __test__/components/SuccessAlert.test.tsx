@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { SuccessAlert } from "@/components/SuccessAlert";
 import NotificationContext from "@/context/notificationContext";
-import { mock } from "node:test";
 
 const mockFn = jest.fn();
 
