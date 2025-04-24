@@ -47,3 +47,13 @@ test("確認用パスワード入力欄", async () => {
     await user.type(input, value);
     expect(screen.getByDisplayValue(value)).toBeInTheDocument();
 });
+
+test("ログインボタンを押すと、画面が切り替わること", async () => {
+    render(<UserAuth />);
+    const button = screen.getByRole("button", {
+        name: "ログイン",
+    });
+    const input = screen.getByLabelText("パスワード（確認用）");
+    await user.click(button);
+    expect(input).not.toBeInTheDocument();
+});
