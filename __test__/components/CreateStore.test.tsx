@@ -2,15 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { CreateStore } from "@/components/CreateStore";
 import { SearchContext } from "@/context/SearchContext";
 import { CurrentUserContext } from "@/context/CurrentUserContext";
-type CurrentUserObj = {
-    id: number;
-    nickname: string;
-    email: string;
-    password_digest: string;
-    self_introduction?: string;
-    created_at: string;
-    updated_at: string;
-}
 
 const testCurrentUser = {
     id: 1,
