@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test("新規ユーザーを作成できること",async ({ page }) => {
+test("新規ユーザーを作成できること", async ({ page }) => {
 
     const timestamp = Date.now();
     const email = `test_user_${timestamp}@example.com`;
