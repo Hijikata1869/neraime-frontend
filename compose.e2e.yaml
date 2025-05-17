@@ -1,0 +1,10 @@
+services:
+  e2e:
+    build: .
+    ports:
+      - "3200:3000"
+    volumes:
+      - .:/neraime_frontend
+      - /neraime_frontend/node_modules
+    env_file:
+      - .env.e2e

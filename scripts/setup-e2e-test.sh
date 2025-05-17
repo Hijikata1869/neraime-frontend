@@ -1,0 +1,1 @@
+docker compose -f ../neraime_api/compose.e2e.yaml exec e2e bundle exec rake e2e:prepare
